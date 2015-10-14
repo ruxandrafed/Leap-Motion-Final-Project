@@ -1,0 +1,1 @@
+Project that combines leap motion with Google Street View. Hapi framework with a Node JS front end.

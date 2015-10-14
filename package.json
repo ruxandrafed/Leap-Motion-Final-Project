@@ -1,0 +1,26 @@
+{
+  "name": "leap_van",
+  "version": "1.0.0",
+  "description": "leap motiong combined with google streeview and API mashup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tulun/Leap-Motion-Final-Project.git"
+  },
+  "keywords": [
+    "leap_motion",
+    "google_street_view"
+  ],
+  "author": "Rux, Jason, Marya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tulun/Leap-Motion-Final-Project/issues"
+  },
+  "homepage": "https://github.com/Tulun/Leap-Motion-Final-Project#readme",
+  "dependencies": {
+    "hapi": "^10.4.1"
+  }
+}
