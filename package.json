@@ -23,5 +23,6 @@
   "dependencies": {
     "hapi": "^10.4.1",
     "inert": "^3.1.0"
+    "leapjs": "^0.6.4"
   }
 }
