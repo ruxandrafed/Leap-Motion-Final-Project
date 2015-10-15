@@ -5,13 +5,13 @@
 //         orientation = "up";
 //     else
 //         orientation = "down";
-    
+
 //     return orientation;
 // }
 
 function move(frame) {
-       
-                
+
+
     // if(frame.valid && frame.gestures.length > 0){
     //     frame.gestures.forEach(function(gesture){
     //         filterGesture("swipe", streetViewSwipe)(frame, gesture);
@@ -57,7 +57,7 @@ function move(frame) {
                       }
                     panorama.setPano(links[panoNum]['pano']);
                     } else {
-                      panorama.setpano(links[0]['pano']);
+                      panorama.setPano(links[0]['pano']);
                     }
                   console.log('forward');
                   console.log(links);
@@ -77,7 +77,7 @@ function move(frame) {
                       }
                       panorama.setPano(links[panoNum]['pano']);
                   } else {
-                      panorama.setpano(links[0]['pano']);
+                      panorama.setPano(links[0]['pano']);
                   }
                   console.log('back');
                   console.log(links);
@@ -92,7 +92,7 @@ function move(frame) {
 
 
   previousFrame = frame;
-  
+
 }
 
 
