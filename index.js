@@ -8,6 +8,20 @@ server.connection({
     port: 8000
 });
 
+// Initialize socket.io and attach it to the server listener
+var io = require('socket.io')(server.listener);
+
+io.on('connection', function (socket) {
+
+  console.log('a user connected; socket id: ' + socket.id);
+
+  socket.on('disconnect', function(){
+    console.log('a user disconnected; socket id: ' + socket.id);
+  });
+
+});
+
+// Adding inert - static file and directory handler for hapi
 server.register(require('inert'), function (err) {
 
   if (err) {
@@ -23,6 +37,7 @@ server.register(require('inert'), function (err) {
     }
   });
 
+  // Add public directory handler
   server.route({
     method: 'GET',
     path: '/{param*}',
@@ -42,5 +57,7 @@ server.register(require('inert'), function (err) {
   });
 
 });
+
+
 
 
