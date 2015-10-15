@@ -1,6 +1,6 @@
 var panorama;
-
 var vancouver = {lat: 49.283324, lng: -123.119452};
+
 
 function initialize() {
 
@@ -123,4 +123,6 @@ function initialize() {
     $('#myModalLocation').modal('hide').fadeOut('slow');
   })
 
+  Leap.loop({enableGestures: true}, move);
 }
+
