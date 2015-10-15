@@ -1,6 +1,6 @@
 html, body {
   height: 100vh;
-  margin: 5px;
+  margin: 0px;
   padding: 0;
 }
 
@@ -10,4 +10,27 @@ html, body {
 
 #streetview {
   height: 100vh;
+}
+
+#help-modal {
+  left: 60px;
+}
+
+#menu-toggle, #help-modal {
+  position: absolute;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+#modal-button {
+  display: none;
+}
+
+.modal-dialog  {
+  width: 75%;
+  height: 75%;
+}
+
+.modal-content  {
+  top: 25%;
 }
