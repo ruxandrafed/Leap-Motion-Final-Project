@@ -10,10 +10,10 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById('streetview'), {
     center: vancouver,
     zoom: 18,
-    streetViewControl: false
+    streetViewControl: true
   });
 
-  // We get the map's default panorama and set up some defaults.\
+  // We get the map's default panorama and set up some defaults.
   panorama = map.getStreetView();
   panorama.setPosition(vancouver);
   panorama.setPov(/** @type {google.maps.StreetViewPov} */({
@@ -27,5 +27,100 @@ function initialize() {
   });
 
   panorama.setVisible(true);
+
+  // Create the autocomplete object, restricting the search to geographical
+  // location types.
+  autocomplete = new google.maps.places.Autocomplete(
+    /** @type {!HTMLInputElement} */(document.getElementById('location-address')),
+    {types: ['geocode']});
+
+  autocomplete = new google.maps.places.Autocomplete(
+    /** @type {!HTMLInputElement} */(document.getElementById('location-address2')),
+    {types: ['geocode']});
+
+  var geocoder = new google.maps.Geocoder();
+
+  // function to geocode an address and plot it on a map
+  function changeMapCoordinates(address) {
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+         panorama.setPosition((results[0].geometry.location));      // center the map on address
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
+  // gets browser coordinates
+  function geolocate() {
+    // Try W3C Geolocation (Preferred)
+    if(navigator.geolocation) {
+      browserSupportFlag = true;
+      navigator.geolocation.getCurrentPosition(function(position) {
+        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+        panorama.setPosition(initialLocation);
+      }, function() {
+        handleNoGeolocation(browserSupportFlag);
+      });
+    }
+    // Browser doesn't support Geolocation
+    else {
+      browserSupportFlag = false;
+      handleNoGeolocation(browserSupportFlag);
+    }
+
+    function handleNoGeolocation(errorFlag) {
+      if (errorFlag == true) {
+        alert("Geolocation service failed.");
+        initialLocation = vancouver;
+      } else {
+        alert("Your browser doesn't support geolocation. We've placed you in Vancouver's city centre.");
+        initialLocation = vancouver;
+      }
+      panorama.setPosition(initialLocation);
+    }
+  }
+
+  $("#map-address-btn").on("click", function(e) {
+    e.preventDefault();
+    var address = $("#location-address").val() ;
+    changeMapCoordinates(address);
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  })
+
+  $("#citycentre-address-btn").on("click", function(e) {
+    e.preventDefault();
+    panorama.setPosition(vancouver);
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  })
+
+  $("#geolocate-address-btn").on("click", function(e) {
+    geolocate();
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  })
+
+  $("#map-address-btn2").on("click", function(e) {
+    e.preventDefault();
+    var address = $("#location-address2").val() ;
+    changeMapCoordinates(address);
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  })
+
+  $("#citycentre-address-btn2").on("click", function(e) {
+    e.preventDefault();
+    panorama.setPosition(vancouver);
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  })
+
+  $("#geolocate-address-btn2").on("click", function(e) {
+    geolocate();
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  })
 
 }
