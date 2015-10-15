@@ -56,6 +56,52 @@
           </div>
         </div>
 
+        <!-- Change Location Modal -->
+        <div class="container">
+
+          <div class="modal fade" id="myModalLocation" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Change location</h4>
+                </div>
+                <div class="modal-body">
+
+                  <div class="container address-search-form">
+
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <p>Enter Address: </p>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-6" id="locationField">
+                          <input id="location-address2" type="text" class="form-control" placeholder="Street, City, State"/>
+                        </div>
+
+                        <div class="col sm-1">
+                          <p><button class="btn btn-primary" id="map-address-btn2"><span>Go</span></button>  or
+                          <button class="btn btn-primary" id="geolocate-address-btn2"><span>Get current location</span></button> or
+                          <button class="btn btn-primary" id="citycentre-address-btn2"><span>Go to city centre</span></button></p>
+                        </div>
+
+                      </div>
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
         <!-- Welcome Modal -->
         <div class="container">
           <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" id="modal-button"></button>
@@ -72,19 +118,24 @@
                 <div class="modal-body">
 
                     <div class="container address-search-form">
+
                         <div class="row">
                           <div class="col-sm-12">
                             <p>Enter Address: </p>
                           </div>
                         </div>
+
                         <div class="row">
-                          <div class="col-sm-6">
+                          <div class="col-sm-6" id="locationField">
                             <input id="location-address" type="text" class="form-control" placeholder="Street, City, State"/>
                           </div>
+
                           <div class="col sm-1">
                             <p><button class="btn btn-primary" id="map-address-btn"><span>Go</span></button>  or
-                            <button class="btn btn-primary" id="geolocate-address-btn"><span>Get current location</span></button></p>
+                            <button class="btn btn-primary" id="geolocate-address-btn"><span>Get current location</span></button> or
+                            <button class="btn btn-primary" id="citycentre-address-btn"><span>Go to city centre</span></button></p>
                           </div>
+
                         </div>
                     </div>
 
@@ -106,8 +157,6 @@
                         Start Bootstrap
                     </a>
                 </li>
-                <li>
-                    <a href="#">Dashboard</a>
                 </li>
                 <li>
                     <a href="#">Shortcuts</a>
@@ -124,6 +173,7 @@
 
                         <a href="#menu-toggle" class="btn btn-default" id="menu-toggle"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                         <a href="#help-modal" class="btn btn-default" id="help-modal" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        <a href="#location-modal" class="btn btn-default" id="location-modal" data-toggle="modal" data-target="#myModalLocation" id="modal-help-button"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
 
                         <!-- Street View Embedded Here -->
                         <div id="streetview"></div>
@@ -141,15 +191,16 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/gmaps.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places&callback=initialize">
     </script>

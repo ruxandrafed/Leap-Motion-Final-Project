@@ -5,13 +5,13 @@
 //         orientation = "up";
 //     else
 //         orientation = "down";
-    
+
 //     return orientation;
 // }
 
 function move(frame) {
-       
-                
+
+
     // if(frame.valid && frame.gestures.length > 0){
     //     frame.gestures.forEach(function(gesture){
     //         filterGesture("swipe", streetViewSwipe)(frame, gesture);
@@ -21,7 +21,6 @@ function move(frame) {
 
     // if(previousFrame && previousFrame.valid)
     //Stopping Leap Motion
-    var previousFrame ||= null;
     var pov = panorama.getPov();
     var panoNum = null;
       if(frame.valid && frame.hands.length > 0) {
@@ -78,11 +77,31 @@ function move(frame) {
                         }
                         panorama.setPano(links[panoNum]['pano']);
                     } else {
-                        panorama.setpano(links[0]['pano']);
+                      panorama.setPano(links[0]['pano']);
                     }
-                    console.log('back');
-                    console.log(links);
-                }
+                  console.log('forward');
+                  console.log(links);
+              }
+            };
+            if (palm > 30) {
+             links = panorama.getLinks();
+              if (links !== undefined) {
+                  if (links.length > 1) {
+                      pano0 = Math.abs(links[0]['heading'] - pov.heading);
+                      pano1 = Math.abs(links[1]['heading'] - pov.heading);
+                      if (pano0 < pano1 ) {
+                          panoNum = 1;
+                      }
+                      else {
+                          panoNum = 0;
+                      }
+                      panorama.setPano(links[panoNum]['pano']);
+                  } else {
+                      panorama.setPano(links[0]['pano']);
+                  }
+                  console.log('back');
+                  console.log(links);
+              }
 
               }
             }
@@ -93,7 +112,7 @@ function move(frame) {
 
 
   previousFrame = frame;
-  
+
 }
 
 
