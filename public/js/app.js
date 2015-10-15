@@ -10,10 +10,4 @@ $(function() {
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   });
 
-  $("#map-address-btn").on("click", function(e){
-    e.preventDefault();
-    var address = $("#location-address").val();         // grab the address from the input field
-    codeAddress(address);                   // geocode the address
-  });
-
 });
