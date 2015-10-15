@@ -1,147 +1,55 @@
-// var map;
-var placesList;
-var service;
-var infowindow;
-var markers = [];
-var start;
-var end;
-var pins = 0;
-var waypts = [];
-var directionsDisplay;
-var leftHandPrev;
-var separationStart;
-var MAX_ZOOM = 22;
-var SEPARATION_SCALING = 1.25;
-var LEFT_HAND = 0, RIGHT_HAND = 1;
-var X = 0, Y = 1, Z = 2;
-var ayMenu = false;
-
-var pointsOfInterestOrigins = [];
-
-var lookupClickedLastFrame = 0;
-
-var streetViewFrameStart = 0;
-var streetView = false;
-function palmPosition(hand) {
-    var position = hand.palmNormal;
-    var orientation;
-    if (position[1] > 0.75)
-        orientation = "up";
-    else
-        orientation = "down";
+// function palmPosition(hand) {
+//     var position = hand.palmNormal;
+//     var orientation;
+//     if (position[1] > 0.75)
+//         orientation = "up";
+//     else
+//         orientation = "down";
     
-    return orientation;
-}
+//     return orientation;
+// }
 
 function move(frame) {
-
-    // This is to catch a bug somewhere that causes the StreetView to not be visible
-    // panorama = map.getStreetView();
-    // if (panorama.getVisible() === false && streetView === true) {
-    //     panorama.setVisible(true);
-    //     console.log("Bug avoided");
-    //     return;
-    // }
        
                 
-    if(frame.valid && frame.gestures.length > 0){
-        frame.gestures.forEach(function(gesture){
-            filterGesture("swipe", streetViewSwipe)(frame, gesture);
-        });
-        return;
-    }
+    // if(frame.valid && frame.gestures.length > 0){
+    //     frame.gestures.forEach(function(gesture){
+    //         filterGesture("swipe", streetViewSwipe)(frame, gesture);
+    //     });
+    //     return;
+    // }
+
+    // if(previousFrame && previousFrame.valid)
+    //Stopping Leap Motion
+    var pov = panorama.getPov();
+    if(frame.valid && frame.hands.length > 0) {
+      for (var i = 0; i < frame.hands.length; i++) {
+        var hand = frame.hands[i];
+        if (hand.grabStrength >0.85) {
+          break
+        } else {
+          if (previousFrame) {
+            var axis = hand.rotationAxis(previousFrame);
+            console.log(axis[2]);
+            if (axis[2] > 0.85) {
+              panorama.setPov({
+              heading: pov.heading + 5,
+              pitch:0});
+            };
+            if (axis[2] < -0.85) {
+              panorama.setPov({
+                heading: pov.heading - 5,
+              pitch:0})
+            };
+           };
+        };
+      };
+    };
+
+
+  previousFrame = frame;
   
 }
-
-
-var handMarkers = [];
-var HEIGHT_OFFSET = 150;
-var BASE_MARKER_SIZE_GRIPPED = 350000, BASE_MARKER_SIZE_UNGRIPPED = 500000;
-// function markHands(frame) {
-//     var scaling = (4.0 / Math.pow(2, map.getZoom()-1));
-//       var bounds = map.getBounds();
-//       // FIXME: Sometimes this gets run too early, just exit if its too early.
-//       if(!bounds) { return; }
-//       var origin = new google.maps.LatLng(bounds.getSouthWest().lat(), bounds.getCenter().lng());
-//       var hands = frame.hands;
-//       for(var i in hands) {
-//           if(hands.hasOwnProperty(i)) {
-//             // Limit this to 2 hands for now
-//             if(i > RIGHT_HAND) {
-//               return;
-//             }
-//             var hand = hands[i];
-//             newCenter = new google.maps.LatLng(origin.lat()
- // + ((hand.stabilizedPalmPosition[1] - HEIGHT_OFFSET) * scaling), origin.lng()
-  // + (hand.stabilizedPalmPosition[0] * scaling));
-//             // console.log(center.lat() + "," + center.lng());
-//             // console.log(newCenter.lat() + "," + newCenter.lng());
-//             var gripped = isGripped(hand);
-//             var baseRadius = gripped ? BASE_MARKER_SIZE_GRIPPED : BASE_MARKER_SIZE_UNGRIPPED;
-//             var handColor = getHandColor(hand);
-//             var handMarker = handMarkers[i];
-//             if(!handMarker) {
-//               handMarker = new google.maps.Circle();
-//               handMarkers[i] = handMarker;
-//             }
-//             handMarker.setOptions({
-//               strokeColor: handColor,
-//               strokeOpacity: 0.8,
-//               strokeWeight: 2,
-//               fillColor: handColor,
-//               fillOpacity: 0.35,
-//               map: map,
-//               center: newCenter,
-//               radius: baseRadius * scaling
-//             });
-//           }
-//       }
-// }
-
-// function menuOpen(frame){
- 
-//     if(frame.hands.length > 1){
-//         var ppx = Math.abs(frame.hands[0].palmPosition[0]) + Math.abs(frame.hands[1].palmPosition[0]);
-//         var ppy = Math.abs(frame.hands[0].palmPosition[1]) + Math.abs(frame.hands[1].palmPosition[1]);
-
-//         if( ppx < 50 && (300 < ppy < 350)){
-//             document.getElementById("opac").style.visibility = 'visible';
-//             document.getElementById("popUpDiv").style.visibility = 'visible';
-//             }
-//         }
-
-//     if(frame.hands.length > 0){
-//       var tip = frame.hands[0].pointables[0].tipPosition[0];
-
-//       console.log(tip);
-//       if(isGripped(frame.hands[0]) && tip < -90){
-//           document.getElementById("opac").style.visibility = 'hidden';ayMenu = false
-//           document.getElementById("popUpDiv").style.visibility = 'hidden';
-//         }
-//       }
-    
-//   }
-  
-
-// function calcRoute() {
-//   //alert(start);
-//   //alert(end);
-//   var request = {
-//       origin:start,
-//       destination:end,
-//       waypoints:waypts,
-//       optimizeWaypoints: true,
-//       travelMode: google.maps.TravelMode.DRIVING
-//   };
-//   directionsService.route(request, function(response, status) {
-//     if (status == google.maps.DirectionsStatus.OK) {
-//       //alert("sd");
-//       directionsDisplay.setDirections(response);
-//     }
-//   });
-//   directionsDisplay.setMap(map);
-// }
-
 
 function streetViewSwipe(frame, swipeGesture) {
   //Classify swipe as either horizontal or vertical
