@@ -1,0 +1,13 @@
+html, body {
+  height: 100vh;
+  margin: 5px;
+  padding: 0;
+}
+
+#sidebar {
+  height: 100vh;
+}
+
+#streetview {
+  height: 100vh;
+}
