@@ -12,7 +12,11 @@ html, body {
   height: 100vh;
 }
 
-#menu-toggle {
+#help-modal {
+  left: 125px;
+}
+
+#menu-toggle, #help-modal {
   position: absolute;
   opacity: 0.9;
   z-index: 1;
@@ -22,11 +26,11 @@ html, body {
   display: none;
 }
 
-#myModal .modal-dialog  {
+.modal-dialog  {
   width: 75%;
   height: 75%;
 }
 
-#myModal .modal-content  {
+.modal-content  {
   top: 25%;
 }
