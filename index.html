@@ -116,6 +116,10 @@
     </div>
     <!-- /#wrapper -->
 
+    <!-- socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
@@ -124,23 +128,7 @@
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
-    <script>
-
-    var panorama;
-    function initialize() {
-      panorama = new google.maps.StreetViewPanorama(
-        document.getElementById('streetview'),
-        {
-          position: {lat: 37.869260, lng: -122.254811},
-          addressControlOptions: {
-            position: google.maps.ControlPosition.BOTTOM_CENTER
-          },
-          pov: {heading: 165, pitch: 0},
-          zoom: 1
-        });
-    }
-
-    </script>
+    <script type="text/javascript" src="js/gmaps.js"></script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&callback=initialize">
     </script>

@@ -1,5 +1,7 @@
 $(function() {
 
+  var socket = io();
+
   $("#modal-button").trigger("click");
 
   $("#menu-toggle").on("click", function(e) {
