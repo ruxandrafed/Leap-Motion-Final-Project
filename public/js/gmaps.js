@@ -7,6 +7,7 @@ function initialize() {
   // Basic Street View embed for homepage starts here
 
   // Set up the map
+  var leapActive = false;
   var map = new google.maps.Map(document.getElementById('streetview'), {
     center: vancouver,
     zoom: 18,
@@ -82,6 +83,9 @@ function initialize() {
   }
 
   $("#map-address-btn").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap();
+    };
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -90,6 +94,9 @@ function initialize() {
   })
 
   $("#citycentre-address-btn").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap();
+    };
     e.preventDefault();
     panorama.setPosition(vancouver);
     $('#myModal').modal('hide').fadeOut('slow');
@@ -98,11 +105,17 @@ function initialize() {
 
   $("#geolocate-address-btn").on("click", function(e) {
     geolocate();
+    if (!(leapActive)){
+      loadLeap();
+    };
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
   })
 
   $("#map-address-btn2").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap();
+    };
     e.preventDefault();
     var address = $("#location-address2").val() ;
     changeMapCoordinates(address);
@@ -111,6 +124,9 @@ function initialize() {
   })
 
   $("#citycentre-address-btn2").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap();
+    };
     e.preventDefault();
     panorama.setPosition(vancouver);
     $('#myModal').modal('hide').fadeOut('slow');
@@ -118,10 +134,24 @@ function initialize() {
   })
 
   $("#geolocate-address-btn2").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap();
+    };
     geolocate();
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
   })
-  Leap.loop({enableGestures: true}, move);
+
+  $("#myModal").on('hidden.bs.modal', function(e){
+    if (!(leapActive)){
+      loadLeap();
+    };
+    e.preventDefault();
+  });
+
+  function loadLeap() {
+    leapActive==true;
+    Leap.loop({enableGestures: true}, move);
+  };
 }
 
