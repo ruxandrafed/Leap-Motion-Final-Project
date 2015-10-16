@@ -20,7 +20,19 @@ html, body {
   left: 105px;
 }
 
-#menu-toggle, #help-modal, #location-modal {
+#leap-icon {
+  left: 155px;
+  top: 10px;
+}
+#leap-icon.leap-on{
+  color: green;
+}
+
+#leap-icon.leap-off{
+  color: red;
+}
+
+#menu-toggle, #help-modal, #location-modal, #leap-icon {
   position: absolute;
   opacity: 0.9;
   z-index: 1;
