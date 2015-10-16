@@ -28,7 +28,9 @@ function move(frame) {
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
     // Close your first with your right hand to deactivate Leap Motion
-    if (hand.grabStrength == 1 && hand.type=='right') {
+    if (hand.grabStrength == 1
+     && hand.type=='right'
+     && hand.confidence > 0.4) {
       leapOn = false;
     }
     // Place right palm opened up near the sensor to turn on 
@@ -76,20 +78,25 @@ function movement (hand) {
   // console.log("All finger are extended?" + allFingersExtended)
 
   // This controls the up down view of looking at a frame
-  if (axis[0] < -0.6) {
+  if (axis[0] < -0.6
+   && hand.palmPosition[2] > -38) {
     currentPitch = Math.min(90, currentPitch += 0.75);
   }
-  if (axis[0] > 0.8 && hand.palmNormal[2] > 0.29) {
+  if (axis[0] > 0.8
+   && hand.palmNormal[2] > 0.29
+   && hand.palmPosition[2] > -38) {
     currentPitch = Math.max(currentPitch -= 0.75, -90);
   }
   // currentPitch= -90*axis[0]
 
   // This control the right left rotation of a street view
 
-  if (axis[2] > 0.7 && hand.palmNormal[0] < -0.3) {
+  if (axis[2] > 0.7
+   && hand.palmNormal[0] < -0.3) {
     currentHeading += 1.5;
   };
-  if (axis[2] < -0.7 && hand.palmNormal[0] > 0.3) {
+  if (axis[2] < -0.7
+   && hand.palmNormal[0] > 0.25) {
     currentHeading -= 1.5;
   };
 
@@ -101,7 +108,8 @@ function movement (hand) {
   var pov = panorama.getPov();
   // Forward motion achieved by putting palm forward towards laptop
   // Direct heading currently a bit buggy.
-  if (hand.palmPosition[2] < -40) {
+  if (hand.palmPosition[2] < -40
+   && hand.confidence > 0.25) {
       moveForward (hand, pov);
   }
 
