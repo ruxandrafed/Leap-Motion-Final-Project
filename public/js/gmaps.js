@@ -151,6 +151,7 @@ function initialize() {
 
   function loadLeap() {
     leapActive==true;
+    $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
 }

@@ -47,7 +47,6 @@ function move(frame) {
       $('#leap-icon').removeClass('leap-off');
     }
   };
-  console.log(leapOn)
   // Motion commands
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
     var hand = frame.hands[0];

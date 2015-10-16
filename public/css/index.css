@@ -21,8 +21,7 @@ html, body {
 }
 
 #leap-icon {
-  left: 155px;
-  top: 10px;
+  left: 150px;
   font-weight: bold;
 }
 #leap-icon.leap-on{
