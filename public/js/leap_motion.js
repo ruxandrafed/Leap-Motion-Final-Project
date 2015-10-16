@@ -13,6 +13,7 @@ var lastMove;
 var previousFrame;
 var currentPitch=0;
 var currentHeading=265;
+var allFingersExtended=false;
 
 function move(frame) {
 
@@ -28,10 +29,11 @@ function move(frame) {
     if(frame.valid && frame.hands.length > 0) {
       for (var i = 0; i < frame.hands.length; i++) {
         var hand = frame.hands[i];
+        // console.log(hand);
         if (hand.grabStrength >0.85) {
           break
         } else {
-          if (previousFrame) {
+          if (previousFrame ) {
             movement(hand);
           }
         };
@@ -44,36 +46,78 @@ function move(frame) {
 };
 
 function movement (hand) {
-  var pov = panorama.getPov();
   var panoNum = null;
   var axis = hand.rotationAxis(previousFrame);
-  var palm = hand.palmPosition[2];
-  // if (axis[0] < -0.1){
-  //   currentPitch = Math.min(90, currentPitch += 0.1);
-  // }
-  // if (axis[0] > 0.1){
-  //   currentPitch = Math.max(currentPitch -= 0.1, -90);
-  // }
-  currentPitch= -90*axis[0]
-  // These first two ifs deal with the rotation in a frame.
+  var palmY = hand.palmPosition[1];
+  var palmZ = hand.palmPosition[2];
+  // These allow me to use different finger arrangments for different commands.
+  var middleFingerExtended = hand.middleFinger.extended;
+  var indexFingerExtended = hand.indexFinger.extended;
+  var ringFingerExtended = hand.ringFinger.extended;
+  var pinkyExtended = hand.pinky.extended;
+
+  if (middleFingerExtended && indexFingerExtended && ringFingerExtended && pinkyExtended) {
+    allFingersExtended = true;
+  } else {
+    allFingersExtended = false;
+  };
+  // console.log("All finger are extended?" + allFingersExtended)
+
+  // This controls the up down view of looking at a frame
+  if (axis[0] < -0.5 && allFingersExtended) {
+    currentPitch = Math.min(90, currentPitch += 0.5);
+  }
+  if (axis[0] > 0.8 && allFingersExtended) {
+    currentPitch = Math.max(currentPitch -= 0.5, -90);
+  }
+  // currentPitch= -90*axis[0]
+
+  // This control the right left rotation of a street view
+
   if (axis[2] > 0.9) {
     panorama.setPov({
-      heading: pov.heading + 1,
-    pitch: currentPitch
-    });
-    console.log(pov.heading + 1)
+      heading: currentHeading += 1,
+      pitch: currentPitch
+    })
+    // console.log(currentHeading);
   };
   if (axis[2] < -0.9) {
     panorama.setPov({
-      heading: pov.heading - 1,
-    pitch: currentPitch})
-    console.log(pov.heading - 1)
+      heading: currentHeading -= 1,
+      pitch: currentPitch
+    })
+    // console.log(currentHeading);
   };
 
-  // panorama.setPov({
-  //   heading: currentHeading,
-  //   pitch: currentPitch
-  // })
+  panorama.setPov({
+    heading: currentHeading,
+    pitch: currentPitch
+  });
+
+  var pov = panorama.getPov();
+  console.log(middleFingerExtended
+    && indexFingerExtended
+    && !(ringFingerExtended)
+    && !(pinkyExtended))
+  console.log(palmY)
+
+  if (palmZ < -20
+    && palmY < 80
+    && middleFingerExtended
+    && indexFingerExtended
+    && !(ringFingerExtended)
+    && !(pinkyExtended)) {
+      moveForward (hand, pov);
+  }
+
+  if (palmZ > 50
+    && palmY > 110 
+    && middleFingerExtended
+    && indexFingerExtended
+    && !(ringFingerExtended)
+    && !(pinkyExtended)) {
+    moveBackward (hand, pov);
+  }
 
 };
 

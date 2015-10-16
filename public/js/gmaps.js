@@ -122,7 +122,6 @@ function initialize() {
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
   })
-  var previousFrame;
   Leap.loop({enableGestures: true}, move);
 }
 
