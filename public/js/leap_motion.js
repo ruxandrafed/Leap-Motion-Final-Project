@@ -8,8 +8,7 @@
 
 //     return orientation;
 // }
-
-var lastMove;
+var leapOn = false;
 var previousFrame;
 var currentPitch=0;
 var currentHeading=265;
@@ -25,20 +24,30 @@ function move(frame) {
   //     return;
   // }
 
-  //Stopping Leap Motion
-    if(frame.valid && frame.hands.length > 0) {
-      for (var i = 0; i < frame.hands.length; i++) {
-        var hand = frame.hands[i];
-        // console.log(hand);
-        if (hand.grabStrength >0.85) {
-          break
-        } else {
-          if (previousFrame ) {
-            movement(hand);
-          }
-        };
-      };
+  //Starting / Stopping Leap Motion. Use right hand to move, left hand to activate/deactive leap motion
+  if(frame.valid && frame.hands.length > 0 && frame.hands[0].type=='left') {
+    var hand = frame.hands[0];
+    var handPosition = hand.palmNormal
+    // Close your first with your left hand to deactivate Leap Motion
+    if (hand.grabStrength > 0.85) {
+      leapOn = false;
+    }
+    // Turn your left hand palm up to activate leap Motion
+    if (hand.palmNormal[1] > 0.75) {
+      leapOn = true;
+    }
+  };
+  console.log(leapOn)
+  // Motion commands
+  if(frame.valid && frame.hands.length > 0 && frame.hands[0].type=='right' && leapOn) {
+    var hand = frame.hands[0];
+    if (!(hand.grabStrength > 0.85)) {
+      console.log(hand)
+      if (previousFrame ) {
+        movement(hand);
+      }
     };
+  };
 
 
   previousFrame = frame;
@@ -95,11 +104,6 @@ function movement (hand) {
   });
 
   var pov = panorama.getPov();
-  console.log(middleFingerExtended
-    && indexFingerExtended
-    && !(ringFingerExtended)
-    && !(pinkyExtended))
-  console.log(palmY)
 
   if (palmZ < -20
     && palmY < 80
