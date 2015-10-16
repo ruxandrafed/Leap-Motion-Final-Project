@@ -41,7 +41,6 @@ function move(frame) {
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
     var hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
-      console.log(hand)
       if (previousFrame ) {
         movement(hand);
       }
@@ -64,32 +63,32 @@ function movement (hand) {
   var ringFingerExtended = hand.ringFinger.extended;
   var pinkyExtended = hand.pinky.extended;
 
-  if (middleFingerExtended && indexFingerExtended && ringFingerExtended && pinkyExtended) {
-    allFingersExtended = true;
-  } else {
-    allFingersExtended = false;
-  };
+  // if (middleFingerExtended && indexFingerExtended && ringFingerExtended && pinkyExtended) {
+  //   allFingersExtended = true;
+  // } else {
+  //   allFingersExtended = false;
+  // };
   // console.log("All finger are extended?" + allFingersExtended)
 
   // This controls the up down view of looking at a frame
-  if (axis[0] < -0.5 && allFingersExtended) {
+  if (axis[0] < -0.5) {
     currentPitch = Math.min(90, currentPitch += 0.5);
   }
-  if (axis[0] > 0.8 && allFingersExtended) {
+  if (axis[0] > 0.8) {
     currentPitch = Math.max(currentPitch -= 0.5, -90);
   }
   // currentPitch= -90*axis[0]
 
   // This control the right left rotation of a street view
 
-  if (axis[2] > 0.9) {
+  if (axis[2] > 0.75 && hand.palmNormal[0] < -0.3) {
     panorama.setPov({
       heading: currentHeading += 1,
       pitch: currentPitch
     })
     // console.log(currentHeading);
   };
-  if (axis[2] < -0.9) {
+  if (axis[2] < -0.9 && hand.palmNormal[0] > 0.3) {
     panorama.setPov({
       heading: currentHeading -= 1,
       pitch: currentPitch
@@ -104,23 +103,23 @@ function movement (hand) {
 
   var pov = panorama.getPov();
 
-  if (palmZ < -20
-    && palmY < 80
-    && middleFingerExtended
-    && indexFingerExtended
-    && !(ringFingerExtended)
-    && !(pinkyExtended)) {
-      moveForward (hand, pov);
-  }
+  // if (palmZ < -20
+  //   && palmY < 80
+  //   && middleFingerExtended
+  //   && indexFingerExtended
+  //   && !(ringFingerExtended)
+  //   && !(pinkyExtended)) {
+  //     moveForward (hand, pov);
+  // }
 
-  if (palmZ > 50
-    && palmY > 110 
-    && middleFingerExtended
-    && indexFingerExtended
-    && !(ringFingerExtended)
-    && !(pinkyExtended)) {
-    moveBackward (hand, pov);
-  }
+  // if (palmZ > 50
+  //   && palmY > 110 
+  //   && middleFingerExtended
+  //   && indexFingerExtended
+  //   && !(ringFingerExtended)
+  //   && !(pinkyExtended)) {
+  //   moveBackward (hand, pov);
+  // }
 
 };
 
