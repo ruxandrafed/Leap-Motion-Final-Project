@@ -9,61 +9,77 @@
 //     return orientation;
 // }
 
+var lastMove;
+var previousFrame;
+var currentPitch=0;
+var currentHeading=265;
+
 function move(frame) {
 
 
-    // if(frame.valid && frame.gestures.length > 0){
-    //     frame.gestures.forEach(function(gesture){
-    //         filterGesture("swipe", streetViewSwipe)(frame, gesture);
-    //     });
-    //     return;
-    // }
-    
-    //Stopping Leap Motion
-      if(frame.valid && frame.hands.length > 0) {
-        for (var i = 0; i < frame.hands.length; i++) {
-          var hand = frame.hands[i];
-          if (hand.grabStrength >0.85) {
-            break
-          } else {
-            if (previousFrame) {
-              movement(hand);
-            }
-          };
+  // if(frame.valid && frame.gestures.length > 0){
+  //     frame.gestures.forEach(function(gesture){
+  //         filterGesture("circle", streetViewCircle)(frame, gesture);
+  //     });
+  //     return;
+  // }
+
+  //Stopping Leap Motion
+    if(frame.valid && frame.hands.length > 0) {
+      for (var i = 0; i < frame.hands.length; i++) {
+        var hand = frame.hands[i];
+        if (hand.grabStrength >0.85) {
+          break
+        } else {
+          if (previousFrame) {
+            movement(hand);
+          }
         };
       };
+    };
 
 
   previousFrame = frame;
 
-}
+};
 
 function movement (hand) {
   var pov = panorama.getPov();
   var panoNum = null;
   var axis = hand.rotationAxis(previousFrame);
   var palm = hand.palmPosition[2];
-  if (axis[2] > 0.90) {
+  // if (axis[0] < -0.1){
+  //   currentPitch = Math.min(90, currentPitch += 0.1);
+  // }
+  // if (axis[0] > 0.1){
+  //   currentPitch = Math.max(currentPitch -= 0.1, -90);
+  // }
+  currentPitch= -90*axis[0]
+  // These first two ifs deal with the rotation in a frame.
+  if (axis[2] > 0.9) {
     panorama.setPov({
-    heading: pov.heading + 1,
-    pitch:0});
+      heading: pov.heading + 1,
+    pitch: currentPitch
+    });
+    console.log(pov.heading + 1)
   };
-  if (axis[2] < -0.90) {
+  if (axis[2] < -0.9) {
     panorama.setPov({
       heading: pov.heading - 1,
-    pitch:0})
+    pitch: currentPitch})
+    console.log(pov.heading - 1)
   };
-  if (palm < -50) {
-    moveForward(hand, pov);
-  };
-  if (palm > 50) {
-    moveBackward(hand, pov);
-  }
+
+  // panorama.setPov({
+  //   heading: currentHeading,
+  //   pitch: currentPitch
+  // })
 
 };
 
 function moveForward (hand, pov) {
   links = panorama.getLinks();
+  console.log(links);
   if (links !== undefined) {
     if (links.length > 1) {
       pano0 = Math.abs(links[0]['heading'] - pov.heading);
@@ -73,12 +89,14 @@ function moveForward (hand, pov) {
       } else {
         panoNum = 1;
       };
-    panorama.setPano(links[panoNum]['pano']);
+      panorama.setPano(links[panoNum]['pano']);
+      // lastMove = 'forward';
+      console.log('forward');
     } else {
-      panorama.setpano(links[0]['pano']);
+      panorama.setPano(links[0]['pano']);
     };
-  console.log('forward');
-  console.log(links);
+
+    console.log(links);
   };
 };
 
@@ -100,6 +118,10 @@ function moveBackward(hand, pov) {
     console.log('back');
     console.log(links);
   };
+};
+
+function streetViewCircle(frame, gesture) {
+  console.log(gesture);
 };
 
 
