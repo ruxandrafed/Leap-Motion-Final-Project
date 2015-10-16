@@ -131,36 +131,16 @@ function moveForward (hand, pov) {
       } else {
         panoNum = 1;
       };
+      mappedLinks = links.map(function (a){return Math.abs(a['heading'] - pov.heading)});
+      console.log(mapped.sort());
+      console.log("Mapped: " + mapped);
       panorama.setPano(links[panoNum]['pano']);
-      // lastMove = 'forward';
       console.log('forward');
     } else {
       panorama.setPano(links[0]['pano']);
     };
-
-    console.log(links);
   };
 };
-
-// function moveBackward(hand, pov) {
-//   links = panorama.getLinks();
-//   if (links !== undefined) {
-//     if (links.length > 1) {
-//       pano0 = Math.abs(links[0]['heading'] - pov.heading);
-//       pano1 = Math.abs(links[1]['heading'] - pov.heading);
-//       if (pano0 < pano1 ) {
-//         panoNum = 1;
-//       } else {
-//         panoNum = 0;
-//       };
-//         panorama.setPano(links[panoNum]['pano']);
-//     } else {
-//         panorama.setPano(links[0]['pano']);
-//     };
-//     console.log('back');
-//     console.log(links);
-//   };
-// };
 
 function streetViewSwipe(frame, gesture) {
   console.log(gesture);
