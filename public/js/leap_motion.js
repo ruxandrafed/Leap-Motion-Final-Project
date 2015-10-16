@@ -72,27 +72,21 @@ function movement (hand) {
 
   // This controls the up down view of looking at a frame
   if (axis[0] < -0.5) {
-    currentPitch = Math.min(90, currentPitch += 0.5);
+    currentPitch = Math.min(90, currentPitch += 0.75);
   }
   if (axis[0] > 0.8) {
-    currentPitch = Math.max(currentPitch -= 0.5, -90);
+    currentPitch = Math.max(currentPitch -= 0.75, -90);
   }
   // currentPitch= -90*axis[0]
 
   // This control the right left rotation of a street view
 
-  if (axis[2] > 0.75 && hand.palmNormal[0] < -0.3) {
-    panorama.setPov({
-      heading: currentHeading += 1,
-      pitch: currentPitch
-    })
+  if (axis[2] > 0.7 && hand.palmNormal[0] < -0.3) {
+    currentHeading += 1.5;
     // console.log(currentHeading);
   };
-  if (axis[2] < -0.9 && hand.palmNormal[0] > 0.3) {
-    panorama.setPov({
-      heading: currentHeading -= 1,
-      pitch: currentPitch
-    })
+  if (axis[2] < -0.7 && hand.palmNormal[0] > 0.3) {
+    currentHeading -= 1.5;
     // console.log(currentHeading);
   };
 
