@@ -23,6 +23,7 @@ html, body {
 #leap-icon {
   left: 155px;
   top: 10px;
+  font-weight: bold;
 }
 #leap-icon.leap-on{
   color: green;

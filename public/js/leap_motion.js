@@ -32,6 +32,8 @@ function move(frame) {
      && hand.type=='right'
      && hand.confidence > 0.4) {
       leapOn = false;
+      $('#leap-icon').removeClass('leap-on');
+      $('#leap-icon').addClass('leap-off');
     }
     // Place right palm opened up near the sensor to turn on 
     if (hand.grabStrength < 1
@@ -41,6 +43,8 @@ function move(frame) {
         && hand.palmPosition[2] > -10
         && hand.palmPosition[2] < 20) {
       leapOn = true;
+      $('#leap-icon').addClass('leap-on');
+      $('#leap-icon').removeClass('leap-off');
     }
   };
   console.log(leapOn)
