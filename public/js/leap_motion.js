@@ -25,21 +25,21 @@ function move(frame) {
   // }
 
   //Starting / Stopping Leap Motion. Use right hand to move, left hand to activate/deactive leap motion
-  if(frame.valid && frame.hands.length > 0 && frame.hands[0].type=='left') {
+  if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='left') {
     var hand = frame.hands[0];
     var handPosition = hand.palmNormal
     // Close your first with your left hand to deactivate Leap Motion
-    if (hand.grabStrength > 0.85) {
+    if (hand.grabStrength == 1 && hand.type=='left') {
       leapOn = false;
     }
     // Turn your left hand palm up to activate leap Motion
-    if (hand.palmNormal[1] > 0.75) {
+    if (hand.palmNormal[1] > 0.75 && hand.type=='left') {
       leapOn = true;
     }
   };
   console.log(leapOn)
   // Motion commands
-  if(frame.valid && frame.hands.length > 0 && frame.hands[0].type=='right' && leapOn) {
+  if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
     var hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
       console.log(hand)
