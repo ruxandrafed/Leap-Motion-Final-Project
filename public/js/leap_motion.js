@@ -17,12 +17,12 @@ var allFingersExtended=false;
 function move(frame) {
 
 
-  // if(frame.valid && frame.gestures.length > 0){
-  //     frame.gestures.forEach(function(gesture){
-  //         filterGesture("circle", streetViewCircle)(frame, gesture);
-  //     });
-  //     return;
-  // }
+  if(frame.valid && frame.gestures.length > 0){
+      frame.gestures.forEach(function(gesture){
+        filterGesture("swipe", streetViewSwipe)(frame, gesture);
+      });
+      return;
+  }
 
   //Starting / Stopping Leap Motion. Use right hand to move, left hand to activate/deactive leap motion
   // if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='left') {
@@ -71,10 +71,10 @@ function movement (hand) {
   // console.log("All finger are extended?" + allFingersExtended)
 
   // This controls the up down view of looking at a frame
-  if (axis[0] < -0.5) {
+  if (axis[0] < -0.6) {
     currentPitch = Math.min(90, currentPitch += 0.75);
   }
-  if (axis[0] > 0.8) {
+  if (axis[0] > 0.8 && hand.palmNormal[2] > 0.29) {
     currentPitch = Math.max(currentPitch -= 0.75, -90);
   }
   // currentPitch= -90*axis[0]
@@ -83,11 +83,9 @@ function movement (hand) {
 
   if (axis[2] > 0.7 && hand.palmNormal[0] < -0.3) {
     currentHeading += 1.5;
-    // console.log(currentHeading);
   };
   if (axis[2] < -0.7 && hand.palmNormal[0] > 0.3) {
     currentHeading -= 1.5;
-    // console.log(currentHeading);
   };
 
   panorama.setPov({
@@ -96,24 +94,12 @@ function movement (hand) {
   });
 
   var pov = panorama.getPov();
+  // Forward motion achieved by putting palm forward towards laptop
+  // Direct heading currently a bit buggy.
+  if (hand.palmPosition[2] < -40) {
+      moveForward (hand, pov);
+  }
 
-  // if (palmZ < -20
-  //   && palmY < 80
-  //   && middleFingerExtended
-  //   && indexFingerExtended
-  //   && !(ringFingerExtended)
-  //   && !(pinkyExtended)) {
-  //     moveForward (hand, pov);
-  // }
-
-  // if (palmZ > 50
-  //   && palmY > 110 
-  //   && middleFingerExtended
-  //   && indexFingerExtended
-  //   && !(ringFingerExtended)
-  //   && !(pinkyExtended)) {
-  //   moveBackward (hand, pov);
-  // }
 
 };
 
@@ -140,27 +126,27 @@ function moveForward (hand, pov) {
   };
 };
 
-function moveBackward(hand, pov) {
-  links = panorama.getLinks();
-  if (links !== undefined) {
-    if (links.length > 1) {
-      pano0 = Math.abs(links[0]['heading'] - pov.heading);
-      pano1 = Math.abs(links[1]['heading'] - pov.heading);
-      if (pano0 < pano1 ) {
-        panoNum = 1;
-      } else {
-        panoNum = 0;
-      };
-        panorama.setPano(links[panoNum]['pano']);
-    } else {
-        panorama.setPano(links[0]['pano']);
-    };
-    console.log('back');
-    console.log(links);
-  };
-};
+// function moveBackward(hand, pov) {
+//   links = panorama.getLinks();
+//   if (links !== undefined) {
+//     if (links.length > 1) {
+//       pano0 = Math.abs(links[0]['heading'] - pov.heading);
+//       pano1 = Math.abs(links[1]['heading'] - pov.heading);
+//       if (pano0 < pano1 ) {
+//         panoNum = 1;
+//       } else {
+//         panoNum = 0;
+//       };
+//         panorama.setPano(links[panoNum]['pano']);
+//     } else {
+//         panorama.setPano(links[0]['pano']);
+//     };
+//     console.log('back');
+//     console.log(links);
+//   };
+// };
 
-function streetViewCircle(frame, gesture) {
+function streetViewSwipe(frame, gesture) {
   console.log(gesture);
 };
 
