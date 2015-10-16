@@ -17,26 +17,31 @@ var allFingersExtended=false;
 function move(frame) {
 
 
-  if(frame.valid && frame.gestures.length > 0){
-      frame.gestures.forEach(function(gesture){
-        filterGesture("swipe", streetViewSwipe)(frame, gesture);
-      });
-      return;
-  }
+  // if(frame.valid && frame.gestures.length > 0){
+  //     frame.gestures.forEach(function(gesture){
+  //       filterGesture("swipe", streetViewSwipe)(frame, gesture);
+  //     });
+  //     return;
+  // }
 
-  //Starting / Stopping Leap Motion. Use right hand to move, left hand to activate/deactive leap motion
-  // if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='left') {
-  //   var hand = frame.hands[0];
-  //   // Close your first with your left hand to deactivate Leap Motion
-  //   if (hand.grabStrength == 1 && hand.type=='left') {
-  //     leapOn = false;
-  //   }
-  //   // Turn your left hand palm up to activate leap Motion
-  //   if (hand.palmNormal[1] > 0.75 && hand.type=='left') {
-  //     leapOn = true;
-  //   }
-  // };
-  // console.log(leapOn)
+  // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
+  if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
+    var hand = frame.hands[0];
+    // Close your first with your right hand to deactivate Leap Motion
+    if (hand.grabStrength == 1 && hand.type=='right') {
+      leapOn = false;
+    }
+    // Place right palm opened up near the sensor to turn on 
+    if (hand.grabStrength < 1
+        && hand.type=='right'
+        && hand.palmPosition[0] > -15
+        && hand.palmPosition[0] < 20
+        && hand.palmPosition[2] > -10
+        && hand.palmPosition[2] < 20) {
+      leapOn = true;
+    }
+  };
+  console.log(leapOn)
   // Motion commands
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
     var hand = frame.hands[0];
