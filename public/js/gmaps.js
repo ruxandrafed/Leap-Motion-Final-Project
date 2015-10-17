@@ -30,9 +30,6 @@ function initialize() {
 
   panorama.setVisible(true);
 
-  console.log("Orig Map Var: ", map)
-  console.log("Orig pano var: ", panorama)
-
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
@@ -152,7 +149,6 @@ function initialize() {
       loadLeap();
     };
     e.preventDefault();
-    pano(map, panorama);
   });
 
   function loadLeap() {
@@ -160,9 +156,10 @@ function initialize() {
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
-  function pano(map, panorama) {
-    console.log("Map var:", map);
-    console.log("Pano var:",panorama);
-  }
+  var lat = panorama.position.lat().toPrecision(7);
+  var lng = panorama.position.lng().toPrecision(7);
+  console.log("Lat is:",panorama.position.lat());
+  console.log("Lng is:",panorama.position.lng());
+  translink(lat,lng);
 }
 
