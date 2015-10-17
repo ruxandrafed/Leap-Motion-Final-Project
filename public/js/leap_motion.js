@@ -46,6 +46,11 @@ function move(frame) {
     }
   };
 
+  if (frame.valid && frame.hands.length == 2){
+    $('#right-hand-icon').addClass('detected');
+    $('#left-hand-icon').addClass('detected');
+  };
+
     // if ((frame.hands[0].type=='left')
     //  && !(leftHand)) {
     //   leftHand = true;
