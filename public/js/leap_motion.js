@@ -23,43 +23,9 @@ function move(frame) {
   //     });
   //     return;
   // }
-
-  // Displaying hands detected
-  // if (frame.valid && frame.hands.length == 0) {
-  //     rightHand = false;
-  //     $('li.right-hand').remove();
-  // };
-
-  if (frame.valid && frame.hands.length == 0) {
-    $('#right-hand-icon').removeClass('detected');
-    $('#left-hand-icon').removeClass('detected');
+  if (frame.valid) {
+    detectHands(frame)
   };
-
-  if (frame.valid && frame.hands.length == 1) {
-    if (frame.hands[0].type=='right') {
-      $('#left-hand-icon').removeClass('detected');
-      $('#right-hand-icon').addClass('detected');
-    };
-    if (frame.hands[0].type =='left') {
-      $('#right-hand-icon').removeClass('detected');
-      $('#left-hand-icon').addClass('detected');
-    }
-  };
-
-  if (frame.valid && frame.hands.length == 2){
-    $('#right-hand-icon').addClass('detected');
-    $('#left-hand-icon').addClass('detected');
-  };
-
-    // if ((frame.hands[0].type=='left')
-    //  && !(leftHand)) {
-    //   leftHand = true;
-    //   $('li.left-hand').appendTo('#detected-hands').text("Left hand detected.");
-    // } else {
-    //   $('.left-hand').remove();
-    // };
-  // };
-
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
@@ -95,6 +61,31 @@ function move(frame) {
 
 
   previousFrame = frame;
+
+};
+
+function detectHands (frame) {
+  hands = frame.hands;
+  if (hands.length == 0) {
+    $('#right-hand-icon').removeClass('detected');
+    $('#left-hand-icon').removeClass('detected');
+  };
+
+  if (hands.length == 1) {
+    if (hands[0].type=='right') {
+      $('#left-hand-icon').removeClass('detected');
+      $('#right-hand-icon').addClass('detected');
+    };
+    if (hands[0].type =='left') {
+      $('#right-hand-icon').removeClass('detected');
+      $('#left-hand-icon').addClass('detected');
+    }
+  };
+
+  if (hands.length == 2){
+    $('#right-hand-icon').addClass('detected');
+    $('#left-hand-icon').addClass('detected');
+  };
 
 };
 
