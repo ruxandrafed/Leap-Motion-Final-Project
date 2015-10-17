@@ -14,6 +14,7 @@ function initialize() {
     streetViewControl: true
   });
 
+
   // We get the map's default panorama and set up some defaults.
   panorama = map.getStreetView();
   panorama.setPosition(vancouver);
@@ -28,6 +29,10 @@ function initialize() {
   });
 
   panorama.setVisible(true);
+
+  console.log("Orig Map Var: ", map)
+  console.log("Orig pano var: ", panorama)
+
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
@@ -147,6 +152,7 @@ function initialize() {
       loadLeap();
     };
     e.preventDefault();
+    pano(map, panorama);
   });
 
   function loadLeap() {
@@ -154,5 +160,9 @@ function initialize() {
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
+  function pano(map, panorama) {
+    console.log("Map var:", map);
+    console.log("Pano var:",panorama);
+  }
 }
 

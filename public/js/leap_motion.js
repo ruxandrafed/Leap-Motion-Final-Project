@@ -23,7 +23,9 @@ function move(frame) {
   //     });
   //     return;
   // }
-
+  if (frame.valid) {
+    detectHands(frame)
+  };
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
@@ -59,6 +61,31 @@ function move(frame) {
 
 
   previousFrame = frame;
+
+};
+
+function detectHands (frame) {
+  hands = frame.hands;
+  if (hands.length == 0) {
+    $('#right-hand-icon').removeClass('detected');
+    $('#left-hand-icon').removeClass('detected');
+  };
+
+  if (hands.length == 1) {
+    if (hands[0].type=='right') {
+      $('#left-hand-icon').removeClass('detected');
+      $('#right-hand-icon').addClass('detected');
+    };
+    if (hands[0].type =='left') {
+      $('#right-hand-icon').removeClass('detected');
+      $('#left-hand-icon').addClass('detected');
+    }
+  };
+
+  if (hands.length == 2){
+    $('#right-hand-icon').addClass('detected');
+    $('#left-hand-icon').addClass('detected');
+  };
 
 };
 
@@ -120,7 +147,7 @@ function movement (hand) {
 };
 
 function moveForward (hand, pov) {
-  links = panorama.getLinks();
+  links = panorama.getLinks();  
   if (links) {
     var linksABS = links.map(function (a){
       return {
