@@ -53,7 +53,7 @@ function move(frame) {
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
     var hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
-      if (previousFrame ) {
+      if (previousFrame) {
         movement(hand);
       }
     };

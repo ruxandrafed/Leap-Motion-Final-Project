@@ -1,8 +1,6 @@
 
 function createMarker(place, map) {
-  console.log(place);
-  console.log(place.name)  
-  console.log(place.geometry.location)   
+
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
   var icon_to_use;
@@ -45,20 +43,24 @@ function createMarker(place, map) {
   var marker = new google.maps.Marker({
     map: map,
     position: {lat: lat, lng: lng},
-    title: place.name,
+    title: name,
     icon: icon_to_use
   });
   
   var infoWindow = new google.maps.InfoWindow({
     content: name
   });
-  
+
+  var prev_infoWindow;
 
   marker.addListener('click', function() {
+    console.log(prev_infoWindow);
     if (prev_infoWindow) {
       prev_infoWindow.close();
     };
     infoWindow.open(map.getStreetView(), marker);
-    return prev_infoWindow = infoWindow
+    prev_infoWindow = infoWindow;
+    console.log(prev_infoWindow);
+    return prev_infoWindow
   });
 }

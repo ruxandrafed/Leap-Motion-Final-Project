@@ -38,8 +38,6 @@ function initialize() {
     types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
     // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
   };
-  var prev_infoWindow = false;
-
   var service = new google.maps.places.PlacesService(map)
   service.search(request,getPlacesInfo)
 
@@ -51,9 +49,7 @@ function initialize() {
     };
   }; 
 
-
-
-  google.maps.event.addDomListener(window, 'load', initialize);
+  // google.maps.event.addDomListener(window, 'load', initialize);
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
