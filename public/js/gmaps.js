@@ -1,7 +1,6 @@
 var panorama;
-var gmaps;
 var vancouver = {lat: 49.283324, lng: -123.119452};
-var placeLoc = place.geometry.location;
+// var place = place.geometry.location;
 
 
 function initialize() {
@@ -15,7 +14,6 @@ function initialize() {
     zoom: 18,
     streetViewControl: true
   });
-  gmaps = google.maps
   // We get the map's default panorama and set up some defaults.
   panorama = map.getStreetView();
   panorama.setPosition(vancouver);
@@ -25,7 +23,7 @@ function initialize() {
   }));
   panorama.setOptions({
     'addressControlOptions': {
-    'position': gmaps.ControlPosition.BOTTOM_CENTER
+    'position': google.maps.ControlPosition.BOTTOM_CENTER
     }
   });
 
@@ -71,8 +69,7 @@ function initialize() {
         var storeMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/shopping.png"
 
         var pharmacyMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/hospitals.png"
-        // Create the PlaceService and send the request.
-        // Handle the callback with an anonymous function.
+  
           function createMarker(place) {     
             var markpos = place.geometry.location;
             var marker;
@@ -106,25 +103,23 @@ function initialize() {
             });
           }
 
-      // Run the initialize function when the window has finished loading.
-
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
-  autocomplete = new gmaps.places.Autocomplete(
+  autocomplete = new google.maps.places.Autocomplete(
     /** @type {!HTMLInputElement} */(document.getElementById('location-address')),
     {types: ['geocode']});
 
-  autocomplete = new gmaps.places.Autocomplete(
+  autocomplete = new google.maps.places.Autocomplete(
     /** @type {!HTMLInputElement} */(document.getElementById('location-address2')),
     {types: ['geocode']});
 
-  var geocoder = new gmaps.Geocoder();
+  var geocoder = new google.maps.Geocoder();
 
   // function to geocode an address and plot it on a map
   function changeMapCoordinates(address) {
     geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == gmaps.GeocoderStatus.OK) {
+      if (status == google.maps.GeocoderStatus.OK) {
          panorama.setPosition((results[0].geometry.location));      // center the map on address
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -138,7 +133,7 @@ function initialize() {
     if(navigator.geolocation) {
       browserSupportFlag = true;
       navigator.geolocation.getCurrentPosition(function(position) {
-        initialLocation = new gmaps.LatLng(position.coords.latitude,position.coords.longitude);
+        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
       }, function() {
         handleNoGeolocation(browserSupportFlag);
