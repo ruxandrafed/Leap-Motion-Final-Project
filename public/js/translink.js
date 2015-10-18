@@ -1,4 +1,4 @@
-function translink(lat,lng, map, prev_infoWindow) {
+function translink(lat,lng, map) {
   url = "http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu" +
   "&lat=" + lat + "&long=" + lng + "&radius=100";
   tripUpdate = "http://gtfs.translink.ca/gtfsrealtime?apikey=aGNpR72RV528weEJ7zZu"
@@ -6,7 +6,7 @@ function translink(lat,lng, map, prev_infoWindow) {
   getBusInfo(url,tripUpdate,map);
 };
 
-function getBusInfo (url, tripUpdate, map, prev_infoWindow) {
+function getBusInfo (url, tripUpdate, map) {
 
   // $.getJSON(tripUpdate, function (buses) {
   //   console.log(buses);
@@ -22,7 +22,7 @@ function getBusInfo (url, tripUpdate, map, prev_infoWindow) {
   });
 }
 
-function renderMarkers (array, map, prev_infoWindow) {
+function renderMarkers (array, map) {
   array.forEach(function (busStop) {
     var marker = new google.maps.Marker({
       position: {lat: busStop[0], lng: busStop[1]},
