@@ -1,6 +1,5 @@
 var panorama;
 var vancouver = {lat: 49.283324, lng: -123.119452};
-// var place = place.geometry.location;
 
 
 function initialize() {
@@ -14,6 +13,7 @@ function initialize() {
     zoom: 18,
     streetViewControl: true
   });
+
 
   // We get the map's default panorama and set up some defaults.
   panorama = map.getStreetView();
@@ -29,80 +29,28 @@ function initialize() {
   });
 
   panorama.setVisible(true);
-
-          var request = {
-          location: vancouver,
-          radius: '100',
-          types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-        };
-        infowindow = new google.maps.InfoWindow();
-        var service = new google.maps.places.PlacesService(map)
-        service.search(request,callback)
-
-        function callback(results, status) {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
-            for (var i = 0; i < results.length; i++) {
-              createMarker(results[i]);
-            }
-          } 
-        }
-        // var customIcons = new google.maps.MarkerImage('images/icon.png') OR
-        // var customIcons = {
-          // url: 'images/beachflag.png'
-          // size: new google.maps.Size(20, 32),
-          // origin: new google.maps.Point(0,0),
-        //}
-
-        var image = {
-          size: new google.maps.Size(20, 32),
-        }
-
-        var bankMarkerImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00');
-
-        var groceryMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/grocerystore.png";
-
-        var salonMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/salon.png";
-
-        var restMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png";
-
-        var coffeeMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/coffeehouse.png";
-
-        var storeMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/shopping.png"
-
-        var pharmacyMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/hospitals.png"
+  // Creating Markers for Google Map seeding 
   
-          function createMarker(place) {     
-            var markpos = place.geometry.location;
-            var marker;
-            var icon_to_use;
+  var request = {
+    location: vancouver,
+    radius: '100',
+    types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
+  };
 
-            if (place.types.indexOf('salon') != -1) {
-              icon_to_use = salonMarkerImage;
-            } if (place.types.indexOf('bank') != -1) { icon_to_use = bankMarkerImage;
-            } if (place.types.indexOf('grocery_or_supermarket') != -1) {
-              icon_to_use = groceryMarkerImage;
-            } if (place.types.indexOf('restaurant') != -1) {
-              icon_to_use = groceryMarkerImage;
-            } if (place.types.indexOf('cafe') != -1) {
-              icon_to_use = coffeeMarkerImage;
-            } if (place.types.indexOf('pharmacy') != -1) {
-              icon_to_use = pharmacyMarkerImage;
-            } if (place.types.indexOf('store') != -1) {
-              icon_to_use = storeMarkerImage;
-            }
+  var service = new google.maps.places.PlacesService(map)
+  service.search(request,getPlacesInfo)
 
-            marker = new google.maps.Marker({
-              map: map,
-              position: markpos,
-              icon: icon_to_use 
-            });
-            
-          
-            google.maps.event.addListener(marker, 'click', function() {
-              infowindow.setContent(place.name);
-              infowindow.open(map, this);
-            });
-          }
+  function getPlacesInfo(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i], map);
+      };
+    }; 
+  };
+
+
+  google.maps.event.addDomListener(window, 'load', initialize);
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
@@ -233,5 +181,3 @@ function initialize() {
   var lng = panorama.position.lng().toPrecision(7);
   translink(lat,lng, map);
 }
-google.maps.event.addDomListener(window, 'load', initialize);
-
