@@ -6,6 +6,7 @@ function createMarker(place, map) {
   var image = {
     size: new google.maps.Size(20, 32),
   }
+  var busMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
 
   var bankMarkerImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00');
 
@@ -34,6 +35,8 @@ function createMarker(place, map) {
     icon_to_use = pharmacyMarkerImage;
   } if (place.types.indexOf('store') != -1) {
     icon_to_use = storeMarkerImage;
+  } if (place.types.indexOf('bus_station') != -1) {
+    icon_to_use = busMarkerImage;
   }
 
   marker = new google.maps.Marker({
