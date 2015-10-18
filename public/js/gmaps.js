@@ -1,5 +1,7 @@
 var panorama;
+var gmaps;
 var vancouver = {lat: 49.283324, lng: -123.119452};
+var placeLoc = place.geometry.location;
 
 
 function initialize() {
@@ -13,7 +15,7 @@ function initialize() {
     zoom: 18,
     streetViewControl: true
   });
-
+  gmaps = google.maps
   // We get the map's default panorama and set up some defaults.
   panorama = map.getStreetView();
   panorama.setPosition(vancouver);
@@ -23,52 +25,106 @@ function initialize() {
   }));
   panorama.setOptions({
     'addressControlOptions': {
-    'position': google.maps.ControlPosition.BOTTOM_CENTER
+    'position': gmaps.ControlPosition.BOTTOM_CENTER
     }
   });
 
   panorama.setVisible(true);
 
-  var request = {
+          var request = {
           location: vancouver,
-          radius: '500',
-          types: ['store']
+          radius: '100',
+          types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
         };
+        infowindow = new google.maps.InfoWindow();
+        var service = new google.maps.places.PlacesService(map)
+        service.search(request,callback)
 
-  // Create the PlaceService and send the request.
-  // Handle the callback with an anonymous function.
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, function(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        var place = results[i];
-        // If the request succeeds, draw the place location on
-        // the map as a marker, and register an event to handle a
-        // click on the marker.
-        var marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location
-        });
-      }
-    }
-  });
+        function callback(results, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+              createMarker(results[i]);
+            }
+          } 
+        }
+        // var customIcons = new google.maps.MarkerImage('images/icon.png') OR
+        // var customIcons = {
+          // url: 'images/beachflag.png'
+          // size: new google.maps.Size(20, 32),
+          // origin: new google.maps.Point(0,0),
+        //}
+
+        var image = {
+          size: new google.maps.Size(20, 32),
+        }
+
+        var bankMarkerImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00');
+
+        var groceryMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/grocerystore.png";
+
+        var salonMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/salon.png";
+
+        var restMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/restaurant.png";
+
+        var coffeeMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/coffeehouse.png";
+
+        var storeMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/shopping.png"
+
+        var pharmacyMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/hospitals.png"
+        // Create the PlaceService and send the request.
+        // Handle the callback with an anonymous function.
+          function createMarker(place) {     
+            var markpos = place.geometry.location;
+            var marker;
+            var icon_to_use;
+
+            if (place.types.indexOf('salon') != -1) {
+              icon_to_use = salonMarkerImage;
+            } if (place.types.indexOf('bank') != -1) { icon_to_use = bankMarkerImage;
+            } if (place.types.indexOf('grocery_or_supermarket') != -1) {
+              icon_to_use = groceryMarkerImage;
+            } if (place.types.indexOf('restaurant') != -1) {
+              icon_to_use = groceryMarkerImage;
+            } if (place.types.indexOf('cafe') != -1) {
+              icon_to_use = coffeeMarkerImage;
+            } if (place.types.indexOf('pharmacy') != -1) {
+              icon_to_use = pharmacyMarkerImage;
+            } if (place.types.indexOf('store') != -1) {
+              icon_to_use = storeMarkerImage;
+            }
+
+            marker = new google.maps.Marker({
+              map: map,
+              position: markpos,
+              icon: icon_to_use 
+            });
+            
+          
+            google.maps.event.addListener(marker, 'click', function() {
+              infowindow.setContent(place.name);
+              infowindow.open(map, this);
+            });
+          }
+
+      // Run the initialize function when the window has finished loading.
+
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
-  autocomplete = new google.maps.places.Autocomplete(
+  autocomplete = new gmaps.places.Autocomplete(
     /** @type {!HTMLInputElement} */(document.getElementById('location-address')),
     {types: ['geocode']});
 
-  autocomplete = new google.maps.places.Autocomplete(
+  autocomplete = new gmaps.places.Autocomplete(
     /** @type {!HTMLInputElement} */(document.getElementById('location-address2')),
     {types: ['geocode']});
 
-  var geocoder = new google.maps.Geocoder();
+  var geocoder = new gmaps.Geocoder();
 
   // function to geocode an address and plot it on a map
   function changeMapCoordinates(address) {
     geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
+      if (status == gmaps.GeocoderStatus.OK) {
          panorama.setPosition((results[0].geometry.location));      // center the map on address
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -82,7 +138,7 @@ function initialize() {
     if(navigator.geolocation) {
       browserSupportFlag = true;
       navigator.geolocation.getCurrentPosition(function(position) {
-        initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+        initialLocation = new gmaps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
       }, function() {
         handleNoGeolocation(browserSupportFlag);
@@ -180,3 +236,4 @@ function initialize() {
   };
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+
