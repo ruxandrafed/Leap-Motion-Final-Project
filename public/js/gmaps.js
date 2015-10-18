@@ -178,5 +178,6 @@ function initialize() {
   };
   var lat = panorama.position.lat().toPrecision(7);
   var lng = panorama.position.lng().toPrecision(7);
+  console.log(panorama);
   translink(lat,lng, map);
 }
