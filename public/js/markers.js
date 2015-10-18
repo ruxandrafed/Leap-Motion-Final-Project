@@ -4,12 +4,22 @@ function createMarker(place, map) {
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
   var icon_to_use;
+  // console.log(place);
 
-  var rating = place.rating
-  console.log(rating);
-  var name = place.name  
+  var rating = hasRating(place);
+  var name = place.name
+  var placeType = place.types[0];
+
+  placeType = capitalizeFirstLetter(placeType);
+
+  console.log(placeType);
+
+  var openNow = isOpen(place);
+  console.log(openNow)
   var contentString = "<div class='infoWindowContent'> <p>Name: " + name + "</p>"
-    + "<p>Rating: " + rating + "</p></div>"
+    + "<p>Rating: " + rating + "</p>"
+    + "<p>Open: " + openNow + "</p>"
+    + "<p>Type of Establishment: " + placeType + "</p></div>"
 
   var image = {
     size: new google.maps.Size(20, 32),
@@ -68,4 +78,28 @@ function createMarker(place, map) {
     prev_infoWindow = infoWindow;
     // return prev_infoWindow
   });
+}
+
+function isOpen (place){
+  if (place.opening_hours) {
+    if (place.opening_hours.open_now) {
+      return "Place is open."
+    } else {
+      return "Place is closed."
+    };
+   } else {
+    return "Info not provided."
+  }
+};
+
+function hasRating (place) {
+  if (place.rating) {
+    return place.rating
+  } else {
+    return "Has not been rated."
+  }
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
