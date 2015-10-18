@@ -4,6 +4,7 @@ function createMarker(place, map) {
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
   var icon_to_use;
+  console.log(place);
 
   var image = {
     size: new google.maps.Size(20, 32),

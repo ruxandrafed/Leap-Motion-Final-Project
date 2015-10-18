@@ -12,9 +12,7 @@ function getBusInfo (url, tripUpdate, map) {
   //   console.log(buses);
   // })
   $.getJSON(url, function (stops) {
-    console.log(stops);
     stops.forEach(function (stop) {
-      console.log(stop);
       contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet + '</p>'
         + '<p> Name: ' + stop.Name + '</p>'
         + '<p>Routes: ' + stop.Routes + '</p></div>'
