@@ -12,8 +12,10 @@ function getBusInfo (url, tripUpdate, map) {
   //   console.log(buses);
   // })
   $.getJSON(url, function (stops) {
+    console.log(stops);
     stops.forEach(function (stop) {
-      contentString = '<div id ="content"> <p> At Street:' + stop.AtStreet + '</p>'
+      console.log(stop);
+      contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet + '</p>'
         + '<p> Name: ' + stop.Name + '</p>'
         + '<p>Routes: ' + stop.Routes + '</p></div>'
       busMarkerInfo.push([stop.Latitude, stop.Longitude, stop.AtStreet, stop.Name, stop.Routes, contentString])
@@ -38,7 +40,7 @@ function renderMarkers (array, map) {
 
     marker.addListener('click', function() {
       if (prev_infoWindow) {
-        prev_infoWindow.close;
+        prev_infoWindow.close();
       };
       infoWindow.open(map.getStreetView(), marker);
       prev_infoWindow = infoWindow;
