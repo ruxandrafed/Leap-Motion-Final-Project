@@ -1,11 +1,17 @@
+
 function createMarker(place, map) {
-  console.log(place);     
-  var markpos = place.geometry.location;
+  console.log(place);
+  console.log(place.name)  
+  console.log(place.geometry.location)   
+  var lat=place.geometry.location.lat();
+  var lng=place.geometry.location.lng();
   var icon_to_use;
 
   var image = {
     size: new google.maps.Size(20, 32),
   }
+
+  var name = place.name
 
   var bankMarkerImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00');
 
@@ -36,25 +42,23 @@ function createMarker(place, map) {
     icon_to_use = storeMarkerImage;
   }
 
-  marker = new google.maps.Marker({
+  var marker = new google.maps.Marker({
     map: map,
-    position: markpos,
-    icon: icon_to_use,
-
+    position: {lat: lat, lng: lng},
+    title: place.name,
+    icon: icon_to_use
   });
-  prev_infoWindow = false;
-  var infoWindow = new google.maps.InfoWindow();
+  
+  var infoWindow = new google.maps.InfoWindow({
+    content: name
+  });
+  
 
-  google.maps.event.addListener(marker, 'click', function() {
-    var prev_infoWindow = false;
-    infoWindow.setContent(place.name);
-    infoWindow.open(map.getStreetView(), this);
+  marker.addListener('click', function() {
     if (prev_infoWindow) {
       prev_infoWindow.close();
     };
-    infoWindow.open(map, this);
-    prev_infoWindow = infoWindow;
+    infoWindow.open(map.getStreetView(), marker);
+    return prev_infoWindow = infoWindow
   });
-
-
 }

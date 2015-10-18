@@ -29,6 +29,7 @@ function initialize() {
   });
 
   panorama.setVisible(true);
+  
   // Creating Markers for Google Map seeding 
   
   var request = {
@@ -37,6 +38,7 @@ function initialize() {
     types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
     // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
   };
+  var prev_infoWindow = false;
 
   var service = new google.maps.places.PlacesService(map)
   service.search(request,getPlacesInfo)
@@ -46,8 +48,9 @@ function initialize() {
       for (var i = 0; i < results.length; i++) {
         createMarker(results[i], map);
       };
-    }; 
-  };
+    };
+  }; 
+
 
 
   google.maps.event.addDomListener(window, 'load', initialize);
