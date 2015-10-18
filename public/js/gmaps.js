@@ -29,7 +29,28 @@ function initialize() {
   });
 
   panorama.setVisible(true);
+  // Creating Markers for Google Map seeding 
+  
+  var request = {
+    location: vancouver,
+    radius: '100',
+    types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
+  };
 
+  var service = new google.maps.places.PlacesService(map)
+  service.search(request,getPlacesInfo)
+
+  function getPlacesInfo(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i], map);
+      };
+    }; 
+  };
+
+
+  google.maps.event.addDomListener(window, 'load', initialize);
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
@@ -160,4 +181,3 @@ function initialize() {
   var lng = panorama.position.lng().toPrecision(7);
   translink(lat,lng, map);
 }
-
