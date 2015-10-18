@@ -12,6 +12,7 @@ html, body {
   height: 100vh;
 }
 
+
 #help-modal {
   left: 60px;
 }
@@ -21,9 +22,11 @@ html, body {
 }
 
 #leap-icon {
-  left: 150px;
+
+  left: 250px;
   font-weight: bold;
 }
+
 #leap-icon.leap-on{
   color: green;
 }
@@ -32,7 +35,24 @@ html, body {
   color: red;
 }
 
-#menu-toggle, #help-modal, #location-modal, #leap-icon {
+#left-hand-icon {
+  left: 295px;
+}
+#left-hand-icon.detected{
+  color: green;
+}
+
+#right-hand-icon {
+  left: 340px;
+}
+
+#right-hand-icon.detected{
+  color: green;
+}
+
+
+#menu-toggle, #help-modal, #location-modal,
+ #leap-icon, #right-hand-icon, #left-hand-icon {
   position: absolute;
   opacity: 0.9;
   z-index: 1;

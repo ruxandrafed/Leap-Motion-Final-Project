@@ -23,7 +23,9 @@ function move(frame) {
   //     });
   //     return;
   // }
-
+  if (frame.valid) {
+    detectHands(frame)
+  };
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
@@ -59,6 +61,31 @@ function move(frame) {
 
 
   previousFrame = frame;
+
+};
+
+function detectHands (frame) {
+  hands = frame.hands;
+  if (hands.length == 0) {
+    $('#right-hand-icon').removeClass('detected');
+    $('#left-hand-icon').removeClass('detected');
+  };
+
+  if (hands.length == 1) {
+    if (hands[0].type=='right') {
+      $('#left-hand-icon').removeClass('detected');
+      $('#right-hand-icon').addClass('detected');
+    };
+    if (hands[0].type =='left') {
+      $('#right-hand-icon').removeClass('detected');
+      $('#left-hand-icon').addClass('detected');
+    }
+  };
+
+  if (hands.length == 2){
+    $('#right-hand-icon').addClass('detected');
+    $('#left-hand-icon').addClass('detected');
+  };
 
 };
 
@@ -113,59 +140,31 @@ function movement (hand) {
   // Direct heading currently a bit buggy.
   if (hand.palmPosition[2] < -40
    && hand.confidence > 0.25) {
-      moveForward (hand, pov);
+      moveForward(hand, pov);
   }
 
 
 };
 
 function moveForward (hand, pov) {
-  links = panorama.getLinks();
-  console.log(links);
-  if (links !== undefined) {
-    if (links.length > 1) {
-      pano0 = Math.abs(links[0]['heading'] - pov.heading);
-      pano1 = Math.abs(links[1]['heading'] - pov.heading);
-      if (pano0 < pano1) {
-         panoNum = 0;
-      } else {
-        panoNum = 1;
-      };
-      panorama.setPano(links[panoNum]['pano']);
-      // lastMove = 'forward';
-      console.log('forward');
-    } else {
-      panorama.setPano(links[0]['pano']);
-    };
-
-    console.log(links);
+  links = panorama.getLinks();  
+  if (links) {
+    var linksABS = links.map(function (a){
+      return {
+        'heading': (Math.abs(a['heading'] - pov.heading)),
+        'description': a['description'],
+        'pano': a['pano']
+      }
+    });
+  linksABS.sort(function (a,b){ return a['heading'] - b['heading']});
+  panorama.setPano(linksABS[0]['pano']);
+  console.log('forward');
   };
 };
-
-// function moveBackward(hand, pov) {
-//   links = panorama.getLinks();
-//   if (links !== undefined) {
-//     if (links.length > 1) {
-//       pano0 = Math.abs(links[0]['heading'] - pov.heading);
-//       pano1 = Math.abs(links[1]['heading'] - pov.heading);
-//       if (pano0 < pano1 ) {
-//         panoNum = 1;
-//       } else {
-//         panoNum = 0;
-//       };
-//         panorama.setPano(links[panoNum]['pano']);
-//     } else {
-//         panorama.setPano(links[0]['pano']);
-//     };
-//     console.log('back');
-//     console.log(links);
-//   };
-// };
 
 function streetViewSwipe(frame, gesture) {
   console.log(gesture);
 };
-
 
 
 

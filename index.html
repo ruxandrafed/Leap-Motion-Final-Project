@@ -3,6 +3,7 @@
 
 <head>
 
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -176,6 +177,8 @@
                         <a href="#help-modal" class="btn btn-default" id="help-modal" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                         <a href="#location-modal" class="btn btn-default" id="location-modal" data-toggle="modal" data-target="#myModalLocation" id="modal-help-button"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
                         <span id="leap-icon" class="btn btn-default glyphicon glyphicon-off"></span>
+                        <span id="left-hand-icon" class="btn btn-default glyphicon glyphicon-hand-left"></span>
+                        <span id="right-hand-icon" class="btn btn-default glyphicon glyphicon-hand-right"></span>
 
                         <!-- Street View Embedded Here -->
                         <div id="streetview"></div>
@@ -206,6 +209,8 @@
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places&callback=initialize">
     </script>
+
+    <script src="js/translink.js"></script>
 
     <!-- Leap Motion JavaScript -->
     <script src="//js.leapmotion.com/leap-0.6.4.js"></script>
