@@ -4,6 +4,7 @@ function createMarker(place, map) {
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
   var icon_to_use;
+  console.log(place);
 
   var image = {
     size: new google.maps.Size(20, 32),
@@ -57,13 +58,11 @@ function createMarker(place, map) {
   var prev_infoWindow;
 
   marker.addListener('click', function() {
-    console.log(prev_infoWindow);
     if (prev_infoWindow) {
       prev_infoWindow.close();
     };
     infoWindow.open(map.getStreetView(), marker);
     prev_infoWindow = infoWindow;
-    console.log(prev_infoWindow);
-    return prev_infoWindow
+    // return prev_infoWindow
   });
 }
