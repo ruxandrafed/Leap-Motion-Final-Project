@@ -4,14 +4,17 @@ function createMarker(place, map) {
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
   var icon_to_use;
-  console.log(place);
+
+  var rating = place.rating
+  console.log(rating);
+  var name = place.name  
+  var contentString = "<div class='infoWindowContent'> <p>Name: " + name + "</p>"
+    + "<p>Rating: " + rating + "</p></div>"
 
   var image = {
     size: new google.maps.Size(20, 32),
   }
   var busMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
-
-  var name = place.name
 
   var bankMarkerImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00');
 
@@ -52,7 +55,7 @@ function createMarker(place, map) {
   });
   
   var infoWindow = new google.maps.InfoWindow({
-    content: name
+    content: contentString
   });
 
   var prev_infoWindow;
