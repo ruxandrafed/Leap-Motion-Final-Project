@@ -49,7 +49,8 @@ function initialize() {
     };
   }; 
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+
+  // google.maps.event.addDomListener(window, 'load', initialize);
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
