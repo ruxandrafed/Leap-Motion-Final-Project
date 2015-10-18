@@ -8,9 +8,9 @@ function translink(lat,lng, map) {
 function getBusInfo (url, map) {
   $.getJSON(url, function (stops) {
     stops.forEach(function (stop) {
-      contentString = "At Street" + stop.AtStreet 
-        + "\nName:" + stop.Name 
-        + "\nRoutes:" + stop.Routes
+      contentString = '<div id ="content"> <p> At Street:' + stop.AtStreet + '</p>'
+        + '<p> Name: ' + stop.Name + '</p>'
+        + '<p>Routes: ' + stop.Routes + '</p></div>'
       busMarkerInfo.push([stop.Latitude, stop.Longitude, stop.AtStreet, stop.Name, stop.Routes, contentString])
     });
     renderMarkers(busMarkerInfo, map);
@@ -20,7 +20,7 @@ function getBusInfo (url, map) {
 function renderMarkers (array, map) {
   mapJ=map;
 
-  array.forEach(function (busStop){
+  array.forEach(function (busStop) {
     var marker = new google.maps.Marker({
       position: {lat: busStop[0], lng: busStop[1]},
       map: mapJ,
@@ -37,7 +37,7 @@ function renderMarkers (array, map) {
       if (prev_infoWindow) {
         prev_infoWindow.close();
       };
-      infoWindow.open(mapJ, marker);
+      infoWindow.open(mapJ.getStreetView(), marker);
       prev_infoWindow = infoWindow;
     });
 
