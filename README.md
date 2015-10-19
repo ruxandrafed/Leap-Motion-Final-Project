@@ -1,1 +1,7 @@
-Project that combines leap motion with Google Street View. Hapi framework with a Node JS front end.
+Leap Motion Controller + Google Street View
+
+- Node.js
+- Hapi.js
+- Socket.io
+- Google Maps API
+- Translink API
