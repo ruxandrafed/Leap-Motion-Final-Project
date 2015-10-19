@@ -1,19 +1,54 @@
+
 var prev_infoWindowM = false;
 var prev_infoWindowSV = false;
 
+function requestInfoFromGoogle (map) {
+
+  var request = {
+    location: vancouver,
+    radius: '100',
+    types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
+  };
+  var service = new google.maps.places.PlacesService(map)
+  service.search(request,getPlacesInfo)
+
+  function getPlacesInfo(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i], map);
+      };
+    };
+  };
+}
+
+
 function createMarker(place, map) {
+  console.log(place);
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
   var icon_to_use;
   // console.log(place);
 
+
+  var rating = hasRating(place);
+  var name = place.name
+  var placeType = place.types[0];
+
+  placeType = capitalizeFirstLetter(placeType);
+
+  var openNow = isOpen(place);
+  var contentString = "<div class='infoWindowContent'> <p>Name: " + name + "</p>"
+    + "<p>Rating: " + rating + "</p>"
+    + "<p>Open: " + openNow + "</p>"
+    + "<p>Type of Establishment: " + placeType + "</p></div>"
+
+
   var image = {
     size: new google.maps.Size(40, 64),
   }
   var busMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
-
-  var name = place.name
 
   var bankMarkerImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00');
 
@@ -58,6 +93,7 @@ function createMarker(place, map) {
   var infoWindowSV = new google.maps.InfoWindow({
     content: name
   });
+  
 
   // Create infowindow for map view
 
@@ -78,4 +114,28 @@ function createMarker(place, map) {
     prev_infoWindowM = infoWindowM;
     prev_infoWindowSV = infoWindowSV;
   });
+}
+
+function isOpen (place){
+  if (place.opening_hours) {
+    if (place.opening_hours.open_now) {
+      return "Place is open."
+    } else {
+      return "Place is closed."
+    };
+   } else {
+    return "Info not provided."
+  }
+};
+
+function hasRating (place) {
+  if (place.rating) {
+    return place.rating
+  } else {
+    return "Has not been rated."
+  }
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
