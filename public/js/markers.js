@@ -13,7 +13,7 @@ function requestInfoFromGoogle (map) {
   var service = new google.maps.places.PlacesService(map)
   service.search(request,getPlacesInfo)
 
-    panorama.addListener('pano_changed', function() {
+  panorama.addListener('pano_changed', function() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
     var request = {
@@ -23,7 +23,7 @@ function requestInfoFromGoogle (map) {
     };
     service.search(request, getPlacesInfo);
     translink(lat, lng, map);
-    });
+  });
 
 
   map.addListener('center_changed', function() {
