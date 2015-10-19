@@ -1,5 +1,25 @@
+function requestInfoFromGoogle (map) {
+
+  var request = {
+    location: vancouver,
+    radius: '100',
+    types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
+  };
+  var service = new google.maps.places.PlacesService(map)
+  service.search(request,getPlacesInfo)
+
+  function getPlacesInfo(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i], map);
+      };
+    };
+  };
+}
 
 function createMarker(place, map) {
+  console.log(place);
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
@@ -12,10 +32,7 @@ function createMarker(place, map) {
 
   placeType = capitalizeFirstLetter(placeType);
 
-  console.log(placeType);
-
   var openNow = isOpen(place);
-  console.log(openNow)
   var contentString = "<div class='infoWindowContent'> <p>Name: " + name + "</p>"
     + "<p>Rating: " + rating + "</p>"
     + "<p>Open: " + openNow + "</p>"

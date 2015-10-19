@@ -31,23 +31,44 @@ function initialize() {
   panorama.setVisible(true);
   
   // Creating Markers for Google Map seeding 
-  
-  var request = {
-    location: vancouver,
-    radius: '100',
-    types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
-  };
-  var service = new google.maps.places.PlacesService(map)
-  service.search(request,getPlacesInfo)
 
-  function getPlacesInfo(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i], map);
-      };
-    };
-  }; 
+  // Translink API
+  var lat = panorama.position.lat().toPrecision(7);
+  var lng = panorama.position.lng().toPrecision(7);
+  translink(lat,lng, map);
+
+  // Google Places API
+  requestInfoFromGoogle(map);
+
+  console.log(map)
+
+  panorama.addListener('bounds_changed', function(){
+    lat = panorama.position.lat();
+    lng = panorama.position.lng();
+    transLat = panorama.position.lat().toPrecision(7);
+    transLng = panorama.position.lng().toPrecision(7);
+    console.log(lat)
+    console.log(lng)
+    console.log(map);
+    map = new google.maps.Map(document.getElementById('streetview'), {
+        center: {lat: lat, lng: lng},
+        zoom: 18,
+        streetViewControl: true
+    });
+    panorama = map.getStreetView();
+    panorama.setPosition({lat: lat, lng: lng});
+
+     panorama.setOptions({
+      'addressControlOptions': {
+      'position': google.maps.ControlPosition.BOTTOM_CENTER
+      }
+    });
+
+  panorama.setVisible(true);
+
+    translink(transLat,transLng, map);
+    requestInfoFromGoogle(map);
+  })
 
 
   // google.maps.event.addDomListener(window, 'load', initialize);
@@ -177,7 +198,5 @@ function initialize() {
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
-  var lat = panorama.position.lat().toPrecision(7);
-  var lng = panorama.position.lng().toPrecision(7);
-  translink(lat,lng, map);
 }
+
