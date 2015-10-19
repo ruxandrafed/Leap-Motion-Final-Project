@@ -13,6 +13,28 @@ function requestInfoFromGoogle (map) {
   var service = new google.maps.places.PlacesService(map)
   service.search(request,getPlacesInfo)
 
+    panorama.addListener('pano_changed', function() {
+    console.log(panorama)
+    var request = {
+      location: panorama.location.latLng,
+      radius: '50',
+      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    };
+    service.search(request, getPlacesInfo);
+    });
+
+
+  map.addListener('center_changed', function() {
+    var mapCenter = map.center;
+    var request = {
+      location: mapCenter,
+      radius: '150',
+      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    };
+    service.search(request, getPlacesInfo);
+  });
+
+
   function getPlacesInfo(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
@@ -24,14 +46,9 @@ function requestInfoFromGoogle (map) {
 
 
 function createMarker(place, map) {
-  console.log(place);
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
-  var icon_to_use;
-  // console.log(place);
-
-
   var rating = hasRating(place);
   var name = place.name
   var placeType = place.types[0];

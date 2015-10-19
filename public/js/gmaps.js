@@ -34,36 +34,8 @@ function initialize() {
 
   var service = new google.maps.places.PlacesService(map);
 
-  // Event listener for panorama
+  // Event listener for panorama & for map
 
-  panorama.addListener('pano_changed', function() {
-    var request = {
-      location: panorama.location.latLng,
-      radius: '50',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    };
-    service.search(request, getPlacesInfo);
-  });
-
-  // Event listener for map
-
-  map.addListener('center_changed', function() {
-    var mapCenter = map.center;
-    var request = {
-      location: mapCenter,
-      radius: '150',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    };
-    service.search(request, getPlacesInfo);
-  });
-
-  function getPlacesInfo(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i], map);
-      };
-    };
-  };
   
   // Creating Markers for Google Map seeding 
 
@@ -74,36 +46,6 @@ function initialize() {
 
   // Google Places API
   requestInfoFromGoogle(map);
-
-  console.log(map)
-
-  panorama.addListener('bounds_changed', function(){
-    lat = panorama.position.lat();
-    lng = panorama.position.lng();
-    transLat = panorama.position.lat().toPrecision(7);
-    transLng = panorama.position.lng().toPrecision(7);
-    console.log(lat)
-    console.log(lng)
-    console.log(map);
-    map = new google.maps.Map(document.getElementById('streetview'), {
-        center: {lat: lat, lng: lng},
-        zoom: 18,
-        streetViewControl: true
-    });
-    panorama = map.getStreetView();
-    panorama.setPosition({lat: lat, lng: lng});
-
-     panorama.setOptions({
-      'addressControlOptions': {
-      'position': google.maps.ControlPosition.BOTTOM_CENTER
-      }
-    });
-
-  panorama.setVisible(true);
-
-    translink(transLat,transLng, map);
-    requestInfoFromGoogle(map);
-  })
 
 
 
@@ -163,9 +105,9 @@ function initialize() {
   }
 
   $("#map-address-btn").on("click", function(e) {
-    // if (!(leapActive)){
-    //   loadLeap();
-    // };
+    if (!(leapActive)){
+      loadLeap();
+    };
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -228,11 +170,15 @@ function initialize() {
     };
     e.preventDefault();
   });
-
+  
   function loadLeap() {
     leapActive==true;
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
 }
+
+
+
+
 
