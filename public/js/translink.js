@@ -1,17 +1,21 @@
 function translink(lat,lng, map) {
-  url = "http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu" +
+  preFilterTranslink();
+  var url = "http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu" +
   "&lat=" + lat + "&long=" + lng + "&radius=100";
-  tripUpdate = "http://gtfs.translink.ca/gtfsrealtime?apikey=aGNpR72RV528weEJ7zZu"
   busMarkerInfo = [];
-  getBusInfo(url,tripUpdate,map);
+  getBusInfo(url, map);
+  
 };
 
-function getBusInfo (url, tripUpdate, map) {
+function getBusInfo (url, map) {
 
   // $.getJSON(tripUpdate, function (buses) {
   //   console.log(buses);
   // })
+  console.log(url)
   $.getJSON(url, function (stops) {
+    console.log(url)
+    console.log(stops);
     stops.forEach(function (stop) {
       contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet + '</p>'
         + '<p> Name: ' + stop.Name + '</p>'
@@ -50,5 +54,10 @@ function renderMarkers (array, map) {
 
 }
 
-
-
+function preFilterTranslink () {
+  $.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+       options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+  });
+}
