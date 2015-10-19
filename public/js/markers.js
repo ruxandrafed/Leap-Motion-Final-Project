@@ -91,7 +91,7 @@ function createMarker(place, map) {
   // Create infowindow for street view
 
   var infoWindowSV = new google.maps.InfoWindow({
-    content: name
+    content: contentString
   });
   
 
