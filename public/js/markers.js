@@ -1,13 +1,15 @@
+var prev_infoWindowM = false;
+var prev_infoWindowSV = false;
 
 function createMarker(place, map) {
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
   var icon_to_use;
-  console.log(place);
+  // console.log(place);
 
   var image = {
-    size: new google.maps.Size(20, 32),
+    size: new google.maps.Size(40, 64),
   }
   var busMarkerImage = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
 
@@ -50,19 +52,30 @@ function createMarker(place, map) {
     title: name,
     icon: icon_to_use
   });
-  
-  var infoWindow = new google.maps.InfoWindow({
+
+  // Create infowindow for street view
+
+  var infoWindowSV = new google.maps.InfoWindow({
     content: name
   });
 
-  var prev_infoWindow;
+  // Create infowindow for map view
+
+  var infoWindowM = new google.maps.InfoWindow({
+    content: name
+  });
 
   marker.addListener('click', function() {
-    if (prev_infoWindow) {
-      prev_infoWindow.close();
+
+    if (prev_infoWindowM) {
+      prev_infoWindowM.close();
     };
-    infoWindow.open(map.getStreetView(), marker);
-    prev_infoWindow = infoWindow;
-    // return prev_infoWindow
+    if (prev_infoWindowSV) {
+      prev_infoWindowSV.close();
+    };
+    infoWindowSV.open(map.getStreetView(), marker);
+    infoWindowM.open(map, marker);
+    prev_infoWindowM = infoWindowM;
+    prev_infoWindowSV = infoWindowSV;
   });
 }
