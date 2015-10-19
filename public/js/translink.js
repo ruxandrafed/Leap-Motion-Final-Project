@@ -24,7 +24,7 @@ function getBusInfo (url, tripUpdate, map) {
 
 function renderMarkers (array, map) {
   array.forEach(function (busStop) {
-    busIcon = "https://maps.gstatic.com/mapfiles/transit/iw2/6/bus.png"
+    busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     var marker = new google.maps.Marker({
       position: {lat: busStop[0], lng: busStop[1]},
       map: map,
@@ -44,7 +44,6 @@ function renderMarkers (array, map) {
       };
       infoWindow.open(map.getStreetView(), marker);
       prev_infoWindow = infoWindow;
-      // return prev_infoWindow
     });
 
   });
