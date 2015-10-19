@@ -58,11 +58,13 @@ function createMarker(place, map) {
   var prev_infoWindow;
 
   marker.addListener('click', function() {
+    console.log(prev_infoWindow)
     if (prev_infoWindow) {
       prev_infoWindow.close();
     };
-    infoWindow.open(map.getStreetView(), marker);
+    infoWindow.open(map.getStreetView(), marker)
     prev_infoWindow = infoWindow;
+    return prev_infoWindow
     // return prev_infoWindow
   });
 }
