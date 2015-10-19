@@ -14,13 +14,15 @@ function requestInfoFromGoogle (map) {
   service.search(request,getPlacesInfo)
 
     panorama.addListener('pano_changed', function() {
-    console.log(panorama)
+    lat = panorama.position.lat().toPrecision(7);
+    lng = panorama.position.lng().toPrecision(7);
     var request = {
       location: panorama.location.latLng,
       radius: '50',
       types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
     };
     service.search(request, getPlacesInfo);
+    translink(lat, lng, map);
     });
 
 
