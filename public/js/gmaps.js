@@ -1,5 +1,5 @@
 var panorama;
-var vancouver = {lat: 49.283324, lng: -123.119452};
+var vancouver = {lat: 49.283281, lng: -123.122786};
 
 
 function initialize() {
@@ -29,17 +29,33 @@ function initialize() {
   });
 
   panorama.setVisible(true);
-  
-  // Creating Markers for Google Map seeding 
-  
-  var request = {
-    location: vancouver,
-    radius: '100',
-    types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
-  };
-  var service = new google.maps.places.PlacesService(map)
-  service.search(request,getPlacesInfo)
+
+  // Creating Markers for Google Map seeding
+
+  var service = new google.maps.places.PlacesService(map);
+
+  // Event listener for panorama
+
+  panorama.addListener('pano_changed', function() {
+    var request = {
+      location: panorama.location.latLng,
+      radius: '50',
+      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    };
+    service.search(request, getPlacesInfo);
+  });
+
+  // Event listener for map
+
+  map.addListener('center_changed', function() {
+    var mapCenter = map.center;
+    var request = {
+      location: mapCenter,
+      radius: '150',
+      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    };
+    service.search(request, getPlacesInfo);
+  });
 
   function getPlacesInfo(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -47,7 +63,7 @@ function initialize() {
         createMarker(results[i], map);
       };
     };
-  }; 
+  };
 
   // google.maps.event.addDomListener(window, 'load', initialize);
 
