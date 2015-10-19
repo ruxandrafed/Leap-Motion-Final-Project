@@ -1,10 +1,10 @@
 function translink(lat,lng, map) {
+  
   preFilterTranslink();
   var url = "http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu" +
-  "&lat=" + lat + "&long=" + lng + "&radius=100";
+    "&lat=" + lat + "&long=" + lng + "&radius=100";
   busMarkerInfo = [];
-  getBusInfo(url, map);
-  
+  getBusInfo(url, map);  
 };
 
 function getBusInfo (url, map) {
@@ -12,10 +12,7 @@ function getBusInfo (url, map) {
   // $.getJSON(tripUpdate, function (buses) {
   //   console.log(buses);
   // })
-  console.log(url)
   $.getJSON(url, function (stops) {
-    console.log(url)
-    console.log(stops);
     stops.forEach(function (stop) {
       contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet + '</p>'
         + '<p> Name: ' + stop.Name + '</p>'
