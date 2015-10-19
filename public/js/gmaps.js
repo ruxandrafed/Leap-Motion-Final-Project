@@ -122,9 +122,9 @@ function initialize() {
   }
 
   $("#map-address-btn").on("click", function(e) {
-    if (!(leapActive)){
-      loadLeap();
-    };
+    // if (!(leapActive)){
+    //   loadLeap();
+    // };
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
