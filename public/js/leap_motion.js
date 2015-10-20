@@ -37,7 +37,7 @@ function move(frame) {
       $('#leap-icon').removeClass('leap-on');
       $('#leap-icon').addClass('leap-off');
     }
-    // Place right palm opened up near the sensor to turn on 
+    // Place right palm opened up near the sensor to turn on
     if (hand.grabStrength < 1
         && hand.type=='right'
         && hand.palmPosition[0] > -15
@@ -147,7 +147,7 @@ function movement (hand) {
 };
 
 function moveForward (hand, pov) {
-  links = panorama.getLinks();  
+  links = panorama.getLinks();
   if (links) {
     var linksABS = links.map(function (a){
       return {
