@@ -154,6 +154,10 @@ function hasRating (place) {
   }
 }
 
+function removeUnderscore(string) {
+ return string.replace(/_/g, " ");
+}
+
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
