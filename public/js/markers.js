@@ -5,8 +5,10 @@ function requestInfoFromGoogle (map) {
   var request = {
     location: vancouver,
     radius: '50',
-    types: ['airport', 'bakery', 'bank', 'bar', 'beauty_salon', 'book_store', 'bus_station', 'cafe', 'church', 'clothing_store', 'convenience_store', 'gas_station', 'gym', 'shopping_mall', 'hospital', 'laundry', 'library', 'liquor_store', 'movie_theatre', 'night_club', 'parking', 'pharmacy', 'subway_station', 'train_station', 'store', 'restaurant', 'grocery_or_supermarket',, 'salon']
-    // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
+    types: ['bakery', 'bank', 'bar', 'book_store',
+    'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
+    'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
+    'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
   };
   var service = new google.maps.places.PlacesService(map)
   service.search(request,getPlacesInfo)
