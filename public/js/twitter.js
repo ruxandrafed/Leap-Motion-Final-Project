@@ -5,7 +5,7 @@ function getTweets(lat, lng, map) {
   $.ajax({
     method: 'get',
     url: '/tweets' ,
-    data: {geocode: lat + ',' + lng + ',0.1km'},
+    data: {geocode: lat + ',' + lng + ',0.05km'},
     success: function (tweets) {
       tweets.statuses.forEach(function(tweet) {
         if (tweet.geo) {

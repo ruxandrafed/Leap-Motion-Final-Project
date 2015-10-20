@@ -4,7 +4,7 @@ function requestInfoFromGoogle (map) {
 
   var request = {
     location: vancouver,
-    radius: '100',
+    radius: '50',
     types: ['airport', 'bakery', 'bank', 'bar', 'beauty_salon', 'book_store', 'bus_station', 'cafe', 'church', 'clothing_store', 'convenience_store', 'gas_station', 'gym', 'shopping_mall', 'hospital', 'laundry', 'library', 'liquor_store', 'movie_theatre', 'night_club', 'parking', 'pharmacy', 'subway_station', 'train_station', 'store', 'restaurant', 'grocery_or_supermarket',, 'salon']
     // placeId: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
   };
@@ -66,7 +66,7 @@ function createMarker(place, map) {
   placeType = capitalizeFirstLetter(placeType);
 
   var openNow = isOpen(place);
-  
+
   var contentString = "<div class='infoWindowContent'> <p>Name: " + name + "</p>"
     + "<p>Rating: " + rating + "<span class='stars'> " + starRating + "</span>" + "</p>"
     + "<p>Open: " + openNow + "</p>"
