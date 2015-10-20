@@ -30,7 +30,7 @@ function initialize() {
 
   panorama.setVisible(true);
 
-  // Creating Markers for Google Map seeding
+  // Creating Markers
 
   var service = new google.maps.places.PlacesService(map);
 
@@ -44,8 +44,6 @@ function initialize() {
 
   // Twitter API
   getTweets(lat, lng, map);
-
-  // google.maps.event.addDomListener(window, 'load', initialize);
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
