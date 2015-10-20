@@ -10,31 +10,34 @@ function translink (lat, lng, map) {
         + '<p>Routes: ' + stop.Routes[0] + '</p></div>'
       busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], contentString])
     });
-    renderMarkers(busMarkerInfo, map);
+    renderTranslinkMarkers(busMarkerInfo, map);
   });
 };
 
 var prev_infoWindow;
 
-function renderMarkers (array, map) {
+var translinkMarkers = [];
+
+function renderTranslinkMarkers (array, map) {
   array.forEach(function (busStop) {
     busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
-    var marker = new google.maps.Marker({
+    var markerTr = new google.maps.Marker({
       position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
       map: map,
       icon: busIcon,
       title: busStop[3]
     })
+    translinkMarkers.push(markerTr);
 
     var infoWindow = new google.maps.InfoWindow({
       content: busStop[5]
     })
 
-    marker.addListener('click', function() {
+    markerTr.addListener('click', function() {
       if (prev_infoWindow) {
         prev_infoWindow.close();
       };
-      infoWindow.open(map.getStreetView(), marker);
+      infoWindow.open(map.getStreetView(), markerTr);
       prev_infoWindow = infoWindow;
     });
 

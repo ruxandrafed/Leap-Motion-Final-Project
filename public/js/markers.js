@@ -11,7 +11,7 @@ function requestInfoFromGoogle (map) {
     'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
   };
   var service = new google.maps.places.PlacesService(map)
-  // service.search(request,getPlacesInfo)
+  service.search(request,getPlacesInfo)
 
   panorama.addListener('pano_changed', function() {
     lat = panorama.position.lat().toPrecision(7);
@@ -48,14 +48,15 @@ function requestInfoFromGoogle (map) {
   function getPlacesInfo(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
-        createMarker(results[i], map);
+        createGPMarker(results[i], map);
       };
     };
   };
 }
 
+var googlePlacesMarkers = [];
 
-function createMarker(place, map) {
+function createGPMarker(place, map) {
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
@@ -115,12 +116,13 @@ function createMarker(place, map) {
     icon_to_use = bakeMarkerImage;
   }
 
-  var marker = new google.maps.Marker({
+  var markerP = new google.maps.Marker({
     map: map,
     position: {lat: lat, lng: lng},
     title: name,
     icon: icon_to_use,
   });
+  googlePlacesMarkers.push(markerP);
 
   // Create infowindow for street view
 
@@ -128,11 +130,11 @@ function createMarker(place, map) {
     content: contentString
   });
 
-  marker.addListener('click', function() {
+  markerP.addListener('click', function() {
     if (prev_infoWindow) {
       prev_infoWindow.close();
     };
-    infoWindow.open(map.getStreetView(), marker);
+    infoWindow.open(map.getStreetView(), markerP);
     prev_infoWindow = infoWindow;
   });
 }
