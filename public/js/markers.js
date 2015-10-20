@@ -1,4 +1,3 @@
-
 var prev_infoWindowM = false;
 var prev_infoWindowSV = false;
 
@@ -57,6 +56,7 @@ function createMarker(place, map) {
   var rating = hasRating(place);
   var name = place.name
   var placeType = place.types[0];
+
 
   placeType = removeUnderscore(placeType);
   placeType = capitalizeFirstLetter(placeType);
@@ -159,9 +159,9 @@ function hasRating (place) {
 }
 
 function removeUnderscore(string) {
-  return string.replace(/_/g, " ");
+ return string.replace(/_/g, " ");
 }
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+   return string.charAt(0).toUpperCase() + string.slice(1);
 }

@@ -1,33 +1,24 @@
-function translink(lat,lng, map) {
+function translink (lat, lng, map) {
 
-  preFilterTranslink();
-  var url = "http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu" +
-    "&lat=" + lat + "&long=" + lng + "&radius=100";
   busMarkerInfo = [];
-  getBusInfo(url, map);
-};
 
-function getBusInfo (url, map) {
-
-  // $.getJSON(tripUpdate, function (buses) {
-  //   console.log(buses);
-  // })
-  $.getJSON(url, function (stops) {
+  $.getJSON("/translink", {lat: lat, lng: lng}, function (data) {
+    stops = data.Stops.Stop;
     stops.forEach(function (stop) {
-      contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet + '</p>'
-        + '<p> Name: ' + stop.Name + '</p>'
-        + '<p>Routes: ' + stop.Routes + '</p></div>'
-      busMarkerInfo.push([stop.Latitude, stop.Longitude, stop.AtStreet, stop.Name, stop.Routes, contentString])
+      contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet[0] + '</p>'
+        + '<p> Name: ' + stop.Name[0] + '</p>'
+        + '<p>Routes: ' + stop.Routes[0] + '</p></div>'
+      busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], contentString])
     });
     renderMarkers(busMarkerInfo, map);
   });
-}
+};
 
 function renderMarkers (array, map) {
   array.forEach(function (busStop) {
     busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     var marker = new google.maps.Marker({
-      position: {lat: busStop[0], lng: busStop[1]},
+      position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
       map: map,
       icon: busIcon,
       title: busStop[3]
@@ -49,12 +40,4 @@ function renderMarkers (array, map) {
 
   });
 
-}
-
-function preFilterTranslink () {
-  $.ajaxPrefilter(function (options) {
-    if (options.crossDomain && jQuery.support.cors) {
-       options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-    }
-  });
 }
