@@ -16,11 +16,16 @@ function requestInfoFromGoogle (map) {
   panorama.addListener('pano_changed', function() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
+
     var request = {
       location: panorama.location.latLng,
       radius: '50',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+      types: ['bakery', 'bank', 'bar', 'book_store',
+      'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
+      'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
+      'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
     };
+
     service.search(request, getPlacesInfo);
     translink(lat, lng, map);
     getTweets(lat, lng, map);
@@ -43,14 +48,15 @@ function requestInfoFromGoogle (map) {
   function getPlacesInfo(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
-        createMarker(results[i], map);
+        createGPMarker(results[i], map);
       };
     };
   };
 }
 
+var googlePlacesMarkers = [];
 
-function createMarker(place, map) {
+function createGPMarker(place, map) {
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
@@ -100,20 +106,23 @@ function createMarker(place, map) {
     icon_to_use = pharmacyMarkerImage;
   } if (place.types.indexOf('store') != -1) {
     icon_to_use = storeMarkerImage;
-  } if (place.types.indexOf('bus_station') != -1) {
-    icon_to_use = busMarkerImage;
-  } if (place.types.indexOf('bar') != -1) {
+  }
+  // if (place.types.indexOf('bus_station') != -1) {
+  //   icon_to_use = busMarkerImage;
+  // }
+    if (place.types.indexOf('bar') != -1) {
     icon_to_use = barMarkerImage;
   } if (place.types.indexOf('bakery') != -1) {
     icon_to_use = bakeMarkerImage;
   }
 
-  var marker = new google.maps.Marker({
+  var markerP = new google.maps.Marker({
     map: map,
     position: {lat: lat, lng: lng},
     title: name,
     icon: icon_to_use,
   });
+  googlePlacesMarkers.push(markerP);
 
   // Create infowindow for street view
 
@@ -121,11 +130,11 @@ function createMarker(place, map) {
     content: contentString
   });
 
-  marker.addListener('click', function() {
+  markerP.addListener('click', function() {
     if (prev_infoWindow) {
       prev_infoWindow.close();
     };
-    infoWindow.open(map.getStreetView(), marker);
+    infoWindow.open(map.getStreetView(), markerP);
     prev_infoWindow = infoWindow;
   });
 }

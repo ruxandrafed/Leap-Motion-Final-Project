@@ -34,10 +34,10 @@ var io = require('socket.io')(server.listener);
 
 io.on('connection', function (socket) {
 
-  console.log('a user connected; socket id: ' + socket.id);
+  // console.log('a user connected; socket id: ' + socket.id);
 
   socket.on('disconnect', function(){
-    console.log('a user disconnected; socket id: ' + socket.id);
+    // console.log('a user disconnected; socket id: ' + socket.id);
   });
 
 });
@@ -107,7 +107,7 @@ server.register(require('inert'), function (err) {
     handler: function (request, reply) {
       var params = request.query;
       twitterClient.get('search/tweets', params, function(error, tweets, response){
-        if (!error) {
+        if (!error && tweets != []) {
           // console.log(tweets);
           reply(tweets);
         }

@@ -30,22 +30,19 @@ function initialize() {
 
   panorama.setVisible(true);
 
-  // Creating Markers for Google Map seeding
+  // Creating Markers
 
-  var service = new google.maps.places.PlacesService(map);
+  // // Google Places API
+  // var service = new google.maps.places.PlacesService(map);
+  // requestInfoFromGoogle(map);
 
-  // Translink API
-  var lat = panorama.position.lat().toPrecision(7);
-  var lng = panorama.position.lng().toPrecision(7);
-  translink(lat,lng, map);
+  // // Translink API
+  // var lat = panorama.position.lat().toPrecision(7);
+  // var lng = panorama.position.lng().toPrecision(7);
+  // translink(lat,lng, map);
 
-  // Google Places API
-  requestInfoFromGoogle(map);
-
-  // Twitter API
-  getTweets(lat, lng, map);
-
-  // google.maps.event.addDomListener(window, 'load', initialize);
+  // // Twitter API
+  // getTweets(lat, lng, map);
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
@@ -166,6 +163,59 @@ function initialize() {
     };
     e.preventDefault();
   });
+
+  // Checkboxes hiding markers
+
+  function checkboxesListeners() {
+
+    $('#add-places').change(function() {
+      if($(this).is(":checked")) {
+        var service = new google.maps.places.PlacesService(map);
+        requestInfoFromGoogle(map);
+        for (var i = 0; i < googlePlacesMarkers.length; i++) {
+          googlePlacesMarkers[i].setMap(map);
+        }
+      } else {
+          for (var i = 0; i < googlePlacesMarkers.length; i++) {
+            googlePlacesMarkers[i].setMap(null);
+          }
+      };
+    })
+
+    $('#add-tweets').change(function() {
+      if($(this).is(":checked")) {
+        var lat = panorama.position.lat();
+        var lng = panorama.position.lng();
+        getTweets(lat, lng, map);
+        for (var i = 0; i < twitterMarkers.length; i++) {
+          twitterMarkers[i].setMap(map);
+        }
+      } else {
+          for (var i = 0; i < twitterMarkers.length; i++) {
+            twitterMarkers[i].setMap(null);
+          }
+      };
+    })
+
+    $('#add-translink').change(function() {
+      if($(this).is(":checked")) {
+        var lat = panorama.position.lat().toPrecision(7);
+        var lng = panorama.position.lng().toPrecision(7);
+        translink(lat, lng, map);
+        for (var i = 0; i < translinkMarkers.length; i++) {
+          translinkMarkers[i].setMap(map);
+        }
+      } else {
+          for (var i = 0; i < translinkMarkers.length; i++) {
+            translinkMarkers[i].setMap(null);
+          }
+      };
+    })
+  }
+
+  checkboxesListeners();
+
+  // Loads Leap Motion controller
 
   function loadLeap() {
     leapActive==true;
