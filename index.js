@@ -2,6 +2,15 @@ var Hapi = require('hapi');
 var Path = require('path');
 var request = require('request');
 
+
+//translink stuff
+
+var params = req.query;
+var request = require('request');
+var parseString = require('xml2js').parseString;
+var params;
+var url;
+
 // Twitter Client
 
 var Twitter = require('twitter');
@@ -54,10 +63,8 @@ server.register(require('inert'), function (err) {
     method: 'GET',
     path: '/translink',
     handler: function (req, reply) {
-      var params = req.query;
-      var request = require('request');
-      var parseString = require('xml2js').parseString;
-      var url = 'http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu&lat=' +
+      params = req.query;
+      url = 'http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu&lat=' +
         params.lat + "&long=" + params.lng + "&radius=100"
 
       request(url, function (error, response, body) {
@@ -69,6 +76,16 @@ server.register(require('inert'), function (err) {
           }
         })
       });
+    }
+  })
+
+  // Realtime dat
+
+  server.route({
+    method: 'GET',
+    path: '/realtime',
+    handler: function (req, reply) {
+
     }
   })
 

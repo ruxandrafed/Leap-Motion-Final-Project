@@ -2,6 +2,10 @@ function translink (lat, lng, map) {
 
   busMarkerInfo = [];
 
+  $.getJSON ("/realtime"), function (data) {
+    console.log(data);
+  };
+
   $.getJSON("/translink", {lat: lat, lng: lng}, function (data) {
     stops = data.Stops.Stop;
     stops.forEach(function (stop) {
