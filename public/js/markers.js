@@ -1,4 +1,3 @@
-
 var prev_infoWindowM = false;
 var prev_infoWindowSV = false;
 
@@ -23,6 +22,7 @@ function requestInfoFromGoogle (map) {
     };
     service.search(request, getPlacesInfo);
     translink(lat, lng, map);
+    getTweets(lat, lng, map);
   });
 
 
@@ -34,6 +34,8 @@ function requestInfoFromGoogle (map) {
       types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
     };
     service.search(request, getPlacesInfo);
+    translink(lat, lng, map);
+    getTweets(lat,lng, map);
   });
 
 
@@ -55,6 +57,8 @@ function createMarker(place, map) {
   var name = place.name
   var placeType = place.types[0];
 
+
+  placeType = removeUnderscore(placeType);
   placeType = capitalizeFirstLetter(placeType);
 
   var openNow = isOpen(place);
@@ -112,7 +116,7 @@ function createMarker(place, map) {
   var infoWindowSV = new google.maps.InfoWindow({
     content: contentString
   });
-  
+
 
   // Create infowindow for map view
 
@@ -159,5 +163,5 @@ function removeUnderscore(string) {
 }
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+   return string.charAt(0).toUpperCase() + string.slice(1);
 }

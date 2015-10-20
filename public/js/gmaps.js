@@ -34,11 +34,6 @@ function initialize() {
 
   var service = new google.maps.places.PlacesService(map);
 
-  // Event listener for panorama & for map
-
-  
-  // Creating Markers for Google Map seeding 
-
   // Translink API
   var lat = panorama.position.lat().toPrecision(7);
   var lng = panorama.position.lng().toPrecision(7);
@@ -47,7 +42,8 @@ function initialize() {
   // Google Places API
   requestInfoFromGoogle(map);
 
-
+  // Twitter API
+  getTweets(lat, lng, map);
 
   // google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -170,7 +166,7 @@ function initialize() {
     };
     e.preventDefault();
   });
-  
+
   function loadLeap() {
     leapActive==true;
     $('#leap-icon').addClass('leap-on');

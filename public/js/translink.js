@@ -28,7 +28,7 @@ function renderMarkers (array, map) {
       content: busStop[5]
     })
 
-    var prev_infoWindow;
+    var prev_infoWindow = false;
 
     marker.addListener('click', function() {
       if (prev_infoWindow) {
