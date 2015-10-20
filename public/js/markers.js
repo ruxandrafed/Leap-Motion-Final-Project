@@ -58,7 +58,6 @@ function createMarker(place, map) {
 
   var rating = hasRating(place);
   var starRating = rateStar(rating);
-  console.log(starRating)
   var name = place.name
   var placeType = place.types[0];
 
@@ -155,7 +154,6 @@ function rateStar (rating) {
   var val = rating
   var size = Math.max(0, (Math.min(5, val))) * 16;
   var $span = $('<span />').width(size);
-  // console.log(val, size, $span);
   return $span.prop('outerHTML');
 }
 
