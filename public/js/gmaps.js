@@ -42,7 +42,7 @@ function initialize() {
   // Translink API
   var lat = panorama.position.lat().toPrecision(7);
   var lng = panorama.position.lng().toPrecision(7);
-  translink(lat,lng, map);
+  getBusInfo(lat,lng, map);
 
   // Google Places API
   requestInfoFromGoogle(map);
