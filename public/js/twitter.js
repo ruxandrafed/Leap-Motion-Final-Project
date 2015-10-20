@@ -23,6 +23,7 @@ var prev_infoWindow;
 function renderTwitterMarkers (array, map) {
   array.forEach(function (tweet) {
     tweetIcon = "http://epsos.de/files/transparent-twitter-icon-logo.png";
+
     var marker = new google.maps.Marker({
       position: {lat: tweet[0], lng: tweet[1]},
       map: map,

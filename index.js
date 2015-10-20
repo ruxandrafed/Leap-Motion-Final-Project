@@ -49,7 +49,7 @@ server.register(require('inert'), function (err) {
     }
   });
 
-  // translink get method 
+  // translink get method
   server.route({
     method: 'GET',
     path: '/translink',
