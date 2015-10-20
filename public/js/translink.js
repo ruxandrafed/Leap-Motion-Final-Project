@@ -1,7 +1,6 @@
-function getBusInfo (lat, lng, map) {
+function translink (lat, lng, map) {
 
   busMarkerInfo = [];
-
 
   $.getJSON("/translink", {lat: lat, lng: lng}, function (data) {
     stops = data.Stops.Stop;
@@ -42,11 +41,3 @@ function renderMarkers (array, map) {
   });
 
 }
-
-// function preFilterTranslink () {
-//   $.ajaxPrefilter(function (options) {
-//     if (options.crossDomain && jQuery.support.cors) {
-//        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-//     }
-//   });
-// }

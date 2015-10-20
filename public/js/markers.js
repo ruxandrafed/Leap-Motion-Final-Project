@@ -22,7 +22,7 @@ function requestInfoFromGoogle (map) {
       types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
     };
     service.search(request, getPlacesInfo);
-    getBusInfo(lat, lng, map);
+    translink(lat, lng, map);
   });
 
 
