@@ -14,6 +14,8 @@ function translink (lat, lng, map) {
   });
 };
 
+var prev_infoWindow;
+
 function renderMarkers (array, map) {
   array.forEach(function (busStop) {
     busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
@@ -27,8 +29,6 @@ function renderMarkers (array, map) {
     var infoWindow = new google.maps.InfoWindow({
       content: busStop[5]
     })
-
-    var prev_infoWindow = false;
 
     marker.addListener('click', function() {
       if (prev_infoWindow) {

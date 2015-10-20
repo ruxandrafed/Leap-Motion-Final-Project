@@ -1,5 +1,4 @@
-var prev_infoWindowM = false;
-var prev_infoWindowSV = false;
+var prev_infoWindow = false;
 
 function requestInfoFromGoogle (map) {
 
@@ -113,28 +112,16 @@ function createMarker(place, map) {
 
   // Create infowindow for street view
 
-  var infoWindowSV = new google.maps.InfoWindow({
+  var infoWindow = new google.maps.InfoWindow({
     content: contentString
   });
 
-
-  // Create infowindow for map view
-
-  var infoWindowM = new google.maps.InfoWindow({
-    content: name
-  });
-
   marker.addListener('click', function() {
-    if (prev_infoWindowM) {
-      prev_infoWindowM.close();
+    if (prev_infoWindow) {
+      prev_infoWindow.close();
     };
-    if (prev_infoWindowSV) {
-      prev_infoWindowSV.close();
-    };
-    infoWindowSV.open(map.getStreetView(), marker);
-    infoWindowM.open(map, marker);
-    prev_infoWindowM = infoWindowM;
-    prev_infoWindowSV = infoWindowSV;
+    infoWindow.open(map.getStreetView(), marker);
+    prev_infoWindow = infoWindow;
   });
 }
 
