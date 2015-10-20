@@ -77,36 +77,6 @@ function initialize() {
 
   console.log(map)
 
-  panorama.addListener('bounds_changed', function(){
-    lat = panorama.position.lat();
-    lng = panorama.position.lng();
-    transLat = panorama.position.lat().toPrecision(7);
-    transLng = panorama.position.lng().toPrecision(7);
-    console.log(lat)
-    console.log(lng)
-    console.log(map);
-    map = new google.maps.Map(document.getElementById('streetview'), {
-        center: {lat: lat, lng: lng},
-        zoom: 18,
-        streetViewControl: true
-    });
-    panorama = map.getStreetView();
-    panorama.setPosition({lat: lat, lng: lng});
-
-     panorama.setOptions({
-      'addressControlOptions': {
-      'position': google.maps.ControlPosition.BOTTOM_CENTER
-      }
-    });
-
-  panorama.setVisible(true);
-
-    translink(transLat,transLng, map);
-    requestInfoFromGoogle(map);
-  })
-
-
-
   // google.maps.event.addDomListener(window, 'load', initialize);
 
   // Create the autocomplete object, restricting the search to geographical
