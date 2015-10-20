@@ -58,7 +58,6 @@ function createMarker(place, map) {
 
   var rating = hasRating(place);
   var starRating = rateStar(rating);
-  console.log(starRating)
   var name = place.name
   var placeType = place.types[0];
 
