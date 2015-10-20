@@ -1,6 +1,17 @@
 var Hapi = require('hapi');
 var Path = require('path');
 
+// Twitter Client
+
+var Twitter = require('twitter');
+
+var twitterClient = new Twitter({
+  consumer_key: 'BgFf5snzuY1e6R8gZMs3XSYaU',
+  consumer_secret: 'JmLfBsSzKei1a8a2EFM1TAPBL3e9BzcaK4Av9HO1LS5IlBQQMv',
+  access_token_key: '3943153758-cp3OiK7PDOY0A35kzEWLKSFipLZsnd4G8JkvUsN',
+  access_token_secret: 'HVyfpXki5q229RxdjHrvRU6Y94kDY0aGcH0hDHTfcZXEO'
+});
+
 // Create a server with a host and port
 var server = new Hapi.Server();
 server.connection({
@@ -48,6 +59,21 @@ server.register(require('inert'), function (err) {
     }
   });
 
+  // Add the route to tweets page
+  server.route({
+    method: 'GET',
+    path: '/tweets',
+    handler: function (request, reply) {
+      var params = request.query;
+      twitterClient.get('search/tweets', params, function(error, tweets, response){
+        if (!error) {
+          // console.log(tweets);
+          reply(tweets);
+        }
+      });
+    }
+  });
+
   // Start the server
   server.start(function (err) {
     if (err) {
@@ -57,7 +83,4 @@ server.register(require('inert'), function (err) {
   });
 
 });
-
-
-
 

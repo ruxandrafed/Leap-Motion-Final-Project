@@ -1,10 +1,10 @@
 function translink(lat,lng, map) {
-  
+
   preFilterTranslink();
   var url = "http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu" +
     "&lat=" + lat + "&long=" + lng + "&radius=100";
   busMarkerInfo = [];
-  getBusInfo(url, map);  
+  getBusInfo(url, map);
 };
 
 function getBusInfo (url, map) {
@@ -37,7 +37,7 @@ function renderMarkers (array, map) {
       content: busStop[5]
     })
 
-    var prev_infoWindow;
+    var prev_infoWindow = false;
 
     marker.addListener('click', function() {
       if (prev_infoWindow) {
