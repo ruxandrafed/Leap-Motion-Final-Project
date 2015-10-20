@@ -1,6 +1,4 @@
-
-var prev_infoWindowM = false;
-var prev_infoWindowSV = false;
+var prev_infoWindow = false;
 
 function requestInfoFromGoogle (map) {
 
@@ -13,6 +11,33 @@ function requestInfoFromGoogle (map) {
   var service = new google.maps.places.PlacesService(map)
   service.search(request,getPlacesInfo)
 
+  panorama.addListener('pano_changed', function() {
+    lat = panorama.position.lat().toPrecision(7);
+    lng = panorama.position.lng().toPrecision(7);
+    var request = {
+      location: panorama.location.latLng,
+      radius: '50',
+      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    };
+    service.search(request, getPlacesInfo);
+    translink(lat, lng, map);
+    getTweets(lat, lng, map);
+  });
+
+
+  map.addListener('center_changed', function() {
+    var mapCenter = map.center;
+    var request = {
+      location: mapCenter,
+      radius: '150',
+      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    };
+    service.search(request, getPlacesInfo);
+    translink(lat, lng, map);
+    getTweets(lat,lng, map);
+  });
+
+
   function getPlacesInfo(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       for (var i = 0; i < results.length; i++) {
@@ -24,19 +49,21 @@ function requestInfoFromGoogle (map) {
 
 
 function createMarker(place, map) {
-  console.log(place);
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
+
   var icon_to_use;
   var iconBase = "../images/places/";
+
   var rating = hasRating(place);
   var starRating = rateStar(rating);
   console.log(starRating)
   var name = place.name
   var placeType = place.types[0];
 
-  placeType = removeUnderscore(placeType); 
+
+  placeType = removeUnderscore(placeType);
   placeType = capitalizeFirstLetter(placeType);
 
   var openNow = isOpen(place);
@@ -89,29 +116,16 @@ function createMarker(place, map) {
 
   // Create infowindow for street view
 
-  var infoWindowSV = new google.maps.InfoWindow({
+  var infoWindow = new google.maps.InfoWindow({
     content: contentString
-  });
-  
-
-  // Create infowindow for map view
-
-  var infoWindowM = new google.maps.InfoWindow({
-    content: name
   });
 
   marker.addListener('click', function() {
-
-    if (prev_infoWindowM) {
-      prev_infoWindowM.close();
+    if (prev_infoWindow) {
+      prev_infoWindow.close();
     };
-    if (prev_infoWindowSV) {
-      prev_infoWindowSV.close();
-    };
-    infoWindowSV.open(map.getStreetView(), marker);
-    infoWindowM.open(map, marker);
-    prev_infoWindowM = infoWindowM;
-    prev_infoWindowSV = infoWindowSV;
+    infoWindow.open(map.getStreetView(), marker);
+    prev_infoWindow = infoWindow;
   });
 }
 
@@ -147,9 +161,9 @@ function rateStar (rating) {
 
 
 function removeUnderscore(string) {
-  return string.replace(/_/g, " ");
+ return string.replace(/_/g, " ");
 }
 
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+   return string.charAt(0).toUpperCase() + string.slice(1);
 }

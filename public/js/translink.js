@@ -1,32 +1,28 @@
-function translink(lat,lng, map) {
-  url = "http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu" +
-  "&lat=" + lat + "&long=" + lng + "&radius=100";
-  tripUpdate = "http://gtfs.translink.ca/gtfsrealtime?apikey=aGNpR72RV528weEJ7zZu"
+function translink (lat, lng, map) {
+
   busMarkerInfo = [];
-  getBusInfo(url,tripUpdate,map);
-};
 
-function getBusInfo (url, tripUpdate, map) {
-
-  // $.getJSON(tripUpdate, function (buses) {
-  //   console.log(buses);
-  // })
-  $.getJSON(url, function (stops) {
+  $.getJSON("/translink", {lat: lat, lng: lng}, function (data) {
+    stops = data.Stops.Stop;
     stops.forEach(function (stop) {
-      contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet + '</p>'
-        + '<p> Name: ' + stop.Name + '</p>'
-        + '<p>Routes: ' + stop.Routes + '</p></div>'
-      busMarkerInfo.push([stop.Latitude, stop.Longitude, stop.AtStreet, stop.Name, stop.Routes, contentString])
+      contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet[0] + '</p>'
+        + '<p> Name: ' + stop.Name[0] + '</p>'
+        + '<p>Routes: ' + stop.Routes[0] + '</p></div>'
+      busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], contentString])
     });
     renderMarkers(busMarkerInfo, map);
   });
-}
+};
+
+var prev_infoWindow;
 
 function renderMarkers (array, map) {
   array.forEach(function (busStop) {
+    busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     var marker = new google.maps.Marker({
-      position: {lat: busStop[0], lng: busStop[1]},
+      position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
       map: map,
+      icon: busIcon,
       title: busStop[3]
     })
 
@@ -34,20 +30,14 @@ function renderMarkers (array, map) {
       content: busStop[5]
     })
 
-    var prev_infoWindow;
-
     marker.addListener('click', function() {
       if (prev_infoWindow) {
         prev_infoWindow.close();
       };
       infoWindow.open(map.getStreetView(), marker);
       prev_infoWindow = infoWindow;
-      // return prev_infoWindow
     });
 
   });
 
 }
-
-
-

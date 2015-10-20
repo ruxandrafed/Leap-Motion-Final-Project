@@ -34,39 +34,6 @@ function initialize() {
 
   var service = new google.maps.places.PlacesService(map);
 
-  // Event listener for panorama
-
-  panorama.addListener('pano_changed', function() {
-    var request = {
-      location: panorama.location.latLng,
-      radius: '50',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    };
-    service.search(request, getPlacesInfo);
-  });
-
-  // Event listener for map
-
-  map.addListener('center_changed', function() {
-    var mapCenter = map.center;
-    var request = {
-      location: mapCenter,
-      radius: '150',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    };
-    service.search(request, getPlacesInfo);
-  });
-
-  function getPlacesInfo(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i], map);
-      };
-    };
-  };
-  
-  // Creating Markers for Google Map seeding 
-
   // Translink API
   var lat = panorama.position.lat().toPrecision(7);
   var lng = panorama.position.lng().toPrecision(7);
@@ -75,7 +42,8 @@ function initialize() {
   // Google Places API
   requestInfoFromGoogle(map);
 
-  console.log(map)
+  // Twitter API
+  getTweets(lat, lng, map);
 
   // google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -133,9 +101,9 @@ function initialize() {
   }
 
   $("#map-address-btn").on("click", function(e) {
-    // if (!(leapActive)){
-    //   loadLeap();
-    // };
+    if (!(leapActive)){
+      loadLeap();
+    };
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -205,4 +173,8 @@ function initialize() {
     Leap.loop({enableGestures: true}, move);
   };
 }
+
+
+
+
 
