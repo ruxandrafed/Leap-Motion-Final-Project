@@ -1,5 +1,4 @@
 var prev_infoWindow = false;
-var listOfMarkers = [];
 
 var googlePlacesMarkers = [];
 

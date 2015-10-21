@@ -30,8 +30,6 @@ function initialize() {
     }
   });
 
-  var listOfMarkers = [];
-
   panorama.setVisible(true);
 
   // Event listeners when the map changes
@@ -263,6 +261,10 @@ function initialize() {
   //     };
   //   };
   // };
+
+
+  // Adds markers into memory, doens't reload ones in array
+  var listOfMarkers = [];
 
   function includedInList(result) {
    // console.log('match');

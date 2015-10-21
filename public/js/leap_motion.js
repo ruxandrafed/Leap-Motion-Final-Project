@@ -18,11 +18,14 @@ function move(frame) {
 
 
   // if(frame.valid && frame.gestures.length > 0){
+  //   // console.log(frame.gestures);
+  //   // debugger;
   //     frame.gestures.forEach(function(gesture){
   //       filterGesture("swipe", streetViewSwipe)(frame, gesture);
   //     });
   //     return;
   // }
+
   if (frame.valid) {
     detectHands(frame)
   };
