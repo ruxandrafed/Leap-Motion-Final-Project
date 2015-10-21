@@ -252,7 +252,8 @@ function openMenu (hand, map) {
    && palmX < 0.3
    && palmX > -0.3
    && hand.confidence > 0.35
-   && !($('#wrapper').hasClass('toggled'))) {
+   && !($('#wrapper').hasClass('toggled'))
+   && !(translinkClicked)) {
       translinkClicked = true;
     $('#add-translink').trigger('click');
   }
