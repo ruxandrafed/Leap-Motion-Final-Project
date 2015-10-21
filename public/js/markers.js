@@ -18,14 +18,19 @@ function requestInfoFromGoogle (map) {
   panorama.addListener('pano_changed', function() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
-    console.log("hello")
+
+    // console.log("hello")
     var bounds = map.getBounds();
-    console.log(bounds)
-    var request = {
-      location: panorama.location.latLng,
-      radius: '50',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    };
+    // console.log(bounds)
+
+    // var request = {
+    //   location: panorama.location.latLng,
+    //   radius: '50',
+    //   types: ['bakery', 'bank', 'bar', 'book_store',
+    //   'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
+    //   'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
+    //   'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
+    // };
   //   if (pano_changes % 3 == 0) {
   //     console.log('now repainting', pano_changes);
       service.search(request, getPlacesInfo);
@@ -33,6 +38,7 @@ function requestInfoFromGoogle (map) {
       getTweets(lat, lng, map);
   //   }
   //   pano_changes += 1;
+
   });
 
 
@@ -79,8 +85,11 @@ function requestInfoFromGoogle (map) {
       // listOfMarkers.push(results);
       // console.log('list markers', listOfMarkers);
       for (var i = 0; i < results.length; i++) {
+
       //   createMarker(results[i], map);
         listOfMarkers.push(results[i]);
+
+        createGPMarker(results[i], map);
       };
       // console.log(listOfMarkers.length);
       // console.log(markersStore.length);
@@ -88,8 +97,9 @@ function requestInfoFromGoogle (map) {
   };
 }
 
+var googlePlacesMarkers = [];
 
-function createMarker(place, map) {
+function createGPMarker(place, map) {
 
   var lat=place.geometry.location.lat();
   var lng=place.geometry.location.lng();
@@ -140,20 +150,23 @@ function createMarker(place, map) {
     icon_to_use = pharmacyMarkerImage;
   } if (place.types.indexOf('store') != -1) {
     icon_to_use = storeMarkerImage;
-  } if (place.types.indexOf('bus_station') != -1) {
-    icon_to_use = busMarkerImage;
-  } if (place.types.indexOf('bar') != -1) {
+  }
+  // if (place.types.indexOf('bus_station') != -1) {
+  //   icon_to_use = busMarkerImage;
+  // }
+    if (place.types.indexOf('bar') != -1) {
     icon_to_use = barMarkerImage;
   } if (place.types.indexOf('bakery') != -1) {
     icon_to_use = bakeMarkerImage;
   }
 
-  var marker = new google.maps.Marker({
+  var markerP = new google.maps.Marker({
     map: map,
     position: {lat: lat, lng: lng},
     title: name,
     icon: icon_to_use,
   });
+  googlePlacesMarkers.push(markerP);
 
   // Create infowindow for street view
 
@@ -161,11 +174,11 @@ function createMarker(place, map) {
     content: contentString
   });
 
-  marker.addListener('click', function() {
+  markerP.addListener('click', function() {
     if (prev_infoWindow) {
       prev_infoWindow.close();
     };
-    infoWindow.open(map.getStreetView(), marker);
+    infoWindow.open(map.getStreetView(), markerP);
     prev_infoWindow = infoWindow;
   });
 }

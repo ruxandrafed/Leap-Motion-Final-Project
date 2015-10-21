@@ -19,17 +19,19 @@ function getTweets(lat, lng, map) {
 }
 
 var prev_infoWindow;
+var twitterMarkers = [];
 
 function renderTwitterMarkers (array, map) {
   array.forEach(function (tweet) {
     tweetIcon = "http://epsos.de/files/transparent-twitter-icon-logo.png";
 
-    var marker = new google.maps.Marker({
+    var markerTw = new google.maps.Marker({
       position: {lat: tweet[0], lng: tweet[1]},
       map: map,
       icon: tweetIcon,
       title: tweet[2]
     });
+    twitterMarkers.push(markerTw);
 
     var infoWindow = new google.maps.InfoWindow({
       content: '<div class="infoWindowContent"> <p>' + tweet[3] + '</p>'
@@ -38,11 +40,11 @@ function renderTwitterMarkers (array, map) {
         + '<p> On: ' + tweet[2] + '</p></div>'
     })
 
-    marker.addListener('click', function() {
+    markerTw.addListener('click', function() {
       if (prev_infoWindow) {
         prev_infoWindow.close();
       };
-      infoWindow.open(map.getStreetView(), marker);
+      infoWindow.open(map.getStreetView(), markerTw);
       prev_infoWindow = infoWindow;
     });
 
