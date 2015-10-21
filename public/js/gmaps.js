@@ -13,7 +13,6 @@ function initialize() {
     zoom: 18,
     streetViewControl: true
   });
-
   var service = new google.maps.places.PlacesService(map)
 
 
@@ -34,8 +33,13 @@ function initialize() {
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {
-    lat = panorama.position.lat().toPrecision(7);
-    lng = panorama.position.lng().toPrecision(7);
+    lat = parseFloat(panorama.position.lat().toPrecision(7));
+    lng = parseFloat(panorama.position.lng().toPrecision(7));
+    // map = new google.maps.Map(document.getElementById('streetview'), {
+    //   center: {lat: lat, lng: lng},
+    //   zoom: 18,
+    //   streetViewControl: true
+    // });
 
     if($('#add-places').is(":checked")) {
       var request = {
@@ -152,7 +156,7 @@ function initialize() {
   $("#geolocate-address-btn").on("click", function(e) {
     geolocate();
     if (!(leapActive)){
-      loadLeap();
+      loadLeap(map);
     };
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
@@ -160,7 +164,7 @@ function initialize() {
 
   $("#map-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      loadLeap(map);
     };
     e.preventDefault();
     var address = $("#location-address2").val() ;
@@ -171,7 +175,7 @@ function initialize() {
 
   $("#citycentre-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      loadLeap(map);
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
@@ -181,7 +185,7 @@ function initialize() {
 
   $("#geolocate-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      loadLeap(map);
     };
     geolocate();
     $('#myModal').modal('hide').fadeOut('slow');
@@ -190,7 +194,7 @@ function initialize() {
 
   $("#myModal").on('hidden.bs.modal', function(e){
     if (!(leapActive)){
-      loadLeap();
+      loadLeap(map);
     };
     e.preventDefault();
   });
@@ -275,7 +279,7 @@ function initialize() {
 
   // Loads Leap Motion controller
 
-  function loadLeap() {
+  function loadLeap(map) {
     leapActive==true;
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);

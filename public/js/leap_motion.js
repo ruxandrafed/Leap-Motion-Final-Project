@@ -21,7 +21,11 @@ var ringFingerExtended;
 var pinkyExtended;
 var thumbExtended;
 
-function move(frame) {
+var twitterClicked = false;
+var translinkClicked = false;
+var placesClicked = false;
+
+function move(frame, map) {
 
 
 
@@ -42,7 +46,7 @@ function move(frame) {
    && frame.hands.length == 1
    && frame.hands[0].type == 'left') {
     hand = frame.hands[0];
-    openMenu(hand);
+    openMenu(hand, map);
   }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
@@ -184,7 +188,7 @@ function streetViewSwipe(frame, gesture) {
 //   console.log(gesture);
 };
 
-function openMenu (hand) {
+function openMenu (hand, map) {
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
   var handTranX = hand._translation[0];
@@ -220,8 +224,10 @@ function openMenu (hand) {
    && palmX < 0.3
    && palmX > -0.3
    && hand.confidence > 0.35
-   && !($('#wrapper').hasClass('toggled'))) {
-    $('#add-tweets').attr('checked', true)
+   && !($('#wrapper').hasClass('toggled'))
+   && !(twitterClicked)) {
+    twitterClicked = true;
+    $('#add-tweets').trigger('click');
   }
   // This toggles the Google Places checkbox to true
   if (indexFingerExtended
@@ -232,8 +238,10 @@ function openMenu (hand) {
    && palmX < 0.3
    && palmX > -0.3
    && hand.confidence > 0.35
-   && !($('#wrapper').hasClass('toggled'))) {
-    $('#add-places').attr('checked', true)
+   && !($('#wrapper').hasClass('toggled'))
+   && !(placesClicked)) {
+    placesClicked = true;
+    $('#add-places').trigger('click');
   }
 
   if (indexFingerExtended
@@ -245,16 +253,29 @@ function openMenu (hand) {
    && palmX > -0.3
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))) {
-    $('#add-translink').attr('checked', true)
+      translinkClicked = true;
+    $('#add-translink').trigger('click');
   }
 
 
   // Removes all checkboxes
 
   if (hand.grabStrength == 1) {
-    $('#add-tweets').attr('checked', false);
-    $('#add-places').attr('checked', false);
-    $('#add-translink').attr('checked', false)
+
+    if (twitterClicked) {
+      $('#add-tweets').trigger('click');
+    };
+
+    if (placesClicked) {
+      $('#add-places').trigger('click');
+    };
+    if (translinkClicked) {
+      $('#add-translink').trigger('click');
+    };
+    
+    twitterClicked = false;
+    translinkClicked = false;
+    placesClicked = false;
   }
 }
 
@@ -296,3 +317,4 @@ function openMenu (hand) {
 
       return clockwise;
   }
+
