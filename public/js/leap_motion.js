@@ -180,17 +180,17 @@ function streetViewSwipe(frame, gesture) {
 function openMenu (hand) {
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
+  var handTranX = hand._translation[0];
   // console.log(palmX);
   // console.log(handVelocX);
-  // debugger;
 
   // These two gestures open and close the side-menu
-  if ( $('#wrapper').hasClass('toggled') && hand._translation[0] > 5 && palmX > 0.6) {
+  if ( $('#wrapper').hasClass('toggled') && hand._translation[0] > 6 && palmX > 0.8) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
 
-  if ( !($('#wrapper').hasClass('toggled')) && hand._translation[0] < -5 && palmX < -0.6) {
+  if ( !($('#wrapper').hasClass('toggled')) && hand._translation[0] < -6 && palmX < -0.8) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
