@@ -40,6 +40,7 @@ function initialize() {
   panorama.addListener('pano_changed', function() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
+    map.setCenter(panorama.position);
 
     if(placesCheckbox.is(":checked")) {
       var request = {
