@@ -65,7 +65,7 @@ function createGPMarker(place, map) {
   }
 
   var markerP = new google.maps.Marker({
-    map: map,
+    map: panorama,
     position: {lat: lat, lng: lng},
     title: name,
     icon: icon_to_use,

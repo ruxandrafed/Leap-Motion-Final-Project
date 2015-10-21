@@ -5,6 +5,9 @@ var vancouver = {lat: 49.283281, lng: -123.122786};
 function initialize() {
 
   var leapActive = false;
+  var placesCheckbox = $('#add-places');
+  var tweetsCheckbox = $('#add-tweets');
+  var translinkCheckbox = $('#add-translink');
 
   // Basic Street View embed for homepage starts here
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -38,7 +41,7 @@ function initialize() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
 
-    if($('#add-places').is(":checked")) {
+    if(placesCheckbox.is(":checked")) {
       var request = {
         location: panorama.location.latLng,
         radius: '50',
@@ -51,11 +54,11 @@ function initialize() {
       service.search(request, getPlacesInfo);
     };
 
-    if($('#add-tweets').is(":checked")) {
+    if(tweetsCheckbox.is(":checked")) {
       getTweets(lat, lng, map);
     };
 
-    if($('#add-translink').is(":checked")) {
+    if(translinkCheckbox.is(":checked")) {
     translink(lat, lng, map);
     };
 
@@ -214,7 +217,7 @@ function initialize() {
 
   function checkboxesListeners() {
 
-    $('#add-places').change(function() {
+    placesCheckbox.change(function() {
       if($(this).is(":checked")) {
         var request = {
           location: panorama.location.latLng,
@@ -236,7 +239,7 @@ function initialize() {
       };
     })
 
-    $('#add-tweets').change(function() {
+    tweetsCheckbox.change(function() {
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -251,7 +254,7 @@ function initialize() {
       };
     })
 
-    $('#add-translink').change(function() {
+    translinkCheckbox.change(function() {
       if($(this).is(":checked")) {
         var lat = panorama.position.lat().toPrecision(7);
         var lng = panorama.position.lng().toPrecision(7);
