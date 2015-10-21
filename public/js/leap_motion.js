@@ -16,6 +16,7 @@ var allFingersExtended=false;
 
 function move(frame) {
 
+  var hand;
 
   // if(frame.valid && frame.gestures.length > 0){
   //   // console.log(frame.gestures);
@@ -29,6 +30,13 @@ function move(frame) {
   if (frame.valid) {
     detectHands(frame)
   };
+
+  if (frame.valid 
+   && frame.hands.length == 1
+   && frame.hands[0].type == 'left') {
+    hand = frame.hands[0];
+    openMenu(hand);
+  }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
@@ -54,7 +62,7 @@ function move(frame) {
   };
   // Motion commands
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
-    var hand = frame.hands[0];
+    hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
       if (previousFrame) {
         movement(hand);
@@ -166,8 +174,27 @@ function moveForward (hand, pov) {
 };
 
 function streetViewSwipe(frame, gesture) {
-  console.log(gesture);
+//   console.log(gesture);
 };
+
+function openMenu (hand) {
+  var palmX = hand.palmNormal[0];
+  var handVelocX = hand.palmVelocity[0];
+  // console.log(palmX);
+  // console.log(handVelocX);
+  // debugger;
+
+  // if (Math.abs(handVelocX > 300)) {
+  if ( $('#wrapper').hasClass('toggled') && hand._translation[0] > 5 && palmX > 0.6) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+
+  if ( !($('#wrapper').hasClass('toggled')) && hand._translation[0] < -5 && palmX < 0.6) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+}
 
 
 
