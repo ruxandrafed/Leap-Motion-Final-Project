@@ -147,6 +147,11 @@ function initialize() {
     }
   }
 
+  function hideModals() {
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  }
+
   $("#map-address-btn").on("click", function(e) {
     if (!(leapActive)){
       loadLeap();
@@ -154,8 +159,7 @@ function initialize() {
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#citycentre-address-btn").on("click", function(e) {
@@ -164,8 +168,7 @@ function initialize() {
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#geolocate-address-btn").on("click", function(e) {
@@ -173,8 +176,7 @@ function initialize() {
     if (!(leapActive)){
       loadLeap();
     };
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#map-address-btn2").on("click", function(e) {
@@ -184,8 +186,7 @@ function initialize() {
     e.preventDefault();
     var address = $("#location-address2").val() ;
     changeMapCoordinates(address);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#citycentre-address-btn2").on("click", function(e) {
@@ -194,8 +195,7 @@ function initialize() {
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#geolocate-address-btn2").on("click", function(e) {
@@ -203,8 +203,7 @@ function initialize() {
       loadLeap();
     };
     geolocate();
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#myModal").on('hidden.bs.modal', function(e){
