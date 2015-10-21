@@ -30,6 +30,8 @@ function initialize() {
     }
   });
 
+  var listOfMarkers = [];
+
   panorama.setVisible(true);
 
   // Event listeners when the map changes
@@ -254,13 +256,40 @@ function initialize() {
 
   checkboxesListeners();
 
-  function getPlacesInfo(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-        createGPMarker(results[i], map);
-      };
-    };
-  };
+  // function getPlacesInfo(results, status) {
+  //   if (status == google.maps.places.PlacesServiceStatus.OK) {
+  //     for (var i = 0; i < results.length; i++) {
+  //       createGPMarker(results[i], map);
+  //     };
+  //   };
+  // };
+
+  function includedInList(result) {
+   // console.log('match');
+   for(var i=0; i < listOfMarkers.length; i++) {
+       // console.log(result);
+     if (listOfMarkers[i].id === result.id) {
+       // console.log('match');
+       return true;
+     }
+   }
+  }
+
+ function getPlacesInfo(results, status) {
+   if (status == google.maps.places.PlacesServiceStatus.OK) {
+     results.forEach(function(result) {
+       if (!includedInList(result)) {
+         
+         createGPMarker(result, map);
+       }
+     });
+
+     for (var i = 0; i < results.length; i++) {
+       listOfMarkers.push(results[i]);
+       createGPMarker(results[i], map);
+     };
+   };
+ };
 
   // Loads Leap Motion controller
 
