@@ -12,7 +12,7 @@ function initialize() {
     zoom: 18
   });
 
-  var panorama = new google.maps.StreetViewPanorama(
+  panorama = new google.maps.StreetViewPanorama(
     document.getElementById('streetview'), {
       position: vancouver,
       pov: {
