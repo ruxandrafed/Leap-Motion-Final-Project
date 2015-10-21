@@ -184,13 +184,13 @@ function openMenu (hand) {
   // console.log(handVelocX);
   // debugger;
 
-  // if (Math.abs(handVelocX > 300)) {
+  // These two gestures open and close the side-menu
   if ( $('#wrapper').hasClass('toggled') && hand._translation[0] > 5 && palmX > 0.6) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
 
-  if ( !($('#wrapper').hasClass('toggled')) && hand._translation[0] < -5 && palmX < 0.6) {
+  if ( !($('#wrapper').hasClass('toggled')) && hand._translation[0] < -5 && palmX < -0.6) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
