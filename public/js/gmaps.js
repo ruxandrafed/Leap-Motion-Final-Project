@@ -4,35 +4,34 @@ var vancouver = {lat: 49.283281, lng: -123.122786};
 
 function initialize() {
 
-  // Basic Street View embed for homepage starts here
-
-  // Set up the map
   var leapActive = false;
-  var map = new google.maps.Map(document.getElementById('streetview'), {
+
+  // Basic Street View embed for homepage starts here
+  var map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
-    zoom: 18,
-    streetViewControl: true
+    zoom: 18
   });
 
-  var service = new google.maps.places.PlacesService(map)
+  var panorama = new google.maps.StreetViewPanorama(
+    document.getElementById('streetview'), {
+      position: vancouver,
+      pov: {
+        heading: 265,
+        pitch: 10
+      }
+  });
 
-
-  // We get the map's default panorama and set up some defaults.
-  panorama = map.getStreetView();
-  panorama.setPosition(vancouver);
-  panorama.setPov(/** @type {google.maps.StreetViewPov} */({
-    heading: 265,
-    pitch: 0
-  }));
   panorama.setOptions({
     'addressControlOptions': {
     'position': google.maps.ControlPosition.BOTTOM_CENTER
     }
   });
 
-  var listOfMarkers = [];
+  map.setStreetView(panorama);
 
-  panorama.setVisible(true);
+
+  var service = new google.maps.places.PlacesService(map)
+  var listOfMarkers = [];
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {
@@ -63,22 +62,21 @@ function initialize() {
   });
 
 
-  map.addListener('center_changed', function() {
-    var mapCenter = map.center;
-    var request = {
-      location: mapCenter,
-      radius: '150',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    };
-    service = new google.maps.places.PlacesService(map)
-    service.search(request, getPlacesInfo);
-    translink(lat, lng, map);
-    getTweets(lat,lng, map);
-  });
+  // map.addListener('center_changed', function() {
+  //   var mapCenter = map.center;
+  //   var request = {
+  //     location: mapCenter,
+  //     radius: '150',
+  //     types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+  //   };
+  //   service = new google.maps.places.PlacesService(map)
+  //   service.search(request, getPlacesInfo);
+  //   translink(lat, lng, map);
+  //   getTweets(lat,lng, map);
+  // });
 
 
-  // Create the autocomplete object, restricting the search to geographical
-  // location types.
+  // Create the autocomplete object, restricting the search to geographical location types.
   autocomplete = new google.maps.places.Autocomplete(
     /** @type {!HTMLInputElement} */(document.getElementById('location-address')),
     {types: ['geocode']});
@@ -89,18 +87,26 @@ function initialize() {
 
   var geocoder = new google.maps.Geocoder();
 
-  // function to geocode an address and plot it on a map
+  // Function to geocode an address and plot it on a map
   function changeMapCoordinates(address) {
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
+
          panorama.setPosition((results[0].geometry.location));      // center the map on address
+
+         // Point streetview camera to a marker
+         var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
+         var pov = panorama.getPov();
+         pov.heading = heading;
+         panorama.setPov(pov);
+
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   }
 
-  // gets browser coordinates
+  // Gets browser coordinates
   function geolocate() {
     // Try W3C Geolocation (Preferred)
     if(navigator.geolocation) {
@@ -108,6 +114,13 @@ function initialize() {
       navigator.geolocation.getCurrentPosition(function(position) {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
+
+        // Point streetview camera to a marker
+       var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
+       var pov = panorama.getPov();
+       pov.heading = heading;
+       panorama.setPov(pov);
+
       }, function() {
         handleNoGeolocation(browserSupportFlag);
       });

@@ -109,7 +109,6 @@ function hasRating (place) {
 
 function rateStar (rating) {
   if (isNaN(rating)) return " ";
-
   var val = rating
   var size = Math.max(0, (Math.min(5, val))) * 16;
   var $span = $('<span />').width(size);

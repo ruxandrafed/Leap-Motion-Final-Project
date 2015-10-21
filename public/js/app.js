@@ -10,4 +10,11 @@ $(function() {
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   });
 
+  $("#drive-around").on("click", function(e) {
+    e.preventDefault();
+    $("#map").toggle().toggleClass('half-left');
+    $("streetview").toggleClass('half-right');
+    initialize();
+  });
+
 });
