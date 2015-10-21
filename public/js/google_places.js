@@ -14,7 +14,6 @@ function createGPMarker(place, map) {
   var rating = hasRating(place);
   var starRating = rateStar(rating);
   var name = place.name
-  // console.log(place)
   var placeType = place.types[0];
 
 
