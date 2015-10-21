@@ -14,6 +14,8 @@ function initialize() {
     streetViewControl: true
   });
 
+  var service = new google.maps.places.PlacesService(map)
+
 
   // We get the map's default panorama and set up some defaults.
   panorama = map.getStreetView();
@@ -30,19 +32,48 @@ function initialize() {
 
   panorama.setVisible(true);
 
-  // Creating Markers
+  // Event listeners when the map changes
+  panorama.addListener('pano_changed', function() {
+    lat = panorama.position.lat().toPrecision(7);
+    lng = panorama.position.lng().toPrecision(7);
+    
+    if($('#add-places').is(":checked")) {
+      var request = {
+        location: panorama.location.latLng,
+        radius: '50',
+        types: ['bakery', 'bank', 'bar', 'book_store',
+        'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
+        'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
+        'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
+      };
 
-  // // Google Places API
-  // var service = new google.maps.places.PlacesService(map);
-  // requestInfoFromGoogle(map);
+      service.search(request, getPlacesInfo);
+    };
 
-  // // Translink API
-  // var lat = panorama.position.lat().toPrecision(7);
-  // var lng = panorama.position.lng().toPrecision(7);
-  // translink(lat,lng, map);
+    if($('#add-tweets').is(":checked")) {
+      getTweets(lat, lng, map);
+    };
 
-  // // Twitter API
-  // getTweets(lat, lng, map);
+    if($('#add-translink').is(":checked")) {
+    translink(lat, lng, map);
+    };
+    
+  });
+
+
+  map.addListener('center_changed', function() {
+    var mapCenter = map.center;
+    var request = {
+      location: mapCenter,
+      radius: '150',
+      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+    };
+    service = new google.maps.places.PlacesService(map)
+    service.search(request, getPlacesInfo);
+    translink(lat, lng, map);
+    getTweets(lat,lng, map);
+  });
+
 
   // Create the autocomplete object, restricting the search to geographical
   // location types.
@@ -170,8 +201,16 @@ function initialize() {
 
     $('#add-places').change(function() {
       if($(this).is(":checked")) {
-        var service = new google.maps.places.PlacesService(map);
-        requestInfoFromGoogle(map);
+        var request = {
+          location: panorama.location.latLng,
+          radius: '50',
+          types: ['bakery', 'bank', 'bar', 'book_store',
+          'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
+          'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
+          'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
+        };
+        service = new google.maps.places.PlacesService(map);
+        service.search(request, getPlacesInfo);
         for (var i = 0; i < googlePlacesMarkers.length; i++) {
           googlePlacesMarkers[i].setMap(map);
         }
@@ -214,6 +253,14 @@ function initialize() {
   }
 
   checkboxesListeners();
+
+  function getPlacesInfo(results, status) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createGPMarker(results[i], map);
+      };
+    };
+  };
 
   // Loads Leap Motion controller
 

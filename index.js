@@ -5,7 +5,6 @@ var request = require('request');
 
 //translink stuff
 
-var params = req.query;
 var request = require('request');
 var parseString = require('xml2js').parseString;
 var params;
