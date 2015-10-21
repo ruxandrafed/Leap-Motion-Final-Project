@@ -38,7 +38,7 @@ function initialize() {
   panorama.addListener('pano_changed', function() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
-    
+
     if($('#add-places').is(":checked")) {
       var request = {
         location: panorama.location.latLng,
@@ -59,7 +59,7 @@ function initialize() {
     if($('#add-translink').is(":checked")) {
     translink(lat, lng, map);
     };
-    
+
   });
 
 
@@ -256,38 +256,20 @@ function initialize() {
 
   checkboxesListeners();
 
-  // function getPlacesInfo(results, status) {
-  //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-  //     for (var i = 0; i < results.length; i++) {
-  //       createGPMarker(results[i], map);
-  //     };
-  //   };
-  // };
-
   function includedInList(result) {
-   // console.log('match');
-   for(var i=0; i < listOfMarkers.length; i++) {
-       // console.log(result);
-     if (listOfMarkers[i].id === result.id) {
-       // console.log('match');
-       return true;
-     }
-   }
+    return listOfMarkers.some(function (value) {
+      return value.id === result.id;
+    });
   }
 
  function getPlacesInfo(results, status) {
    if (status == google.maps.places.PlacesServiceStatus.OK) {
-     results.forEach(function(result) {
-       if (!includedInList(result)) {
-         
-         createGPMarker(result, map);
-       }
+     results.filter(function (result) {
+      return !includedInList(result);
+     }).forEach(function (result) {
+      listOfMarkers.push(result);
+      createGPMarker(result, map);
      });
-
-     for (var i = 0; i < results.length; i++) {
-       listOfMarkers.push(results[i]);
-       createGPMarker(results[i], map);
-     };
    };
  };
 
