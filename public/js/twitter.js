@@ -27,7 +27,7 @@ function renderTwitterMarkers (array, map) {
 
     var markerTw = new google.maps.Marker({
       position: {lat: tweet[0], lng: tweet[1]},
-      map: map,
+      map: panorama,
       icon: tweetIcon,
       title: tweet[2]
     });

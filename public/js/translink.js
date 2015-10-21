@@ -29,7 +29,7 @@ function renderTranslinkMarkers (array, map) {
     var markerTr = new google.maps.Marker({
 
       position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
-      map: map,
+      map: panorama,
       icon: busIcon,
       title: busStop[3]
     })

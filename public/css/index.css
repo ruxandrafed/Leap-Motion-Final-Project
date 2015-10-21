@@ -8,10 +8,23 @@ html, body {
   height: 100vh;
 }
 
-#streetview {
+#streetview, #map {
   height: 100vh;
 }
 
+#map {
+  display: none;
+}
+
+.half-left {
+  float: left;
+  width: 50%;
+}
+
+.half-right {
+  float: right;
+  width: 50%;
+}
 
 #help-modal {
   left: 60px;
@@ -19,6 +32,10 @@ html, body {
 
 #location-modal {
   left: 105px;
+}
+
+#drive-around {
+  left: 150px;
 }
 
 #leap-icon {
@@ -50,9 +67,8 @@ html, body {
   color: green;
 }
 
-
 #menu-toggle, #help-modal, #location-modal,
- #leap-icon, #right-hand-icon, #left-hand-icon {
+ #leap-icon, #right-hand-icon, #left-hand-icon, #drive-around {
   position: absolute;
   opacity: 0.9;
   z-index: 1;

@@ -4,44 +4,46 @@ var vancouver = {lat: 49.283281, lng: -123.122786};
 
 function initialize() {
 
-  // Basic Street View embed for homepage starts here
-
-  // Set up the map
   var leapActive = false;
-  var map = new google.maps.Map(document.getElementById('streetview'), {
+  var placesCheckbox = $('#add-places');
+  var tweetsCheckbox = $('#add-tweets');
+  var translinkCheckbox = $('#add-translink');
+
+  // Basic Street View embed for homepage starts here
+  var map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
-    zoom: 18,
-    streetViewControl: true
+    zoom: 18
   });
-  var service = new google.maps.places.PlacesService(map)
 
+  panorama = new google.maps.StreetViewPanorama(
+    document.getElementById('streetview'), {
+      position: vancouver,
+      pov: {
+        heading: 265,
+        pitch: 10
+      }
+  });
 
-  // We get the map's default panorama and set up some defaults.
-  panorama = map.getStreetView();
-  panorama.setPosition(vancouver);
-  panorama.setPov(/** @type {google.maps.StreetViewPov} */({
-    heading: 265,
-    pitch: 0
-  }));
   panorama.setOptions({
     'addressControlOptions': {
     'position': google.maps.ControlPosition.BOTTOM_CENTER
     }
   });
 
-  panorama.setVisible(true);
+
+  map.setStreetView(panorama);
+
+
+  var service = new google.maps.places.PlacesService(map)
+  var listOfMarkers = [];
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {
-    lat = parseFloat(panorama.position.lat().toPrecision(7));
-    lng = parseFloat(panorama.position.lng().toPrecision(7));
-    // map = new google.maps.Map(document.getElementById('streetview'), {
-    //   center: {lat: lat, lng: lng},
-    //   zoom: 18,
-    //   streetViewControl: true
-    // });
+    lat = panorama.position.lat().toPrecision(7);
+    lng = panorama.position.lng().toPrecision(7);
+    map.setCenter(panorama.position);
 
-    if($('#add-places').is(":checked")) {
+    if(placesCheckbox.is(":checked")) {
       var request = {
         location: panorama.location.latLng,
         radius: '50',
@@ -54,33 +56,32 @@ function initialize() {
       service.search(request, getPlacesInfo);
     };
 
-    if($('#add-tweets').is(":checked")) {
+    if(tweetsCheckbox.is(":checked")) {
       getTweets(lat, lng, map);
     };
 
-    if($('#add-translink').is(":checked")) {
+    if(translinkCheckbox.is(":checked")) {
     translink(lat, lng, map);
     };
 
   });
 
 
-  map.addListener('center_changed', function() {
-    var mapCenter = map.center;
-    var request = {
-      location: mapCenter,
-      radius: '150',
-      types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-    };
-    service = new google.maps.places.PlacesService(map)
-    service.search(request, getPlacesInfo);
-    translink(lat, lng, map);
-    getTweets(lat,lng, map);
-  });
+  // map.addListener('center_changed', function() {
+  //   var mapCenter = map.center;
+  //   var request = {
+  //     location: mapCenter,
+  //     radius: '150',
+  //     types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+  //   };
+  //   service = new google.maps.places.PlacesService(map)
+  //   service.search(request, getPlacesInfo);
+  //   translink(lat, lng, map);
+  //   getTweets(lat,lng, map);
+  // });
 
 
-  // Create the autocomplete object, restricting the search to geographical
-  // location types.
+  // Create the autocomplete object, restricting the search to geographical location types.
   autocomplete = new google.maps.places.Autocomplete(
     /** @type {!HTMLInputElement} */(document.getElementById('location-address')),
     {types: ['geocode']});
@@ -91,18 +92,26 @@ function initialize() {
 
   var geocoder = new google.maps.Geocoder();
 
-  // function to geocode an address and plot it on a map
+  // Function to geocode an address and plot it on a map
   function changeMapCoordinates(address) {
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
+
          panorama.setPosition((results[0].geometry.location));      // center the map on address
+
+         // Point streetview camera to a marker
+         var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
+         var pov = panorama.getPov();
+         pov.heading = heading;
+         panorama.setPov(pov);
+
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   }
 
-  // gets browser coordinates
+  // Gets browser coordinates
   function geolocate() {
     // Try W3C Geolocation (Preferred)
     if(navigator.geolocation) {
@@ -110,6 +119,13 @@ function initialize() {
       navigator.geolocation.getCurrentPosition(function(position) {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
+
+        // Point streetview camera to a marker
+       var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
+       var pov = panorama.getPov();
+       pov.heading = heading;
+       panorama.setPov(pov);
+
       }, function() {
         handleNoGeolocation(browserSupportFlag);
       });
@@ -132,6 +148,11 @@ function initialize() {
     }
   }
 
+  function hideModals() {
+    $('#myModal').modal('hide').fadeOut('slow');
+    $('#myModalLocation').modal('hide').fadeOut('slow');
+  }
+
   $("#map-address-btn").on("click", function(e) {
     if (!(leapActive)){
       loadLeap();
@@ -139,8 +160,7 @@ function initialize() {
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#citycentre-address-btn").on("click", function(e) {
@@ -149,8 +169,7 @@ function initialize() {
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#geolocate-address-btn").on("click", function(e) {
@@ -158,8 +177,7 @@ function initialize() {
     if (!(leapActive)){
       loadLeap(map);
     };
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#map-address-btn2").on("click", function(e) {
@@ -169,8 +187,7 @@ function initialize() {
     e.preventDefault();
     var address = $("#location-address2").val() ;
     changeMapCoordinates(address);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#citycentre-address-btn2").on("click", function(e) {
@@ -179,8 +196,7 @@ function initialize() {
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#geolocate-address-btn2").on("click", function(e) {
@@ -188,8 +204,7 @@ function initialize() {
       loadLeap(map);
     };
     geolocate();
-    $('#myModal').modal('hide').fadeOut('slow');
-    $('#myModalLocation').modal('hide').fadeOut('slow');
+    hideModals();
   })
 
   $("#myModal").on('hidden.bs.modal', function(e){
@@ -203,7 +218,7 @@ function initialize() {
 
   function checkboxesListeners() {
 
-    $('#add-places').change(function() {
+    placesCheckbox.change(function() {
       if($(this).is(":checked")) {
         var request = {
           location: panorama.location.latLng,
@@ -225,7 +240,7 @@ function initialize() {
       };
     })
 
-    $('#add-tweets').change(function() {
+    tweetsCheckbox.change(function() {
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -240,7 +255,7 @@ function initialize() {
       };
     })
 
-    $('#add-translink').change(function() {
+    translinkCheckbox.change(function() {
       if($(this).is(":checked")) {
         var lat = panorama.position.lat().toPrecision(7);
         var lng = panorama.position.lng().toPrecision(7);
