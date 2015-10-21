@@ -14,9 +14,16 @@ var currentPitch=0;
 var currentHeading=265;
 var allFingersExtended=false;
 
+var hand;
+var middleFingerExtended;
+var indexFingerExtended;
+var ringFingerExtended;
+var pinkyExtended;
+var thumbExtended;
+
 function move(frame) {
 
-  var hand;
+
 
   // if(frame.valid && frame.gestures.length > 0){
   //   // console.log(frame.gestures);
@@ -106,10 +113,10 @@ function movement (hand) {
   var palmY = hand.palmPosition[1];
   var palmZ = hand.palmPosition[2];
   // These allow me to use different finger arrangments for different commands.
-  var middleFingerExtended = hand.middleFinger.extended;
-  var indexFingerExtended = hand.indexFinger.extended;
-  var ringFingerExtended = hand.ringFinger.extended;
-  var pinkyExtended = hand.pinky.extended;
+  middleFingerExtended = hand.middleFinger.extended;
+  indexFingerExtended = hand.indexFinger.extended;
+  ringFingerExtended = hand.ringFinger.extended;
+  pinkyExtended = hand.pinky.extended;
 
   // if (middleFingerExtended && indexFingerExtended && ringFingerExtended && pinkyExtended) {
   //   allFingersExtended = true;
@@ -181,18 +188,73 @@ function openMenu (hand) {
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
   var handTranX = hand._translation[0];
+
+  middleFingerExtended = hand.middleFinger.extended;
+  indexFingerExtended = hand.indexFinger.extended;
+  ringFingerExtended = hand.ringFinger.extended;
+  pinkyExtended = hand.pinky.extended;
+  thumbExtended = hand.thumb.extended;
+
+
   // console.log(palmX);
   // console.log(handVelocX);
 
   // These two gestures open and close the side-menu
-  if ( $('#wrapper').hasClass('toggled') && hand._translation[0] > 6 && palmX > 0.8) {
+
+  // Close menu
+  if ($('#wrapper').hasClass('toggled') && hand._translation[0] > 6 && palmX > 0.8) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
-
-  if ( !($('#wrapper').hasClass('toggled')) && hand._translation[0] < -6 && palmX < -0.8) {
+  // Open menu
+  if (!($('#wrapper').hasClass('toggled')) && hand._translation[0] < -6 && palmX <-0.8) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+  // This toggles the twitter checkbox to true
+  if (indexFingerExtended
+   && !(ringFingerExtended)
+   && !(thumbExtended)
+   && !(middleFingerExtended)
+   && !(pinkyExtended)
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))) {
+    $('#add-tweets').attr('checked', true)
+  }
+  // This toggles the Google Places checkbox to true
+  if (indexFingerExtended
+   && (middleFingerExtended)
+   && !(thumbExtended)
+   && !(ringFingerExtended)
+   && !(pinkyExtended)
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))) {
+    $('#add-places').attr('checked', true)
+  }
+
+  if (indexFingerExtended
+   && (thumbExtended)
+   && (middleFingerExtended)
+   && !(ringFingerExtended)
+   && !(pinkyExtended)
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))) {
+    $('#add-translink').attr('checked', true)
+  }
+
+
+  // Removes all checkboxes
+
+  if (hand.grabStrength == 1) {
+    $('#add-tweets').attr('checked', false);
+    $('#add-places').attr('checked', false);
+    $('#add-translink').attr('checked', false)
   }
 }
 
