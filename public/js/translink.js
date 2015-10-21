@@ -24,8 +24,10 @@ var translinkMarkers = [];
 
 function renderTranslinkMarkers (array, map) {
   array.forEach(function (busStop) {
-    busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
+    // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
+    busIcon = "../images/places/busstop.png"
     var markerTr = new google.maps.Marker({
+
       position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
       map: map,
       icon: busIcon,
