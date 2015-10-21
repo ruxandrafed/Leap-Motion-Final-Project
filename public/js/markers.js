@@ -1,4 +1,5 @@
 var prev_infoWindow = false;
+var listOfMarkers = [];
 
 function requestInfoFromGoogle (map) {
 
@@ -11,19 +12,27 @@ function requestInfoFromGoogle (map) {
     'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
   };
   var service = new google.maps.places.PlacesService(map)
-  service.search(request,getPlacesInfo)
+  // service.search(request,getPlacesInfo)
 
+  // var pano_changes = 0;
   panorama.addListener('pano_changed', function() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
+    console.log("hello")
+    var bounds = map.getBounds();
+    console.log(bounds)
     var request = {
       location: panorama.location.latLng,
       radius: '50',
       types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
     };
-    service.search(request, getPlacesInfo);
-    translink(lat, lng, map);
-    getTweets(lat, lng, map);
+  //   if (pano_changes % 3 == 0) {
+  //     console.log('now repainting', pano_changes);
+      service.search(request, getPlacesInfo);
+      translink(lat, lng, map);
+      getTweets(lat, lng, map);
+  //   }
+  //   pano_changes += 1;
   });
 
 
@@ -39,12 +48,42 @@ function requestInfoFromGoogle (map) {
     getTweets(lat,lng, map);
   });
 
+  /**
+   * Checks each response object against a chached list
+   * only adds a new marker if its not found in the 
+   * cached list (ie. no constant repainting of page)
+  **/
+  function includedInList(result) {
+    // console.log('match');
+    for(var i=0; i < listOfMarkers.length; i++) {
+        // console.log(result);
+      if (listOfMarkers[i].id === result.id) {
+        // console.log('match');
+        return true;
+      }
+    }
+  }
 
   function getPlacesInfo(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
+
+      results.forEach(function(result) {
+        if (!includedInList(result)) {
+          
+          createMarker(result, map);
+        }
+      });
+
+
+
+      // listOfMarkers.push(results);
+      // console.log('list markers', listOfMarkers);
       for (var i = 0; i < results.length; i++) {
-        createMarker(results[i], map);
+      //   createMarker(results[i], map);
+        listOfMarkers.push(results[i]);
       };
+      // console.log(listOfMarkers.length);
+      // console.log(markersStore.length);
     };
   };
 }
@@ -61,6 +100,7 @@ function createMarker(place, map) {
   var rating = hasRating(place);
   var starRating = rateStar(rating);
   var name = place.name
+  // console.log(place)
   var placeType = place.types[0];
 
 
