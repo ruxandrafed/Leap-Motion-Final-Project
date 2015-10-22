@@ -12,6 +12,7 @@ $(function() {
 
   $("#drive-around").on("click", function(e) {
     e.preventDefault();
+    $('#drive-around span').toggleClass("glyphicon-road").toggleClass("glyphicon-eye-open");
     $("#map").toggle().toggleClass('half-left');
     $("streetview").toggleClass('half-right');
     $("#get-directions-modal").toggle()
