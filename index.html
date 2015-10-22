@@ -70,7 +70,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Change location</h4>
+                  <h4 class="modal-title">Change Location:</h4>
                 </div>
                 <div class="modal-body">
 
@@ -87,15 +87,18 @@
                           <input id="location-address3" type="text" class="form-control" placeholder="Street, City, State"/>
                         </div>
 
-                        <div class="col sm-1">
+                        <div class="col-sm-4">
                           <p><button class="btn btn-primary" id="map-address-btn3"><span>Go</span></button></p>
                         </div>
-                      </div>
 
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <p>Not sure where to go? <button class="btn btn-primary" id="geolocate-address-btn3"><span>Current location</span></button> or
-                          <button class="btn btn-primary" id="citycentre-address-btn3"><span>City centre</span></button></p>
+                        <div class="col-sm-3">
+                          Travel Mode:
+                          <select id="travel-mode" class="form-control">
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLING">Bicycling</option>
+                            <option value="TRANSIT">Transit</option>
+                          </select>
                         </div>
                       </div>
 
@@ -258,6 +261,9 @@
                         <div id="map"></div>
                         <div id="streetview"></div>
 
+                        <!-- Directions Embedded Here -->
+                        <div id="directions-panel"></div>
+
                     </div>
                 </div>
             </div>
@@ -282,6 +288,7 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" src="js/google_places.js"></script>
     <script type="text/javascript" src="js/twitter.js"></script>
+    <script type="text/javascript" src="js/directions.js"></script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places&callback=initialize">
     </script>

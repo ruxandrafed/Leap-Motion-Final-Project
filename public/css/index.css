@@ -92,9 +92,12 @@ html, body {
   top: 25%;
 }
 
+/* Styling google maps directions */
+.adp-directions {
+  width: 100%;
+}
 
 /* Styling search form welcome modal */
-
 .pac-container {
   z-index: 9999;
 }
