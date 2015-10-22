@@ -14,18 +14,40 @@ var currentPitch=0;
 var currentHeading=265;
 var allFingersExtended=false;
 
-function move(frame) {
+var hand;
+var middleFingerExtended;
+var indexFingerExtended;
+var ringFingerExtended;
+var pinkyExtended;
+var thumbExtended;
+
+var twitterClicked = false;
+var translinkClicked = false;
+var placesClicked = false;
+
+function move(frame, map) {
+
 
 
   // if(frame.valid && frame.gestures.length > 0){
+  //   // console.log(frame.gestures);
+  //   // debugger;
   //     frame.gestures.forEach(function(gesture){
   //       filterGesture("swipe", streetViewSwipe)(frame, gesture);
   //     });
   //     return;
   // }
+
   if (frame.valid) {
     detectHands(frame)
   };
+
+  if (frame.valid 
+   && frame.hands.length == 1
+   && frame.hands[0].type == 'left') {
+    hand = frame.hands[0];
+    openMenu(hand, map);
+  }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
@@ -51,7 +73,7 @@ function move(frame) {
   };
   // Motion commands
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
-    var hand = frame.hands[0];
+    hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
       if (previousFrame) {
         movement(hand);
@@ -95,10 +117,10 @@ function movement (hand) {
   var palmY = hand.palmPosition[1];
   var palmZ = hand.palmPosition[2];
   // These allow me to use different finger arrangments for different commands.
-  var middleFingerExtended = hand.middleFinger.extended;
-  var indexFingerExtended = hand.indexFinger.extended;
-  var ringFingerExtended = hand.ringFinger.extended;
-  var pinkyExtended = hand.pinky.extended;
+  middleFingerExtended = hand.middleFinger.extended;
+  indexFingerExtended = hand.indexFinger.extended;
+  ringFingerExtended = hand.ringFinger.extended;
+  pinkyExtended = hand.pinky.extended;
 
   // if (middleFingerExtended && indexFingerExtended && ringFingerExtended && pinkyExtended) {
   //   allFingersExtended = true;
@@ -163,8 +185,100 @@ function moveForward (hand, pov) {
 };
 
 function streetViewSwipe(frame, gesture) {
-  console.log(gesture);
+//   console.log(gesture);
 };
+
+function openMenu (hand, map) {
+  var palmX = hand.palmNormal[0];
+  var handVelocX = hand.palmVelocity[0];
+  var handTranX = hand._translation[0];
+
+  middleFingerExtended = hand.middleFinger.extended;
+  indexFingerExtended = hand.indexFinger.extended;
+  ringFingerExtended = hand.ringFinger.extended;
+  pinkyExtended = hand.pinky.extended;
+  thumbExtended = hand.thumb.extended;
+
+
+  // console.log(palmX);
+  // console.log(handVelocX);
+
+  // These two gestures open and close the side-menu
+
+  // Close menu
+  if ($('#wrapper').hasClass('toggled') && hand._translation[0] > 6 && palmX > 0.8) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+  // Open menu
+  if (!($('#wrapper').hasClass('toggled')) && hand._translation[0] < -6 && palmX <-0.8) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+  // This toggles the twitter checkbox to true
+  if (indexFingerExtended
+   && !(ringFingerExtended)
+   && !(thumbExtended)
+   && !(middleFingerExtended)
+   && !(pinkyExtended)
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))
+   && !(twitterClicked)) {
+    twitterClicked = true;
+    $('#add-tweets').trigger('click');
+  }
+  // This toggles the Google Places checkbox to true
+  if (indexFingerExtended
+   && (middleFingerExtended)
+   && !(thumbExtended)
+   && !(ringFingerExtended)
+   && !(pinkyExtended)
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))
+   && !(placesClicked)) {
+    placesClicked = true;
+    $('#add-places').trigger('click');
+  }
+
+  if (indexFingerExtended
+   && (thumbExtended)
+   && (middleFingerExtended)
+   && !(ringFingerExtended)
+   && !(pinkyExtended)
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))
+   && !(translinkClicked)) {
+      translinkClicked = true;
+    $('#add-translink').trigger('click');
+  }
+
+
+  // Removes all checkboxes
+
+  if (hand.grabStrength == 1) {
+
+    if (twitterClicked) {
+      $('#add-tweets').trigger('click');
+    };
+
+    if (placesClicked) {
+      $('#add-places').trigger('click');
+    };
+    if (translinkClicked) {
+      $('#add-translink').trigger('click');
+    };
+    
+    twitterClicked = false;
+    translinkClicked = false;
+    placesClicked = false;
+  }
+}
 
 
 
@@ -204,3 +318,4 @@ function streetViewSwipe(frame, gesture) {
 
       return clockwise;
   }
+

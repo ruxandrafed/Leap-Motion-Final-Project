@@ -1,5 +1,4 @@
 var prev_infoWindow = false;
-var listOfMarkers = [];
 
 var googlePlacesMarkers = [];
 
@@ -64,7 +63,7 @@ function createGPMarker(place, map) {
   }
 
   var markerP = new google.maps.Marker({
-    map: map,
+    map: panorama,
     position: {lat: lat, lng: lng},
     title: name,
     icon: icon_to_use,
@@ -108,7 +107,6 @@ function hasRating (place) {
 
 function rateStar (rating) {
   if (isNaN(rating)) return " ";
-
   var val = rating
   var size = Math.max(0, (Math.min(5, val))) * 16;
   var $span = $('<span />').width(size);
