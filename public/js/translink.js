@@ -51,7 +51,7 @@ function renderTranslinkMarkers (array, map) {
 
 }
 
-var busRoutes = {};
+// var busRoutes = {};
 
 function retrieveBusRoutes() {
 
@@ -59,9 +59,10 @@ function retrieveBusRoutes() {
     data.Buses.Bus.forEach(function(busRoute) {
       var busRouteName = busRoute.RouteNo[0];
       busRoutes[busRouteName] = [busRoute.Destination[0], busRoute.Direction[0], busRoute.RouteMap[0].Href[0]];
-      console.log(busRouteName + ': ' + busRoutes[busRouteName]);
+      // console.log(busRouteName + ': ' + busRoutes[busRouteName]);
     });
   });
+
 }
 
-// retrieveBusRoutes();
+retrieveBusRoutes();
