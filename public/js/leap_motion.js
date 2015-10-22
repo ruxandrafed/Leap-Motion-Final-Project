@@ -177,12 +177,12 @@ function movement (hand) {
   // Direct heading currently a bit buggy.
   if (hand.palmPosition[2] < -40
    && hand.confidence > 0.25
-   && hand.palmPosition[1] < 140) {
+   && hand.palmPosition[1] < 120) {
       moveForward(hand, pov);
   }
 
-  if (hand.palmPosition[0] > 75
-   && hand.palmPosition[1] > 175
+  if (hand.palmPosition[0] > 50
+   && hand.palmPosition[1] > 150
    && !(driveAround)
    // && hand.palmNormal[0] > -0.3
    // && hand.palmNormal[0] < 0.25
@@ -195,8 +195,8 @@ function movement (hand) {
     openDriveView();
   }
 
-  if (hand.palmPosition[0] > 75
-   && hand.palmPosition[1] > 175
+  if (hand.palmPosition[0] > 50
+   && hand.palmPosition[1] > 150
    && driveAround
    // && hand.palmNormal[0] > -0.3
    // && hand.palmNormal[0] < 0.25
