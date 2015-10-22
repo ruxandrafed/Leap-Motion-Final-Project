@@ -92,6 +92,14 @@ html, body {
   top: 25%;
 }
 
+#travel-mode {
+  width: 20%;
+}
+
+#bus-route {
+  width: 40%;
+}
+
 /* Styling google maps directions */
 .adp-directions {
   width: 100%;

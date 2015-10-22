@@ -70,36 +70,41 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Change Location:</h4>
+                  <h4 class="modal-title">Change Location or Simulate Bus Route:</h4>
                 </div>
                 <div class="modal-body">
 
                   <div class="container address-search-form">
 
                       <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-8" id="locationField">
                           <p>Enter Address: </p>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <div class="col-sm-6" id="locationField">
                           <input id="location-address3" type="text" class="form-control" placeholder="Street, City, State"/>
-                        </div>
-
-                        <div class="col-sm-4">
-                          <p><button class="btn btn-primary" id="map-address-btn3"><span>Go</span></button></p>
-                        </div>
-
-                        <div class="col-sm-3">
-                          Travel Mode:
+                          <br>
+                          <p>Travel Mode:</p>
                           <select id="travel-mode" class="form-control">
                             <option value="DRIVING">Driving</option>
                             <option value="WALKING">Walking</option>
                             <option value="BICYCLING">Bicycling</option>
                             <option value="TRANSIT">Transit</option>
                           </select>
+                          <br>
+                          <p><button class="btn btn-primary" id="map-address-btn3"><span>Go</span></button></p>
                         </div>
+
+                        <div class="col-sm-4">
+                          <!-- Bus Routes Simulator Embedded Here -->
+                          <p>Simulate Bus Route:</p>
+                          <select id="bus-route" class="form-control">
+                              <option value="4">#004</option>
+                              <option value="5">#005</option>
+                              <option value="6">#006</option>
+                              <option value="9">#009</option>
+                          </select>
+                          <br>
+                          <button class="btn btn-primary" id="simulate-bus-route"><span>Go</span></button>
+                        </div>
+
                       </div>
 
                   </div>
