@@ -134,13 +134,13 @@ function movement (hand) {
 
   // This controls the up down view of looking at a frame
   if (axis[0] < -0.6
-   && hand.palmNormal[2] < -0.3
+   && hand.palmNormal[2] <= -0.2
    && hand.palmPosition[2] > -38
    && hand.palmPosition[1] < 150) {
     currentPitch = Math.min(90, currentPitch += 0.75);
   }
   if (axis[0] > 0.8
-   && hand.palmNormal[2] > 0
+   && hand.palmNormal[2] >= 0.2
    && hand.palmPosition[2] > -38
    && hand.palmPosition[1] < 150) {
     currentPitch = Math.max(currentPitch -= 0.75, -90);
