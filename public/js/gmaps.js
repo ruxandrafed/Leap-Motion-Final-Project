@@ -207,6 +207,16 @@ function initialize() {
     hideModals();
   })
 
+  $("#map-address-btn3").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap(map);
+    };
+    e.preventDefault();
+    var address = $("#location-address3").val() ;
+    // changeMapCoordinates(address);
+    hideModals();
+  })
+
   $("#myModal").on('hidden.bs.modal', function(e){
     if (!(leapActive)){
       loadLeap(map);

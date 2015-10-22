@@ -14,6 +14,7 @@ $(function() {
     e.preventDefault();
     $("#map").toggle().toggleClass('half-left');
     $("streetview").toggleClass('half-right');
+    $("#get-directions-modal").toggle()
     google.maps.event.trigger(panorama, "resize");
     google.maps.event.trigger(map, "resize");
   });
