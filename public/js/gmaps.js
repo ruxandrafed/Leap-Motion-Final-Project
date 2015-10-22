@@ -36,6 +36,7 @@ function initialize() {
 
   var service = new google.maps.places.PlacesService(map)
   var listOfMarkers = [];
+  console.log(listOfMarkers)
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {

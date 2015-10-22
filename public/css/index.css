@@ -75,17 +75,19 @@ html, body {
 }
 
 .modal-header {
-  background-color: #ccddee;
+  background-color: #03A9F4;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
 
-/*.modal-body {
-  background-color: #ccddee;
+.modal-body {
+  background-color: #E1F5FE;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
-.modal-footer {
-  background-color: #ccddee;
+/*.modal-footer {
+  background-color: #E3F2FD;
 }*/
 
 #modal-button {
@@ -109,6 +111,7 @@ html, body {
 }
 
 /* Styling search form sidebar */
+
 
 #sidebar-wrapper #location-address {
   width: 19%;
