@@ -28,11 +28,10 @@ function createGPMarker(place, map) {
   // var image = {
   //   size: new google.maps.Size(42, 68),
   // };
-  var busMarkerImage = iconBase + 'busstop.png';
-  var bankMarkerImage = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_icon&chld=dollar|FFFF00');
+  var bankMarkerImage = iconBase + 'bank.png'
   var groceryMarkerImage = iconBase + 'supermarket.png';
   var salonMarkerImage = iconBase + 'barber.png';
-  var restMarkerImage = iconBase + 'burger.png';
+  var restMarkerImage = iconBase + 'fastfood.png';
   var coffeeMarkerImage = iconBase + 'coffee.png';
   var storeMarkerImage = iconBase + "mall.png";
   var pharmacyMarkerImage = iconBase + 'medicalstore.png';

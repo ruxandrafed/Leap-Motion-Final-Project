@@ -36,12 +36,10 @@ function initialize() {
 
   var service = new google.maps.places.PlacesService(map);
   var listOfMarkers = [];
-<<<<<<< HEAD
-  console.log(listOfMarkers)
-=======
+
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var directionsService = new google.maps.DirectionsService;
->>>>>>> 0d10da57aebbdad2627cb4f15f63cfc63a94f355
+
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {
