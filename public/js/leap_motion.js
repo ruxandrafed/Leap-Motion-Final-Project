@@ -214,8 +214,6 @@ function movement (hand) {
 
 function moveForward (hand, pov) {
   links = panorama.getLinks();
-  console.log("Pov heading is: ", pov.heading)
-  console.log("Links are: ", links)
   if (links) {
     var linksABS = links.map(function (a){
       return {
@@ -224,10 +222,7 @@ function moveForward (hand, pov) {
         'pano': a['pano']
       }
     });
-  console.log("All sorted links are: ", linksABS)
-  console.log("Links abs value: ", linksABS[0]);
   linksABS.sort(function (a,b){ return a['heading'] - b['heading']});
-  console.log("Links sorted: ",linksABS[0]);
   panorama.setPano(linksABS[0]['pano']);
   };
 };
