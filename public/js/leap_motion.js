@@ -27,7 +27,7 @@ var placesClicked = false;
 
 var driveAround = false;
 
-function move(frame, map) {
+function move(frame) {
 
 
 
@@ -48,7 +48,7 @@ function move(frame, map) {
    && frame.hands.length == 1
    && frame.hands[0].type == 'left') {
     hand = frame.hands[0];
-    openMenu(hand, map);
+    openMenu(hand);
   }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
@@ -152,14 +152,21 @@ function movement (hand) {
   if (axis[2] > 0.7
    && hand.palmNormal[0] < -0.3
    && hand.palmPosition[1] < 150) {
-    currentHeading += 1.5;
+    if (currentHeading > 360) {
+      currentHeading = 1;
+    } else {
+      currentHeading += 1;
+    }
   };
   if (axis[2] < -0.7
    && hand.palmNormal[0] > 0.25
    && hand.palmPosition[1] < 150) {
-    currentHeading -= 1.5;
+    if (currentHeading <= 0) {
+      currentHeading = 360;
+    } else {
+      currentHeading -= 1
+    }
   };
-
   panorama.setPov({
     heading: currentHeading,
     pitch: currentPitch
@@ -207,6 +214,8 @@ function movement (hand) {
 
 function moveForward (hand, pov) {
   links = panorama.getLinks();
+  console.log("Pov heading is: ", pov.heading)
+  console.log("Links are: ", links)
   if (links) {
     var linksABS = links.map(function (a){
       return {
@@ -215,7 +224,10 @@ function moveForward (hand, pov) {
         'pano': a['pano']
       }
     });
+  console.log("All sorted links are: ", linksABS)
+  console.log("Links abs value: ", linksABS[0]);
   linksABS.sort(function (a,b){ return a['heading'] - b['heading']});
+  console.log("Links sorted: ",linksABS[0]);
   panorama.setPano(linksABS[0]['pano']);
   };
 };
@@ -224,7 +236,7 @@ function streetViewSwipe(frame, gesture) {
 //   console.log(gesture);
 };
 
-function openMenu (hand, map) {
+function openMenu (hand) {
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
   var handTranX = hand._translation[0];
