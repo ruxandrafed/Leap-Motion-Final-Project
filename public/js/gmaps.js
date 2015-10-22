@@ -226,16 +226,19 @@ function initialize() {
     hideModals();
   })
 
+// ********************
+
   // $("#simulate-bus-route").on("click", function(e) {
   //   if (!(leapActive)){
   //     loadLeap(map);
   //   };
   //   e.preventDefault();
 
-  //   var origin = ;
-  //   var destination = ;
+  //   var routeNo = $('#bus-route').val();
+  //   // alert(JSON.stringify(busRoutes));
+  //   var origin = busRoutes[routeNo];
+  //   // var destination = ;
   //   var travelMode = 'Transit';
-
   //   getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
   //   hideModals();
   // })
