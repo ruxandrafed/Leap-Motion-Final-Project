@@ -34,9 +34,14 @@ function initialize() {
   map.setStreetView(panorama);
 
 
-  var service = new google.maps.places.PlacesService(map)
+  var service = new google.maps.places.PlacesService(map);
   var listOfMarkers = [];
+<<<<<<< HEAD
   console.log(listOfMarkers)
+=======
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var directionsService = new google.maps.DirectionsService;
+>>>>>>> 0d10da57aebbdad2627cb4f15f63cfc63a94f355
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {
@@ -89,6 +94,10 @@ function initialize() {
 
   autocomplete = new google.maps.places.Autocomplete(
     /** @type {!HTMLInputElement} */(document.getElementById('location-address2')),
+    {types: ['geocode']});
+
+  autocomplete = new google.maps.places.Autocomplete(
+    /** @type {!HTMLInputElement} */(document.getElementById('location-address3')),
     {types: ['geocode']});
 
   var geocoder = new google.maps.Geocoder();
@@ -152,6 +161,7 @@ function initialize() {
   function hideModals() {
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
+    $('#myModalDirections').modal('hide').fadeOut('slow');
   }
 
   $("#map-address-btn").on("click", function(e) {
@@ -205,6 +215,18 @@ function initialize() {
       loadLeap();
     };
     geolocate();
+    hideModals();
+  })
+
+  $("#map-address-btn3").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap(map);
+    };
+    e.preventDefault();
+    var origin = panorama.position;
+    var destination = $("#location-address3").val();
+    var travelMode = $("#travel-mode").val();
+    getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
     hideModals();
   })
 

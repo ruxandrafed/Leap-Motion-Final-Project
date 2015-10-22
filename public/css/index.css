@@ -38,9 +38,14 @@ html, body {
   left: 150px;
 }
 
+#get-directions-modal {
+  display: none;
+  left: 195px;
+}
+
 #leap-icon {
 
-  left: 250px;
+  left: 280px;
   font-weight: bold;
 }
 
@@ -53,22 +58,22 @@ html, body {
 }
 
 #left-hand-icon {
-  left: 295px;
+  left: 325px;
 }
 #left-hand-icon.detected{
   color: green;
 }
 
 #right-hand-icon {
-  left: 340px;
+  left: 370px;
 }
 
 #right-hand-icon.detected{
   color: green;
 }
 
-#menu-toggle, #help-modal, #location-modal,
- #leap-icon, #right-hand-icon, #left-hand-icon, #drive-around {
+#menu-toggle, #help-modal, #location-modal, #get-directions-modal,
+#leap-icon, #right-hand-icon, #left-hand-icon, #drive-around, #get-directions {
   position: absolute;
   opacity: 0.9;
   z-index: 1;
@@ -103,9 +108,12 @@ html, body {
   top: 25%;
 }
 
+/* Styling google maps directions */
+.adp-directions {
+  width: 100%;
+}
 
 /* Styling search form welcome modal */
-
 .pac-container {
   z-index: 9999;
 }
