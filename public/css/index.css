@@ -75,13 +75,13 @@ html, body {
 }
 
 .modal-header {
-  background-color: #03A9F4;
+  background-color: #FF9800;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
 
 .modal-body {
-  background-color: #E1F5FE;
+ /* background-color: #FFF3E0;*/
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
