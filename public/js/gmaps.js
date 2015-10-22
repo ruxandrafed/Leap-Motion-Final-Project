@@ -182,14 +182,14 @@ function initialize() {
   $("#geolocate-address-btn").on("click", function(e) {
     geolocate();
     if (!(leapActive)){
-      loadLeap(map);
+      loadLeap();
     };
     hideModals();
   })
 
   $("#map-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      loadLeap();
     };
     e.preventDefault();
     var address = $("#location-address2").val() ;
@@ -199,7 +199,7 @@ function initialize() {
 
   $("#citycentre-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      loadLeap();
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
@@ -208,7 +208,7 @@ function initialize() {
 
   $("#geolocate-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      loadLeap();
     };
     geolocate();
     hideModals();
@@ -228,7 +228,7 @@ function initialize() {
 
   $("#myModal").on('hidden.bs.modal', function(e){
     if (!(leapActive)){
-      loadLeap(map);
+      loadLeap();
     };
     e.preventDefault();
   });

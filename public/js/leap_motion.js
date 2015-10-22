@@ -25,7 +25,9 @@ var twitterClicked = false;
 var translinkClicked = false;
 var placesClicked = false;
 
-function move(frame, map) {
+var driveAround = false;
+
+function move(frame) {
 
 
 
@@ -46,7 +48,7 @@ function move(frame, map) {
    && frame.hands.length == 1
    && frame.hands[0].type == 'left') {
     hand = frame.hands[0];
-    openMenu(hand, map);
+    openMenu(hand);
   }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
@@ -121,6 +123,7 @@ function movement (hand) {
   indexFingerExtended = hand.indexFinger.extended;
   ringFingerExtended = hand.ringFinger.extended;
   pinkyExtended = hand.pinky.extended;
+  thumbExtended = hand.thumb.extended;
 
   // if (middleFingerExtended && indexFingerExtended && ringFingerExtended && pinkyExtended) {
   //   allFingersExtended = true;
@@ -131,12 +134,15 @@ function movement (hand) {
 
   // This controls the up down view of looking at a frame
   if (axis[0] < -0.6
-   && hand.palmPosition[2] > -38) {
+   && hand.palmNormal[2] <= -0.2
+   && hand.palmPosition[2] > -38
+   && hand.palmPosition[1] < 150) {
     currentPitch = Math.min(90, currentPitch += 0.75);
   }
   if (axis[0] > 0.8
-   && hand.palmNormal[2] > 0.29
-   && hand.palmPosition[2] > -38) {
+   && hand.palmNormal[2] >= 0.2
+   && hand.palmPosition[2] > -38
+   && hand.palmPosition[1] < 150) {
     currentPitch = Math.max(currentPitch -= 0.75, -90);
   }
   // currentPitch= -90*axis[0]
@@ -144,14 +150,23 @@ function movement (hand) {
   // This control the right left rotation of a street view
 
   if (axis[2] > 0.7
-   && hand.palmNormal[0] < -0.3) {
-    currentHeading += 1.5;
+   && hand.palmNormal[0] < -0.3
+   && hand.palmPosition[1] < 150) {
+    if (currentHeading > 360) {
+      currentHeading = 1;
+    } else {
+      currentHeading += 1;
+    }
   };
   if (axis[2] < -0.7
-   && hand.palmNormal[0] > 0.25) {
-    currentHeading -= 1.5;
+   && hand.palmNormal[0] > 0.25
+   && hand.palmPosition[1] < 150) {
+    if (currentHeading <= 0) {
+      currentHeading = 360;
+    } else {
+      currentHeading -= 1
+    }
   };
-
   panorama.setPov({
     heading: currentHeading,
     pitch: currentPitch
@@ -161,8 +176,37 @@ function movement (hand) {
   // Forward motion achieved by putting palm forward towards laptop
   // Direct heading currently a bit buggy.
   if (hand.palmPosition[2] < -40
-   && hand.confidence > 0.25) {
+   && hand.confidence > 0.25
+   && hand.palmPosition[1] < 120) {
       moveForward(hand, pov);
+  }
+
+  if (hand.palmPosition[0] > 50
+   && hand.palmPosition[1] > 150
+   && !(driveAround)
+   // && hand.palmNormal[0] > -0.3
+   // && hand.palmNormal[0] < 0.25
+   && indexFingerExtended
+   && !(middleFingerExtended)
+   && !(ringFingerExtended)
+   && !(thumbExtended)
+   && !(pinkyExtended)
+   && hand.confidence > 0.3) {
+    openDriveView();
+  }
+
+  if (hand.palmPosition[0] > 50
+   && hand.palmPosition[1] > 150
+   && driveAround
+   // && hand.palmNormal[0] > -0.3
+   // && hand.palmNormal[0] < 0.25
+   && indexFingerExtended
+   && middleFingerExtended
+   && !(thumbExtended)
+   && !(ringFingerExtended)
+   && !(pinkyExtended)
+   && hand.confidence > 0.3) {
+    closeDriveView();
   }
 
 
@@ -180,7 +224,6 @@ function moveForward (hand, pov) {
     });
   linksABS.sort(function (a,b){ return a['heading'] - b['heading']});
   panorama.setPano(linksABS[0]['pano']);
-  console.log('forward');
   };
 };
 
@@ -188,7 +231,7 @@ function streetViewSwipe(frame, gesture) {
 //   console.log(gesture);
 };
 
-function openMenu (hand, map) {
+function openMenu (hand) {
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
   var handTranX = hand._translation[0];
@@ -281,41 +324,51 @@ function openMenu (hand, map) {
 }
 
 
+function openDriveView () {
+  driveAround = true;
+  $('#drive-around').trigger('click')
+}
 
-  // ==== utility functions =====
+function closeDriveView () {
+  driveAround = false;
+  $('#drive-around').trigger('click')
+}
 
-  /** Returns the truth that a Leap Motion API Hand object is currently in a gripped or "grabbed" state.
-  */
-  function isGripped(hand) {
-    return hand.grabStrength == 1.0;
-  }
 
-  function getHandColor(hand) {
-      if(isGripped(hand)) {
-          return "rgb(0,119,0)";
-      } else {
-          var tint = Math.round((1.0 - hand.grabStrength) * 119);
-          tint = "rgb(119," + tint + "," + tint + ")";
-          return tint;
-      }
-  }
+// ==== utility functions =====
 
-  function filterGesture(gestureType, callback) {
-      return function(frame, gesture) {
-          if(gesture.type == gestureType) {
-              callback(frame, gesture);
-          }
-      }
-  }
+/** Returns the truth that a Leap Motion API Hand object is currently in a gripped or "grabbed" state.
+*/
+function isGripped(hand) {
+  return hand.grabStrength == 1.0;
+}
 
-  function isClockwise(frame, gesture) {
-      var clockwise = false;
-      var pointableID = gesture.pointableIds[0];
-      var direction = frame.pointable(pointableID).direction;
-      var dotProduct = Leap.vec3.dot(direction, gesture.normal);
+function getHandColor(hand) {
+    if(isGripped(hand)) {
+        return "rgb(0,119,0)";
+    } else {
+        var tint = Math.round((1.0 - hand.grabStrength) * 119);
+        tint = "rgb(119," + tint + "," + tint + ")";
+        return tint;
+    }
+}
 
-      if (dotProduct  >  0) clockwise = true;
+function filterGesture(gestureType, callback) {
+    return function(frame, gesture) {
+        if(gesture.type == gestureType) {
+            callback(frame, gesture);
+        }
+    }
+}
 
-      return clockwise;
-  }
+function isClockwise(frame, gesture) {
+    var clockwise = false;
+    var pointableID = gesture.pointableIds[0];
+    var direction = frame.pointable(pointableID).direction;
+    var dotProduct = Leap.vec3.dot(direction, gesture.normal);
+
+    if (dotProduct  >  0) clockwise = true;
+
+    return clockwise;
+}
 
