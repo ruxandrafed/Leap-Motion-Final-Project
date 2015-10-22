@@ -58,6 +58,20 @@ html, body {
   z-index: 1;
 }
 
+.modal-header {
+  background-color: #ccddee;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+/*.modal-body {
+  background-color: #ccddee;
+}
+
+.modal-footer {
+  background-color: #ccddee;
+}*/
+
 #modal-button {
   display: none;
 }
