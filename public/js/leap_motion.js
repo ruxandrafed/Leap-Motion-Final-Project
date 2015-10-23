@@ -274,10 +274,10 @@ function openMenu (hand) {
   }
   // This toggles the Google Places checkbox to true
   if (indexFingerExtended
-   && (middleFingerExtended)
-   && !(thumbExtended)
-   && !(ringFingerExtended)
-   && !(pinkyExtended)
+   && middleFingerExtended
+   && !thumbExtended
+   && !ringFingerExtended
+   && !pinkyExtended
    && palmX < 0.3
    && palmX > -0.3
    && hand.confidence > 0.35
@@ -288,10 +288,10 @@ function openMenu (hand) {
   }
 
   if (indexFingerExtended
-   && (thumbExtended)
-   && (middleFingerExtended)
-   && !(ringFingerExtended)
-   && !(pinkyExtended)
+   && thumbExtended
+   && middleFingerExtended
+   && !ringFingerExtended
+   && !pinkyExtended
    && palmX < 0.3
    && palmX > -0.3
    && hand.confidence > 0.35
@@ -304,7 +304,13 @@ function openMenu (hand) {
 
   // Removes all checkboxes
 
-  if (hand.grabStrength == 1) {
+  if (hand.grabStrength == 1
+   && !($('#wrapper').hasClass('toggled'))
+   && !indexFingerExtended
+   && !middleFingerExtended
+   && !thumbExtended
+   && !ringFingerExtended
+   && !pinkyExtended) {
 
     if (twitterClicked) {
       $('#add-tweets').trigger('click');

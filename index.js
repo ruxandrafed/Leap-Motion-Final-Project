@@ -9,6 +9,7 @@ var request = require('request');
 var parseString = require('xml2js').parseString;
 var params;
 var url;
+var xml;
 
 // Twitter Client
 
@@ -60,14 +61,14 @@ server.register(require('inert'), function (err) {
   // translink get method
   server.route({
     method: 'GET',
-    path: '/translink',
+    path: '/translink/stops',
     handler: function (req, reply) {
       params = req.query;
       url = 'http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu&lat=' +
         params.lat + "&long=" + params.lng + "&radius=100"
 
       request(url, function (error, response, body) {
-        var xml = body;
+        xml = body;
         parseString(xml, function (err, result){
           data = JSON.stringify(result)
           if (!error && response.statusCode == 200) {
@@ -78,17 +79,37 @@ server.register(require('inert'), function (err) {
     }
   })
 
-  // Realtime dat
-
   server.route({
     method: 'GET',
-    path: '/realtime',
+    path: '/translink/buses',
     handler: function (req, reply) {
-
+      params = req.query;
+      url = 'http://api.translink.ca/rttiapi/v1/stops/'+ params.stopNo
+        + '/estimates?apikey=aGNpR72RV528weEJ7zZu'+ '&count=' +
+        params.count + '&timeframe=' + params.timeFrame
+      request(url, function (error, response, body) {
+        xml = body;
+        parseString(xml, function (err, result){
+          data = JSON.stringify(result)
+          if (!error && response.statusCode == 200) {
+            reply(data);
+          }
+        });
+      })
     }
   })
 
-  // Add public directory handler
+  // Realtime data route
+
+  // server.route({
+  //   method: 'GET',
+  //   path: '/realtime',
+  //   handler: function (req, reply) {
+
+  //   }
+  // })
+
+  // // Add public directory handler
   server.route({
     method: 'GET',
     path: '/{param*}',

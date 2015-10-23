@@ -2,17 +2,19 @@ function translink (lat, lng, map) {
 
   busMarkerInfo = [];
 
-  $.getJSON ("/realtime"), function (data) {
-    console.log(data);
-  };
+  // $.getJSON ("/realtime"), function (data) {
+  //   console.log(data);
+  // };
 
-  $.getJSON("/translink", {lat: lat, lng: lng}, function (data) {
+
+  $.getJSON("/translink/stops", {lat: lat, lng: lng}, function (data) {
     stops = data.Stops.Stop;
+    console.log(stops)
     stops.forEach(function (stop) {
       contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet[0] + '</p>'
         + '<p> Name: ' + stop.Name[0] + '</p>'
         + '<p>Routes: ' + stop.Routes[0] + '</p></div>'
-      busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], contentString])
+      busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], contentString, stop.StopNo[0]])
     });
     renderTranslinkMarkers(busMarkerInfo, map);
   });
@@ -24,6 +26,10 @@ var translinkMarkers = [];
 
 function renderTranslinkMarkers (array, map) {
   array.forEach(function (busStop) {
+
+  $.getJSON("/translink/buses", {stopNo: busStop[6], count: 3, timeFrame: 60}, function (estimates) {
+    console.log(estimates);
+  });
     // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     busIcon = "../images/places/busstop.png"
     var markerTr = new google.maps.Marker({
