@@ -1,5 +1,9 @@
 /* this is for the star ratings to appear 
 in the infowindow of each marker */
+div.gm-style-iw {
+  background-color: #FFF3E0;
+  
+}
 
 span.stars, span.stars span {
   display: block;
@@ -11,3 +15,4 @@ span.stars, span.stars span {
 span.stars span {
   background-position: 0 0;
 }
+

@@ -85,7 +85,6 @@ server.register(require('inert'), function (err) {
     handler: function (req, reply) {
       params = req.query;
       url = 'http://api.translink.ca/rttiapi/v1/buses?apikey=aGNpR72RV528weEJ7zZu'
-
       request(url, function (error, response, body) {
         var xml = body;
         parseString(xml, function (err, result){
@@ -97,16 +96,6 @@ server.register(require('inert'), function (err) {
       });
     }
   })
-
-  // // Translink Realtime data
-
-  // server.route({
-  //   method: 'GET',
-  //   path: '/realtime',
-  //   handler: function (req, reply) {
-
-  //   }
-  // })
 
   // Add public directory handler
   server.route({

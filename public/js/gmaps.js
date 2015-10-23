@@ -12,7 +12,8 @@ function initialize() {
   // Basic Street View embed for homepage starts here
   var map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
-    zoom: 18
+    zoom: 18,
+    mapTypeControl: false
   });
 
   panorama = new google.maps.StreetViewPanorama(
@@ -30,14 +31,14 @@ function initialize() {
     }
   });
 
-
   map.setStreetView(panorama);
-
 
   var service = new google.maps.places.PlacesService(map);
   var listOfMarkers = [];
+
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var directionsService = new google.maps.DirectionsService;
+
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {

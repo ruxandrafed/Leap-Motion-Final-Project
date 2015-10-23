@@ -47,10 +47,12 @@ html, body {
 
   left: 280px;
   font-weight: bold;
+
 }
 
 #leap-icon.leap-on{
   color: green;
+
 }
 
 #leap-icon.leap-off{
@@ -78,6 +80,22 @@ html, body {
   opacity: 0.9;
   z-index: 1;
 }
+
+.modal-header {
+  background-color: #FF9800;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.modal-body {
+ /* background-color: #FFF3E0;*/
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/*.modal-footer {
+  background-color: #E3F2FD;
+}*/
 
 #modal-button {
   display: none;

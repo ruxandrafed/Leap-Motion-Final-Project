@@ -70,18 +70,32 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Change Location or Simulate Bus Route:</h4>
+                  <h4 class="modal-title">Get Directions or Simulate Bus Route:</h4>
                 </div>
                 <div class="modal-body">
 
                   <div class="container address-search-form">
 
                       <div class="row">
-                        <div class="col-sm-8" id="locationField">
+                        <div class="col-sm-12">
                           <p>Enter Address: </p>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-sm-6" id="locationField">
                           <input id="location-address3" type="text" class="form-control" placeholder="Street, City, State"/>
-                          <br>
-                          <p>Travel Mode:</p>
+                        </div>
+
+                        <div class="col sm-1">
+                          <p><button class="btn btn-primary" id="map-address-btn3"><span>Giddy up!</span></button></p>
+                        </div>
+                      </div>
+
+                      <div class="row">
+
+                        <div class="col-sm-8">
+                          Travel mode:
                           <select id="travel-mode" class="form-control">
                             <option value="DRIVING">Driving</option>
                             <option value="WALKING">Walking</option>
@@ -89,10 +103,7 @@
                             <option value="TRANSIT">Transit</option>
                           </select>
                           <br>
-                          <p><button class="btn btn-primary" id="map-address-btn3"><span>Go</span></button></p>
-                        </div>
 
-                        <div class="col-sm-4">
                           <!-- Bus Routes Simulator Embedded Here -->
                           <p>Simulate Bus Route:</p>
                           <select id="bus-route" class="form-control">
@@ -104,7 +115,6 @@
                           <br>
                           <button class="btn btn-primary" id="simulate-bus-route"><span>Go</span></button>
                         </div>
-
                       </div>
 
                   </div>
@@ -148,7 +158,7 @@
                         </div>
 
                         <div class="col sm-1">
-                          <p><button class="btn btn-primary" id="map-address-btn2"><span>Go</span></button></p>
+                          <p><button class="btn btn-primary" id="map-address-btn2"><span>Giddy up!</span></button></p>
                         </div>
                       </div>
 
@@ -200,7 +210,7 @@
                           </div>
 
                           <div class="col sm-1">
-                            <p><button class="btn btn-primary" id="map-address-btn"><span>Go</span></button></p>
+                            <p><button class="btn btn-primary" id="map-address-btn"><span>Giddy up!</span></button></p>
                           </div>
                         </div>
 
@@ -214,9 +224,9 @@
                     </div>
 
                 </div>
-                <div class="modal-footer">
+             <!--    <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                </div> -->
               </div>
 
             </div>
@@ -228,11 +238,11 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="/">
-                        Leap Vancouver
+                        Giddy Up Vancouver!
                     </a>
                 </li>
                 <li>
-                    <p>Add markers</p>
+                    <p>What would you like to see?</p>
                     <li>
                       <input type="checkbox" name="add-tweets" id="add-tweets"> Tweets<br>
                     </li>
@@ -241,6 +251,10 @@
                     </li>
                     <li>
                       <input type="checkbox" name="add-translink" id="add-translink"> Bus stations<br>
+                    </li>
+                    <p>Is this your first rodeo?</p>
+                    <li>
+                      <a href="#help-modal" class="btn btn-default" id="help-modal" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                     </li>
                 </li>
             </ul>
@@ -258,9 +272,11 @@
                         <a href="#location-modal" class="btn btn-default" id="location-modal" data-toggle="modal" data-target="#myModalLocation" id="modal-help-button"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
                         <a href="" class="btn btn-default" id="drive-around"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></a>
                         <a href="#get-directions-modal" class="btn btn-default" id="get-directions-modal" data-toggle="modal" data-target="#myModalDirections"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
-                        <span id="leap-icon" class="btn btn-default glyphicon glyphicon-off"></span>
-                        <span id="left-hand-icon" class="btn btn-default glyphicon glyphicon-hand-left"></span>
-                        <span id="right-hand-icon" class="btn btn-default glyphicon glyphicon-hand-right"></span>
+                        <div class="leap-buttons text-center">
+                          <span id="leap-icon" class="btn btn-default glyphicon glyphicon-off"></span>
+                          <span id="left-hand-icon" class="btn btn-default glyphicon glyphicon-hand-left"></span>
+                          <span id="right-hand-icon" class="btn btn-default glyphicon glyphicon-hand-right"></span>
+                        </div>
 
                         <!-- Street View Embedded Here -->
                         <div id="map"></div>
@@ -297,6 +313,7 @@
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places&callback=initialize">
     </script>
+
 
     <script src="js/translink.js"></script>
 
