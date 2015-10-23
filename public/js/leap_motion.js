@@ -232,6 +232,8 @@ function streetViewSwipe(frame, gesture) {
 };
 
 function openMenu (hand) {
+  // console.log(hand)
+  // debugger;
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
   var handTranX = hand._translation[0];
@@ -269,8 +271,20 @@ function openMenu (hand) {
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
    && !(twitterClicked)) {
+
+    if (placesClicked) {
+      placesClicked = false
+      $('#add-places').trigger('click');
+    };
+
+    if (translinkClicked) {
+      translinkClicked = false;
+      $('#add-translink').trigger('click');
+    };
+
     twitterClicked = true;
     $('#add-tweets').trigger('click');
+
   }
   // This toggles the Google Places checkbox to true
   if (indexFingerExtended
@@ -283,6 +297,17 @@ function openMenu (hand) {
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
    && !(placesClicked)) {
+
+    if (twitterClicked) {
+      twitterClicked = false;
+      $('#add-tweets').trigger('click');
+    };
+
+    if (translinkClicked) {
+      translinkClicked = false;
+      $('#add-translink').trigger('click');
+    };
+
     placesClicked = true;
     $('#add-places').trigger('click');
   }
@@ -297,9 +322,36 @@ function openMenu (hand) {
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
    && !(translinkClicked)) {
+
+    if (twitterClicked) {
+      twitterClicked = false;
+      $('#add-tweets').trigger('click');
+    };
+
+    if (placesClicked) {
+      placesClicked = false
+      $('#add-places').trigger('click');
+    };
+
       translinkClicked = true;
     $('#add-translink').trigger('click');
   }
+
+
+  // var scrollYMax = Math.min(380.9, window.scrollY += 10)
+  // var scrollYMin = Math.max(window.scrollY -= 10, 0)
+  // //moves window down
+  // if (hand.pinchStrength > 0.7
+  //  && hand._translation[1] > 1) {
+  //   window.scroll(0, scrollYMax);
+  // }
+
+  // //moves window up
+
+  // if (hand.pinchStrength > 0.7
+  //  && hand._translation[1] < -1) {
+  //   window.scroll(0, scrollYMin);
+  // }
 
 
   // Removes all checkboxes
@@ -308,7 +360,6 @@ function openMenu (hand) {
    && !($('#wrapper').hasClass('toggled'))
    && !indexFingerExtended
    && !middleFingerExtended
-   && !thumbExtended
    && !ringFingerExtended
    && !pinkyExtended) {
 
