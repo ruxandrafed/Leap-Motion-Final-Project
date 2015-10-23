@@ -1,15 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
 html, body {
-  height: 100vh;
+  height: 95vh;
   margin: 0px;
   padding: 0;
 }
 
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
+
 #sidebar {
-  height: 100vh;
+  height: 95vh;
 }
 
 #streetview, #map {
-  height: 100vh;
+  height: 95vh;
 }
 
 #map {
@@ -47,10 +53,12 @@ html, body {
 
   left: 280px;
   font-weight: bold;
+
 }
 
 #leap-icon.leap-on{
   color: green;
+
 }
 
 #leap-icon.leap-off{
@@ -79,6 +87,22 @@ html, body {
   z-index: 1;
 }
 
+.modal-header {
+  background-color: #FF9800;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.modal-body {
+ /* background-color: #FFF3E0;*/
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/*.modal-footer {
+  background-color: #E3F2FD;
+}*/
+
 #modal-button {
   display: none;
 }
@@ -95,6 +119,11 @@ html, body {
 /* Styling google maps directions */
 .adp-directions {
   width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.adp-marker {
+  margin: 5px 5px;
 }
 
 /* Styling search form welcome modal */
@@ -102,8 +131,23 @@ html, body {
   z-index: 9999;
 }
 
+.sidebar-nav > .sidebar-brand a {
+    color: #333;
+}
+
+#sidebar-wrapper {
+  background-color: white;
+  box-shadow: 5px 5px 5px #d1d1d1;
+}
+
+
 /* Styling search form sidebar */
 
 #sidebar-wrapper #location-address {
   width: 19%;
+}
+
+.instructions .borderless td {
+  border: none;
+  text-align: center;
 }
