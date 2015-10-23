@@ -43,6 +43,10 @@ html, body {
   left: 195px;
 }
 
+.leap-buttons {
+  text-align: center;
+}
+
 #leap-icon {
 
   left: 280px;
