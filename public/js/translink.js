@@ -26,15 +26,33 @@ function renderTranslinkMarkers (array, map) {
   name = busStop[3];
   route = busStop[4];
   atStreet = busStop[2];
+  contentRoutes = ''
   // console.log("Whole object: ",busStop)
   // console.log("Stop No: ", busStop[5])
+  function getContentRoutes() {
+    $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
+    // console.log("Next Buses, ", data.NextBuses.NextBus);
+      var buses = data.NextBuses.NextBus;
+      buses.forEach(function (bus) {
+        // console.log(bus);
+        contentRoutes = contentRoutes.concat('<p> Route No: ' + bus.RouteNo[0] + '</p>'
+         + '<p> Next 3 buses: ' + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
+         + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
+         + '</p></div>')
+      })
+      console.log(contentRoutes)
+      // return contentRoutes
+    });
+    returnContent(contentRoutes);
 
-  $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 1200}, function (buses) {
-    // console.log(buses);
-    // console.log("Route name: ", buses.NextBuses.NextBus[0].RouteName)
-    // console.log("Route Number: ",buses.NextBuses.NextBus[0].RouteNo)
-    // console.log("Route Schedule: ", buses.NextBuses.NextBus[0].Schedules)
-  });
+  }
+
+  function returnContent(string) {
+    $('.routes-content').text(string);
+  }
+
+  getContentRoutes();
+
     // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     busIcon = "../images/places/busstop.png"
     var markerTr = new google.maps.Marker({
@@ -48,9 +66,9 @@ function renderTranslinkMarkers (array, map) {
     contentString = '<div class="infoWindowContent"> <p> At Street:' + atStreet + '</p>'
         + '<p> Name: ' + name + '</p>'
         + '<p>Routes: ' + route + '</p>'
-        + '<p> StopNo' + busStop[5] + '</p>'
-        + '<div><h5>Bus Schedule Estimates</h5>'
-        + '<p> </p></div>'
+        + '<p> StopNo ' + busStop[5] + '</p>'
+        + '<div class=><h5>Bus Schedule Estimates</h5>'
+        + '<span class="routes-content"></span>' + '</div>'
     translinkMarkers.push(markerTr);
 
     var infoWindow = new google.maps.InfoWindow({
