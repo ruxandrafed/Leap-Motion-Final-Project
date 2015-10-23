@@ -1,15 +1,21 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
 html, body {
-  height: 100vh;
+  height: 95vh;
   margin: 0px;
   padding: 0;
 }
 
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
+
 #sidebar {
-  height: 100vh;
+  height: 95vh;
 }
 
 #streetview, #map {
-  height: 100vh;
+  height: 95vh;
 }
 
 #map {
@@ -113,6 +119,7 @@ html, body {
 /* Styling google maps directions */
 .adp-directions {
   width: 100%;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 /* Styling search form welcome modal */
@@ -128,6 +135,6 @@ html, body {
 }
 
 .instructions .borderless td {
-    border: none;
-    text-align: center;
+  border: none;
+  text-align: center;
 }
