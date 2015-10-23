@@ -9,12 +9,8 @@ function translink (lat, lng, map) {
 
   $.getJSON("/translink/stops", {lat: lat, lng: lng}, function (data) {
     stops = data.Stops.Stop;
-    console.log(stops)
     stops.forEach(function (stop) {
-      contentString = '<div class="infoWindowContent"> <p> At Street:' + stop.AtStreet[0] + '</p>'
-        + '<p> Name: ' + stop.Name[0] + '</p>'
-        + '<p>Routes: ' + stop.Routes[0] + '</p></div>'
-      busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], contentString, stop.StopNo[0]])
+      busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], stop.StopNo[0]])
     });
     renderTranslinkMarkers(busMarkerInfo, map);
   });
@@ -24,11 +20,20 @@ var prev_infoWindow;
 
 var translinkMarkers = [];
 
+
 function renderTranslinkMarkers (array, map) {
   array.forEach(function (busStop) {
+  name = busStop[3];
+  route = busStop[4];
+  atStreet = busStop[2];
+  console.log("Whole object: ",busStop)
+  console.log("Stop No: ", busStop[5])
 
-  $.getJSON("/translink/buses", {stopNo: busStop[6], count: 3, timeFrame: 60}, function (estimates) {
-    console.log(estimates);
+  $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 1200}, function (buses) {
+    console.log(buses);
+    console.log("Route name: ", buses.NextBuses.NextBus[0].RouteName)
+    console.log("Route Number: ",buses.NextBuses.NextBus[0].RouteNo)
+    console.log("Route Schedule: ", buses.NextBuses.NextBus[0].Schedules)
   });
     // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     busIcon = "../images/places/busstop.png"
@@ -39,10 +44,17 @@ function renderTranslinkMarkers (array, map) {
       icon: busIcon,
       title: busStop[3]
     })
+
+    contentString = '<div class="infoWindowContent"> <p> At Street:' + atStreet + '</p>'
+        + '<p> Name: ' + name + '</p>'
+        + '<p>Routes: ' + route + '</p>'
+        + '<p> StopNo' + busStop[5] + '</p>'
+        + '<div><h5>Bus Schedule Estimates</h5>'
+        + '<p> </p></div>'
     translinkMarkers.push(markerTr);
 
     var infoWindow = new google.maps.InfoWindow({
-      content: busStop[5]
+      content: contentString
     })
 
     markerTr.addListener('click', function() {
