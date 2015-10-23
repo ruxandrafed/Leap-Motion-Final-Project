@@ -4,6 +4,10 @@ html, body {
   padding: 0;
 }
 
+#logo {
+  font-family: 'Pacifico', cursive;
+}
+
 #sidebar {
   height: 100vh;
 }
@@ -60,7 +64,7 @@ html, body {
 
 #left-hand-icon {
   left: 45px;
-  margin-top: -3px;
+  margin-top: -2px;
 }
 #left-hand-icon.detected{
   color: green;
@@ -68,7 +72,7 @@ html, body {
 
 #right-hand-icon {
   left: 90px;
-  margin-top: -3px;
+  margin-top: -2px;
 }
 
 #right-hand-icon.detected{

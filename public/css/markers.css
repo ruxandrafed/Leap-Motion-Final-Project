@@ -1,8 +1,26 @@
 /* this is for the star ratings to appear 
 in the infowindow of each marker */
-div.gm-style-iw {
-  background-color: #FFF3E0;
-  
+iwOuter.parent.parent {
+  left: 115px;
+}
+
+.iw-title {
+  font-family: 'Pacifico';
+  font-size: 18px;
+  font-weight: 400;
+  background-color: #FF9800;
+  margin: 1px;
+}
+
+.gm-style-iw {
+  width: 210px !important;
+  top: 1px !important;
+  left: 1px !important;
+  border-radius: 2px 2px 0 0;
+ /* background-color: #FFF3E0;*/
+  box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
+  border: 1px solid #FF9800;
+  border-radius: 2px 2px 0 0;  
 }
 
 span.stars, span.stars span {

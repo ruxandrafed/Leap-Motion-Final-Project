@@ -21,7 +21,7 @@ function createGPMarker(place, map) {
 
   var openNow = isOpen(place);
 
-  var contentString = "<div class='infoWindowContent'> <p>Name: " + name + "</p>"
+  var contentString = "<div class='infoWindowContent'> <div class='iw-title'>" + name + "</div>"
     + "<p>Rating: " + rating + "<span class='stars'> " + starRating + "</span>" + "</p>"
     + "<p>Open: " + openNow + "</p>"
     + "<p>Type of Establishment: " + placeType + "</p></div>"
@@ -81,6 +81,13 @@ function createGPMarker(place, map) {
     };
     infoWindow.open(map.getStreetView(), markerP);
     prev_infoWindow = infoWindow;
+    var iwOuter = $('.gm-style-iw');
+    var iwBackground = iwOuter.prev();
+    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
+    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px',  'z-index' : '10'});
   });
 }
 
