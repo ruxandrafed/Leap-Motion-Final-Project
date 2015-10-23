@@ -61,7 +61,7 @@ function renderTranslinkMarkers (array, map) {
       if (prev_infoWindow) {
         prev_infoWindow.close();
       };
-      infoWindow.open(map.getStreetView(), markerTr);
+      infoWindow.open(panorama, markerTr);
       prev_infoWindow = infoWindow;
     });
 
