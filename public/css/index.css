@@ -43,20 +43,15 @@ html, body {
   left: 195px;
 }
 
-.leap-buttons {
-  text-align: center;
-}
+
 
 #leap-icon {
-
-  left: 280px;
+  left: 640px;
   font-weight: bold;
-
 }
 
 #leap-icon.leap-on{
   color: green;
-
 }
 
 #leap-icon.leap-off{
@@ -64,14 +59,16 @@ html, body {
 }
 
 #left-hand-icon {
-  left: 325px;
+  left: 45px;
+  margin-top: -3px;
 }
 #left-hand-icon.detected{
   color: green;
 }
 
 #right-hand-icon {
-  left: 370px;
+  left: 90px;
+  margin-top: -3px;
 }
 
 #right-hand-icon.detected{
