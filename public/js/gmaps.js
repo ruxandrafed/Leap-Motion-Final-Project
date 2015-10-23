@@ -266,7 +266,7 @@ function initialize() {
         service = new google.maps.places.PlacesService(map);
         service.search(request, getPlacesInfo);
         for (var i = 0; i < googlePlacesMarkers.length; i++) {
-          googlePlacesMarkers[i].setMap(map);
+          googlePlacesMarkers[i].setMap(panorama);
         }
       } else {
           for (var i = 0; i < googlePlacesMarkers.length; i++) {
