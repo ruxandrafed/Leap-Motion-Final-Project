@@ -60,19 +60,18 @@ function retrieveBusRoute(route) {
   $.getJSON("/translink-routes", function (data) {
     data.Buses.Bus.forEach(function(busRoute) {
       var busRouteName = busRoute.RouteNo[0];
-      busRoutes[busRouteName] = [busRoute.Destination[0], busRoute.Direction[0], busRoute.RouteMap[0].Href[0]];
-      // console.log(busRouteName + ': ' + busRoutes[busRouteName]);
+      busRoutes[busRouteName] = [busRoute.Destination[0], busRoute.Direction[0]];
+      // console.log(busRoute.RouteMap[0].Href[0]);
     });
-    // console.log(busRoutes);
     extractDestOrigin(route, busRoutes);
   });
 
   function extractDestOrigin(route, hash) {
-    var kmzMap = hash[route][2];
-    var data = {upload: kmzMap};
-    debugger;
+    var kmzMap = "http://localhost:8000:/translink/" + route + '.kmz';
 
-    $.post("http://ogre.adc4gis.com/convert", data, function (data) {
+    var params = {upload: kmzMap};
+
+    $.post("http://ogre.adc4gis.com/convert", params, function (data) {
         console.log(data);
       });
     };
