@@ -43,7 +43,7 @@ function renderTwitterMarkers (array, map) {
       if (prev_infoWindow) {
         prev_infoWindow.close();
       };
-      infoWindow.open(map.getStreetView(), markerTw);
+      infoWindow.open(panorama, markerTw);
       prev_infoWindow = infoWindow;
     });
 
