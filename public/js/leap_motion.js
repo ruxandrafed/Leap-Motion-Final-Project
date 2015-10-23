@@ -270,7 +270,8 @@ function openMenu (hand) {
    && palmX > -0.3
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
-   && !(twitterClicked)) {
+   && !(twitterClicked)
+   && hand.pinchStrength < 0.85) {
 
     if (placesClicked) {
       placesClicked = false
@@ -296,7 +297,8 @@ function openMenu (hand) {
    && palmX > -0.3
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
-   && !(placesClicked)) {
+   && !(placesClicked)
+   && hand.pinchStrength < 0.55) {
 
     if (twitterClicked) {
       twitterClicked = false;
@@ -321,7 +323,8 @@ function openMenu (hand) {
    && palmX > -0.3
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
-   && !(translinkClicked)) {
+   && !(translinkClicked)
+   && hand.pinchStrength < 0.1) {
 
     if (twitterClicked) {
       twitterClicked = false;
@@ -340,18 +343,28 @@ function openMenu (hand) {
 
   // var scrollYMax = Math.min(380.9, window.scrollY += 10)
   // var scrollYMin = Math.max(window.scrollY -= 10, 0)
-  // //moves window down
-  // if (hand.pinchStrength > 0.7
-  //  && hand._translation[1] > 1) {
-  //   window.scroll(0, scrollYMax);
-  // }
+  //moves window down
+  if (hand.pinchStrength > 0.7
+   && hand._translation[1] > 1
+   && $('#wrapper').hasClass('toggled')) {
+    window.scroll(0, window.scrollY += 10);
+  }
 
-  // //moves window up
+  //moves window up
 
-  // if (hand.pinchStrength > 0.7
-  //  && hand._translation[1] < -1) {
-  //   window.scroll(0, scrollYMin);
-  // }
+  if (hand.pinchStrength > 0.7
+   && hand._translation[1] < -1
+   && $('#wrapper').hasClass('toggled')) {
+    window.scroll(0, window.scrollY -= 10);
+  }
+
+  if (window.scrollY > 450) {
+    window.scrollY = 450
+  }
+
+  if (window.scrollY < 0) {
+    window.scrollY = 0
+  }
 
 
   // Removes all checkboxes
