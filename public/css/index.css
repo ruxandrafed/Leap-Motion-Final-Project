@@ -127,8 +127,17 @@ body {
   z-index: 9999;
 }
 
-/* Styling search form sidebar */
+.sidebar-nav > .sidebar-brand a {
+    color: #333;
+}
 
+#sidebar-wrapper {
+  background-color: white;
+  box-shadow: 5px 5px 5px #d1d1d1;
+}
+
+
+/* Styling search form sidebar */
 
 #sidebar-wrapper #location-address {
   width: 19%;

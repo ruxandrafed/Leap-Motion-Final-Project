@@ -71,18 +71,32 @@ function initialize() {
   });
 
 
-  // map.addListener('center_changed', function() {
-  //   var mapCenter = map.center;
-  //   var request = {
-  //     location: mapCenter,
-  //     radius: '150',
-  //     types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
-  //   };
-  //   service = new google.maps.places.PlacesService(map)
-  //   service.search(request, getPlacesInfo);
-  //   translink(lat, lng, map);
-  //   getTweets(lat,lng, map);
-  // });
+  map.addListener('bounds_changed', function() {
+
+    var mapCenter = map.center;
+
+    if(placesCheckbox.is(":checked")) {
+      var request = {
+        location: panorama.location.latLng,
+        radius: '50',
+        types: ['bakery', 'bank', 'bar', 'book_store',
+        'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
+        'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
+        'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
+      };
+
+      service.search(request, getPlacesInfo);
+    };
+
+    if(tweetsCheckbox.is(":checked")) {
+      getTweets(lat, lng, map);
+    };
+
+    if(translinkCheckbox.is(":checked")) {
+    translink(lat, lng, map);
+    };
+
+  });
 
 
   // Create the autocomplete object, restricting the search to geographical location types.
