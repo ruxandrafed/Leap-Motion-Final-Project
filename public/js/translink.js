@@ -26,14 +26,14 @@ function renderTranslinkMarkers (array, map) {
   name = busStop[3];
   route = busStop[4];
   atStreet = busStop[2];
-  console.log("Whole object: ",busStop)
-  console.log("Stop No: ", busStop[5])
+  // console.log("Whole object: ",busStop)
+  // console.log("Stop No: ", busStop[5])
 
   $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 1200}, function (buses) {
-    console.log(buses);
-    console.log("Route name: ", buses.NextBuses.NextBus[0].RouteName)
-    console.log("Route Number: ",buses.NextBuses.NextBus[0].RouteNo)
-    console.log("Route Schedule: ", buses.NextBuses.NextBus[0].Schedules)
+    // console.log(buses);
+    // console.log("Route name: ", buses.NextBuses.NextBus[0].RouteName)
+    // console.log("Route Number: ",buses.NextBuses.NextBus[0].RouteNo)
+    // console.log("Route Schedule: ", buses.NextBuses.NextBus[0].Schedules)
   });
     // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     busIcon = "../images/places/busstop.png"

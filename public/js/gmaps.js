@@ -267,7 +267,7 @@ function initialize() {
         service.search(request, getPlacesInfo);
         for (var i = 0; i < googlePlacesMarkers.length; i++) {
           googlePlacesMarkers[i].setMap(map);
-          setTimeout(function() {google.maps.event.trigger(googlePlacesMarkers[i], 'click')}, 500);
+          // setTimeout(function() {google.maps.event.trigger(googlePlacesMarkers[i], 'click')}, 500);
         }
       } else {
           for (var i = 0; i < googlePlacesMarkers.length; i++) {
