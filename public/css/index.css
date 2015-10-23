@@ -126,3 +126,8 @@ html, body {
 #sidebar-wrapper #location-address {
   width: 19%;
 }
+
+.instructions .borderless td {
+    border: none;
+    text-align: center;
+}
