@@ -1,4 +1,4 @@
-function getTweets(lat, lng, map) {
+function getTweets(lat, lng, panorama) {
 
   var allTweets = [];
 
@@ -24,7 +24,6 @@ var twitterMarkers = [];
 function renderTwitterMarkers (array, map) {
   array.forEach(function (tweet) {
     tweetIcon = "/images/twitter-icon-logo.png";
-
     var markerTw = new google.maps.Marker({
       position: {lat: tweet[0], lng: tweet[1]},
       map: panorama,

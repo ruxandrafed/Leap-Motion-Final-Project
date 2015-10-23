@@ -280,7 +280,7 @@ function initialize() {
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
-        getTweets(lat, lng);
+        getTweets(lat, lng, panorama);
         for (var i = 0; i < twitterMarkers.length; i++) {
           twitterMarkers[i].setMap(panorama);
         }
