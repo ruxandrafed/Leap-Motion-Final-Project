@@ -122,6 +122,10 @@ body {
   font-family: 'Ubuntu', sans-serif;
 }
 
+.adp-marker {
+  margin: 5px 5px;
+}
+
 /* Styling search form welcome modal */
 .pac-container {
   z-index: 9999;
