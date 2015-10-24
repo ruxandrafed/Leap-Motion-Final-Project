@@ -35,7 +35,6 @@ function renderInstagramMarkers(array, map) {
     });
 
     markerInsta.addListener('click', function() {
-      debugger;
       if (prev_infoWindow) {
         prev_infoWindow.close();
       };
