@@ -85,7 +85,7 @@ var HyperlapsePoint = function(location, pano_id, params ) {
 	 * @default "© 2013 Google"
 	 * @type {String}
 	 */
-	this.copyright = params.copyright || "© 2013 Google";
+	this.copyright = params.copyright || "© 2015 Google";
 
 	/**
 	 * @type {String}
@@ -171,6 +171,7 @@ var Hyperlapse = function(container, params) {
 	var _streetview_service = new google.maps.StreetViewService();
 
 	_canvas = document.createElement( 'canvas' );
+	_canvas.setAttribute('id', 'canvas');
 	_context = _canvas.getContext( '2d' );
 
 	_camera = new THREE.PerspectiveCamera( _fov, _w/_h, 1, 1100 );
@@ -212,6 +213,7 @@ var Hyperlapse = function(container, params) {
 		var context = canvas.getContext('2d');
 		canvas.setAttribute('width',this.canvas.width);
 		canvas.setAttribute('height',this.canvas.height);
+		canvas.setAttribute('id', 'canvas');
 		context.drawImage(this.canvas, 0, 0);
 
 		_h_points[_point_index].image = canvas;

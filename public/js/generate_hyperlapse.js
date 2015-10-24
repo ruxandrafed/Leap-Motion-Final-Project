@@ -1,10 +1,14 @@
 function generateHyperlapse(origin, destination) {
 
+  var hyperlapseDivWidth = $("div#hyperlapse").width() - 5;
+
   var hyperlapse = new Hyperlapse(document.getElementById('hyperlapse'), {
     lookat: origin,
     zoom: 1,
     use_lookat: true,
-    elevation: 50
+    elevation: 50,
+    width: hyperlapseDivWidth,
+    heigh: hyperlapseDivWidth/2
   });
 
   hyperlapse.onError = function(e) {
