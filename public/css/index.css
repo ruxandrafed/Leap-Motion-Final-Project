@@ -34,9 +34,13 @@ body {
   width: 53%;
 }
 
+.icon-legend {
+  font-size: 12px;
+}
+
 .instructions .borderless td {
   border: none;
-  text-align: center;
+  text-align: left;
 }
 
 .modal-body {
@@ -46,7 +50,7 @@ body {
 }
 
 .modal-content  {
-  top: 25%;
+  top: 20%;
 }
 
 .modal-dialog  {
