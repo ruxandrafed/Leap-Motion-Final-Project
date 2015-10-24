@@ -1,4 +1,4 @@
-/* this is for the star ratings to appear 
+/* this is for the star ratings to appear
 in the infowindow of each marker */
 iwOuter.parent.parent {
   left: 115px;
@@ -12,12 +12,10 @@ iwOuter.parent.parent {
   color:  #ff9800;
   /*background-color: #FF9800;*/
   margin: 1px;
-  padding: 5px;
-  padding-left: 12px;
+  padding: 0px;
+  /*padding-left: 12px;*/
   width: 200px;
 }
-
-
 
 span.stars, span.stars span {
   display: block;
