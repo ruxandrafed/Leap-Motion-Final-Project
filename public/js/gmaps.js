@@ -27,8 +27,9 @@ function initialize() {
 
   panorama.setOptions({
     'addressControlOptions': {
-    'position': google.maps.ControlPosition.BOTTOM_CENTER
-    }
+      'position': google.maps.ControlPosition.BOTTOM_CENTER
+    },
+    panControl: false
   });
 
 
