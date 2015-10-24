@@ -69,6 +69,7 @@ function createGPMarker(place, map) {
   });
   googlePlacesMarkers.push(markerP);
 
+
   // Create infowindow for street view
 
   var infoWindow = new google.maps.InfoWindow({
@@ -76,10 +77,11 @@ function createGPMarker(place, map) {
   });
 
   markerP.addListener('click', function() {
-    if (prev_infoWindow) {
-      prev_infoWindow.close();
-    };
+    // if (prev_infoWindow) {
+    //   prev_infoWindow.close();
+    // };
     infoWindow.open(map.getStreetView(), markerP);
+
     prev_infoWindow = infoWindow;
     var iwOuter = $('.gm-style-iw');
     var iwBackground = iwOuter.prev();
@@ -89,6 +91,10 @@ function createGPMarker(place, map) {
     iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
     iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px',  'z-index' : '10'});
   });
+
+  // This open windows automatically, still buggy
+  // setTimeout(function() {google.maps.event.trigger(markerP, 'click')}, 1000);
+
 }
 
 function isOpen (place){

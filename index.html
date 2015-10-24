@@ -52,7 +52,49 @@
                   <h4 class="modal-title">Instructions</h4>
                 </div>
                 <div class="modal-body">
-                  <p>Some text in the modal.</p>
+                  <div class="container instructions">
+                      <h5>Activate/deactivate Leap Motion</h5>
+                      <h5>Moving in streetview</h5>
+                      <h5>Open/close sidebar</h5>
+                      <h5>Toggle markers</h5>
+                      <h5>Switch to side-by-side view</h5>
+                      <h5>Icons legend</h5>
+                      <table class="table borderless condensed" id="icons-legend">
+                          <tr>
+                            <td><img id="open-sidebar-icon" src="/images/icons/open-sidebar.jpg" alt="Open sidebar" class="info-icons"></td>
+                            <td><img id="close-sidebar-icon" src="/images/icons/close-sidebar.jpg" alt="Close sidebar" class="info-icons"></td>
+                            <td><img id="show-instructions-icon" src="/images/icons/info.jpg" alt="Instructions" class="info-icons"></td>
+                            <td><img id="change-location-icon" src="/images/icons/change-location.jpg" alt="Change location" class="info-icons"></td>
+                            <td><img id="side-by-side-icon" src="/images/icons/side-by-side.jpg" alt="Switch to side-by-side view" class="info-icons"></td>
+                            <td><img id="streetview-icon" src="/images/icons/streetview-only.jpg" alt="Switch to streetview only mode" class="info-icons"></td>
+                          </tr>
+                          <tr>
+                            <td>Open sidebar</td>
+                            <td>Close sidebar</td>
+                            <td>Instructions</td>
+                            <td>Change location</td>
+                            <td>Side-by-side</td>
+                            <td>Streetview only</td>
+                          </tr>
+                          <tr>
+                            <td><img id="get-directions-icon" src="/images/icons/get-directions.jpg" alt="Get directions" class="info-icons"></td>
+                            <td><img id="leap-active-icon" src="/images/icons/leap-active.jpg" alt="Leap Motion active" class="info-icons"></td>
+                            <td><img id="leap-inactive-icon" src="/images/icons/leap-inactive.jpg" alt="Leap Motion inactive" class="info-icons"></td>
+                            <td><img id="right-hand-active-icon" src="/images/icons/right-hand-active.jpg" alt="Right hand active" class="info-icons"></td>
+                            <td><img id="left-hand-inactive-icon" src="/images/icons/left-hand-inactive.jpg" alt="Left hand inactive" class="info-icons"></td>
+                            <td><img id="pegman-icon" src="/images/icons/pegman.jpg" alt="Pegman" class="info-icons"></td>
+                          </tr>
+                          <tr>
+                            <td>Get directions</td>
+                            <td>Leap Motion active</td>
+                            <td>Leap Motion inactive</td>
+                            <td>Right hand active</td>
+                            <td>Left hand inactive</td>
+                            <td>Draggable pegman</td>
+                          </tr>
+                      </table>
+                      <div id="icon-legend"></div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -91,7 +133,11 @@
                         </div>
 
                         <div class="col-sm-4">
-                          <p><button class="btn btn-primary" id="map-address-btn3"><span id="logo">Giddy up!</span></button></p>
+
+<!--                           <p><button class="btn btn-primary" id="map-address-btn3"><span id="logo">Giddy up!</span></button></p>
+ -->
+                          <p><button class="btn btn-success" id="map-address-btn3"><span>Giddy up!</span></button></p>
+
                         </div>
 
                         <div class="col-sm-3">
@@ -146,15 +192,15 @@
                         </div>
 
                         <div class="col sm-1">
-                          <p><button class="btn btn-primary" id="map-address-btn2"><span>Giddy up!
+                          <p><button class="btn btn-success" id="map-address-btn2"><span>Giddy up!
                           </span></button></p>
                         </div>
                       </div>
 
                       <div class="row">
                         <div class="col-sm-12">
-                          <p>Not sure where to go? <button class="btn btn-primary" id="geolocate-address-btn2"><span>Current location</span></button> or
-                          <button class="btn btn-primary" id="citycentre-address-btn2"><span>City centre</span></button></p>
+                          <p>Not sure where to go? <button class="btn btn-success" id="geolocate-address-btn2"><span>Current location</span></button> or
+                          <button class="btn btn-success" id="citycentre-address-btn2"><span>City centre</span></button></p>
                         </div>
                       </div>
 
@@ -199,23 +245,23 @@
                           </div>
 
                           <div class="col sm-1">
-                            <p><button class="btn btn-primary" id="map-address-btn"><span>Giddy up!</span></button></p>
+                            <p><button class="btn btn-success" id="map-address-btn"><span>Giddy up!</span></button></p>
                           </div>
                         </div>
 
                       <div class="row">
                         <div class="col-sm-12">
-                          <p>Not sure where to go? <button class="btn btn-primary" id="geolocate-address-btn"><span>Current location</span></button> or
-                          <button class="btn btn-primary" id="citycentre-address-btn"><span>City centre</span></button></p>
+                          <p>Not sure where to go? <button class="btn btn-success" id="geolocate-address-btn"><span>Current location</span></button> or
+                          <button class="btn btn-success" id="citycentre-address-btn"><span>City centre</span></button></p>
                         </div>
                       </div>
 
                     </div>
 
                 </div>
-             <!--    <div class="modal-footer">
+                <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div> -->
+                </div>
               </div>
 
             </div>
@@ -241,10 +287,10 @@
                     <li>
                       <input type="checkbox" name="add-translink" id="add-translink"> Bus stations<br>
                     </li>
-                    <p>Is this your first rodeo?</p>
-                    <li>
+<!--                     <li>
+                       <p>Is this your first rodeo?</p>
                       <a href="#help-modal" class="btn btn-default" id="help-modal" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
-                    </li>
+                    </li> -->
                 </li>
             </ul>
         </div>
@@ -301,6 +347,7 @@
     <script type="text/javascript" src="js/google_places.js"></script>
     <script type="text/javascript" src="js/twitter.js"></script>
     <script type="text/javascript" src="js/directions.js"></script>
+    <script type="text/javascript" src="js/instagram.js"></script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places&callback=initialize">
     </script>

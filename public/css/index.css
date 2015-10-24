@@ -1,15 +1,22 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
 html, body {
-  height: 100vh;
+  height: 95vh;
   margin: 0px;
   padding: 0;
 }
 
 #logo {
   font-family: 'Pacifico', cursive;
+} 
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+
 }
 
 #sidebar {
-  height: 100vh;
+  height: 95vh;
 }
 
 .sidebar-brand {
@@ -18,7 +25,7 @@ html, body {
 }
 
 #streetview, #map {
-  height: 100vh;
+  height: 95vh;
 }
 
 #map {
@@ -129,6 +136,11 @@ html, body {
 /* Styling google maps directions */
 .adp-directions {
   width: 100%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.adp-marker {
+  margin: 5px 5px;
 }
 
 /* Styling search form welcome modal */
@@ -136,9 +148,23 @@ html, body {
   z-index: 9999;
 }
 
-/* Styling search form sidebar */
+.sidebar-nav > .sidebar-brand a {
+    color: #333;
+}
 
+#sidebar-wrapper {
+  background-color: white;
+  box-shadow: 5px 5px 5px #d1d1d1;
+}
+
+
+/* Styling search form sidebar */
 
 #sidebar-wrapper #location-address {
   width: 19%;
+}
+
+.instructions .borderless td {
+  border: none;
+  text-align: center;
 }

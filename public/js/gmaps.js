@@ -61,27 +61,41 @@ function initialize() {
     };
 
     if(tweetsCheckbox.is(":checked")) {
-      getTweets(lat, lng, map);
+      getTweets(lat, lng, panorama);
     };
 
     if(translinkCheckbox.is(":checked")) {
-    translink(lat, lng, map);
+    translink(lat, lng, panorama);
     };
 
   });
 
 
-  // map.addListener('center_changed', function() {
+  // map.addListener('bounds_changed', function() {
+
   //   var mapCenter = map.center;
-  //   var request = {
-  //     location: mapCenter,
-  //     radius: '150',
-  //     types: ['store', 'restaurant', 'cafe', 'grocery_or_supermarket','bank', 'salon']
+
+  //   if(placesCheckbox.is(":checked")) {
+  //     var request = {
+  //       location: panorama.location.latLng,
+  //       radius: '50',
+  //       types: ['bakery', 'bank', 'bar', 'book_store',
+  //       'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
+  //       'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
+  //       'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
+  //     };
+
+  //     service.search(request, getPlacesInfo);
   //   };
-  //   service = new google.maps.places.PlacesService(map)
-  //   service.search(request, getPlacesInfo);
+
+  //   if(tweetsCheckbox.is(":checked")) {
+  //     getTweets(lat, lng, map);
+  //   };
+
+  //   if(translinkCheckbox.is(":checked")) {
   //   translink(lat, lng, map);
-  //   getTweets(lat,lng, map);
+  //   };
+
   // });
 
 
@@ -252,7 +266,8 @@ function initialize() {
         service = new google.maps.places.PlacesService(map);
         service.search(request, getPlacesInfo);
         for (var i = 0; i < googlePlacesMarkers.length; i++) {
-          googlePlacesMarkers[i].setMap(map);
+          googlePlacesMarkers[i].setMap(panorama);
+          // setTimeout(function() {google.maps.event.trigger(googlePlacesMarkers[i], 'click')}, 500);
         }
       } else {
           for (var i = 0; i < googlePlacesMarkers.length; i++) {
@@ -265,9 +280,9 @@ function initialize() {
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
-        getTweets(lat, lng, map);
+        getTweets(lat, lng, panorama);
         for (var i = 0; i < twitterMarkers.length; i++) {
-          twitterMarkers[i].setMap(map);
+          twitterMarkers[i].setMap(panorama);
         }
       } else {
           for (var i = 0; i < twitterMarkers.length; i++) {
@@ -280,9 +295,9 @@ function initialize() {
       if($(this).is(":checked")) {
         var lat = panorama.position.lat().toPrecision(7);
         var lng = panorama.position.lng().toPrecision(7);
-        translink(lat, lng, map);
+        translink(lat, lng, panorama);
         for (var i = 0; i < translinkMarkers.length; i++) {
-          translinkMarkers[i].setMap(map);
+          translinkMarkers[i].setMap(panorama);
         }
       } else {
           for (var i = 0; i < translinkMarkers.length; i++) {
