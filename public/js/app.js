@@ -8,6 +8,8 @@ $(function() {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+    google.maps.event.trigger(map, 'resize');
+    map.setZoom( map.getZoom() );
   });
 
   $("#drive-around").on("click", function(e) {
