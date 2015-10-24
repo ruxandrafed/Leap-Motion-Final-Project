@@ -8,6 +8,7 @@ function initialize() {
   var placesCheckbox = $('#add-places');
   var tweetsCheckbox = $('#add-tweets');
   var translinkCheckbox = $('#add-translink');
+  var instagramCheckbox = $('#add-instagram');
 
   // Basic Street View embed for homepage starts here
   var map = new google.maps.Map(document.getElementById('map'), {
@@ -65,7 +66,11 @@ function initialize() {
     };
 
     if(translinkCheckbox.is(":checked")) {
-    translink(lat, lng, panorama);
+      translink(lat, lng, panorama);
+    };
+
+    if(instagramCheckbox.is(":checked")) {
+      getInstagramPosts(lat, lng, panorama);
     };
 
   });
@@ -274,7 +279,7 @@ function initialize() {
             googlePlacesMarkers[i].setMap(null);
           }
       };
-    })
+    });
 
     tweetsCheckbox.change(function() {
       if($(this).is(":checked")) {
@@ -287,6 +292,21 @@ function initialize() {
       } else {
           for (var i = 0; i < twitterMarkers.length; i++) {
             twitterMarkers[i].setMap(null);
+          }
+      };
+    });
+
+    instagramCheckbox.change(function() {
+      if($(this).is(":checked")) {
+        var lat = panorama.position.lat();
+        var lng = panorama.position.lng();
+        getInstagramPosts(lat, lng, panorama);
+        for (var i = 0; i < instaMarkers.length; i++) {
+          instaMarkers[i].setMap(panorama);
+        }
+      } else {
+          for (var i = 0; i < instaMarkers.length; i++) {
+            instaMarkers[i].setMap(null);
           }
       };
     })
@@ -304,7 +324,7 @@ function initialize() {
             translinkMarkers[i].setMap(null);
           }
       };
-    })
+    });
   }
 
   checkboxesListeners();

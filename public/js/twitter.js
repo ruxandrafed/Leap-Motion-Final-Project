@@ -23,7 +23,7 @@ var twitterMarkers = [];
 
 function renderTwitterMarkers (array, map) {
   array.forEach(function (tweet) {
-    tweetIcon = "/images/twitter-icon-logo.png";
+    var tweetIcon = "/images/twitter-icon-logo.png";
     var markerTw = new google.maps.Marker({
       position: {lat: tweet[0], lng: tweet[1]},
       map: panorama,
@@ -37,7 +37,7 @@ function renderTwitterMarkers (array, map) {
         + '<img src="' + tweet[5] + '">'
         + '<p> Posted by: <a href="http://www.twitter.com/' + tweet[4] + '">' + tweet[4] + '</a></p>'
         + '<p> On: ' + tweet[2] + '</p></div>'
-    })
+    });
 
     markerTw.addListener('click', function() {
       if (prev_infoWindow) {

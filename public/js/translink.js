@@ -36,7 +36,7 @@ function renderTranslinkMarkers (array, map) {
     // console.log("Route Schedule: ", buses.NextBuses.NextBus[0].Schedules)
   });
     // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
-    busIcon = "../images/places/busstop.png"
+    var busIcon = "../images/places/busstop.png"
     var markerTr = new google.maps.Marker({
 
       position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
