@@ -12,6 +12,11 @@ html, body {
   height: 100vh;
 }
 
+.sidebar-brand {
+  font-family: 'Pacifico';
+  font-size: 28px;
+}
+
 #streetview, #map {
   height: 100vh;
 }
@@ -84,6 +89,12 @@ html, body {
   position: absolute;
   opacity: 0.9;
   z-index: 1;
+}
+
+.modal-title {
+  font-family: 'Pacifico';
+  font-size: 22px;
+  left: 20px;
 }
 
 .modal-header {
