@@ -29,7 +29,6 @@ function initialize() {
     'addressControlOptions': {
       'position': google.maps.ControlPosition.BOTTOM_CENTER
     },
-    panControl: false
   });
 
 
