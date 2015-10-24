@@ -86,7 +86,7 @@ function createGPMarker(place, map) {
     var iwOuter = $('.gm-style-iw');
     var iwBackground = iwOuter.prev();
     iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
-  
+
   });
 
   // This open windows automatically, still buggy

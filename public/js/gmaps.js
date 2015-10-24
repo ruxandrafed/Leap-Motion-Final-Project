@@ -147,11 +147,11 @@ function initialize() {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
 
-        // Point streetview camera to a marker
-       var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
-       var pov = panorama.getPov();
-       pov.heading = heading;
-       panorama.setPov(pov);
+       //  // Point streetview camera to a marker
+       // var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
+       // var pov = panorama.getPov();
+       // pov.heading = heading;
+       // panorama.setPov(pov);
 
       }, function() {
         handleNoGeolocation(browserSupportFlag);
