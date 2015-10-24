@@ -16,7 +16,7 @@ var prev_infoWindow;
 var instaMarkers = [];
 
 function renderInstagramMarkers(array, map) {
-  var instaIcon = "/images/instagram-logo.png";
+  var instaIcon = "/images/instagram-logo.jpg";
 
   array.forEach(function (post) {
 
@@ -29,8 +29,8 @@ function renderInstagramMarkers(array, map) {
     instaMarkers.push(markerInsta);
 
     var infoWindow = new google.maps.InfoWindow({
-      content: '<div class="infoWindowContent"> <p>@' + post.user.username + '</p>'
-        + '<img src="' + post.images.low_resolution.url + '" width="100px">'
+      content: '<div style="z-index: 99" class="infoWindowContent"> <p>@' + post.user.username + '</p>'
+        + '<img src="' + post.images.standard_resolution.url + '" width="200px">'
         + '<p> Posted by: <a href="http://www.instagram.com/' + post.user.username + '">@' + post.user.username + '</a></p></div>'
     });
 
