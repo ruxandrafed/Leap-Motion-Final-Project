@@ -45,10 +45,10 @@ function renderTranslinkMarkers (array, map) {
       title: busStop[3]
     })
 
-    contentString = '<div class="infoWindowContent"> <p> At Street:' + atStreet + '</p>'
-        + '<p> Name: ' + name + '</p>'
+    contentString = '<div class="infoWindowContent"> <div class="iw-title">Stop No. ' + busStop[5] + ' </div>'
+        + '<p>' + name + ' </p>'
+        + '<p> At Street: ' + atStreet + '</p>'
         + '<p>Routes: ' + route + '</p>'
-        + '<p> StopNo' + busStop[5] + '</p>'
         + '<div><h5>Bus Schedule Estimates</h5>'
         + '<p> </p></div>'
     translinkMarkers.push(markerTr);
@@ -63,8 +63,11 @@ function renderTranslinkMarkers (array, map) {
       };
       infoWindow.open(panorama, markerTr);
       prev_infoWindow = infoWindow;
+
+      var iwOuter = $('.gm-style-iw');
+      var iwBackground = iwOuter.prev();
+      iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
     });
 
   });
-
 }

@@ -21,10 +21,10 @@ function createGPMarker(place, map) {
 
   var openNow = isOpen(place);
 
-  var contentString = "<div class='infoWindowContent'> <div class='iw-title'>" + name + "</div>"
+  var contentString = "<div class='infoWindowContent'> <div class='iw-title'>" + name + "</div><div class='contentBody'>"
     + "<p>Rating: " + rating + "<span class='stars'> " + starRating + "</span>" + "</p>"
     + "<p>Open: " + openNow + "</p>"
-    + "<p>Type of Establishment: " + placeType + "</p></div>"
+    + "<p>Type of Establishment: " + placeType + "</p></div></div>"
   // var image = {
   //   size: new google.maps.Size(42, 68),
   // };
@@ -77,19 +77,16 @@ function createGPMarker(place, map) {
   });
 
   markerP.addListener('click', function() {
-    // if (prev_infoWindow) {
-    //   prev_infoWindow.close();
-    // };
+    if (prev_infoWindow) {
+      prev_infoWindow.close();
+    };
     infoWindow.open(map.getStreetView(), markerP);
 
     prev_infoWindow = infoWindow;
     var iwOuter = $('.gm-style-iw');
     var iwBackground = iwOuter.prev();
-    iwBackground.children(':nth-child(2)').css({'display' : 'none'});
-    iwBackground.children(':nth-child(4)').css({'display' : 'none'});
-    iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
-    iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 76px !important;'});
-    iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px',  'z-index' : '10'});
+    iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
+  
   });
 
   // This open windows automatically, still buggy

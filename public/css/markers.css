@@ -6,22 +6,18 @@ iwOuter.parent.parent {
 
 .iw-title {
   font-family: 'Pacifico';
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 400;
-  background-color: #FF9800;
+
+  color:  #ff9800;
+  /*background-color: #FF9800;*/
   margin: 1px;
+  padding: 5px;
+  padding-left: 12px;
+  width: 200px;
 }
 
-.gm-style-iw {
-  width: 210px !important;
-  top: 1px !important;
-  left: 1px !important;
-  border-radius: 2px 2px 0 0;
- /* background-color: #FFF3E0;*/
-  box-shadow: 0 1px 6px rgba(178, 178, 178, 0.6);
-  border: 1px solid #FF9800;
-  border-radius: 2px 2px 0 0;  
-}
+
 
 span.stars, span.stars span {
   display: block;
@@ -34,3 +30,11 @@ span.stars span {
   background-position: 0 0;
 }
 
+.infoWindowContent {
+  padding: 0px;
+  background: rgba(240, 240, 240, 0);
+}
+
+.contentBody {
+  margin-top: 10px;
+}
