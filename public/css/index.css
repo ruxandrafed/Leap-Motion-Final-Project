@@ -6,12 +6,22 @@ html, body {
   padding: 0;
 }
 
+#logo {
+  font-family: 'Pacifico', cursive;
+} 
+
 body {
   font-family: 'Ubuntu', sans-serif;
+
 }
 
 #sidebar {
   height: 95vh;
+}
+
+.sidebar-brand {
+  font-family: 'Pacifico';
+  font-size: 28px;
 }
 
 #streetview, #map {
@@ -49,16 +59,15 @@ body {
   left: 195px;
 }
 
+
+
 #leap-icon {
-
-  left: 280px;
+  left: 640px;
   font-weight: bold;
-
 }
 
 #leap-icon.leap-on{
   color: green;
-
 }
 
 #leap-icon.leap-off{
@@ -66,14 +75,16 @@ body {
 }
 
 #left-hand-icon {
-  left: 325px;
+  left: 45px;
+  margin-top: -2px;
 }
 #left-hand-icon.detected{
   color: green;
 }
 
 #right-hand-icon {
-  left: 370px;
+  left: 90px;
+  margin-top: -2px;
 }
 
 #right-hand-icon.detected{
@@ -85,6 +96,12 @@ body {
   position: absolute;
   opacity: 0.9;
   z-index: 1;
+}
+
+.modal-title {
+  font-family: 'Pacifico';
+  font-size: 22px;
+  left: 20px;
 }
 
 .modal-header {
