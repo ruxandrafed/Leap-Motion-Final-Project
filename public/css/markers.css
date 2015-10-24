@@ -36,3 +36,12 @@ span.stars span {
 .contentBody {
   margin-top: 10px;
 }
+
+/* Styles image in tweet info window */
+
+.gm-style img {
+  border-radius: 5px;
+  float: right;
+  margin-left: 5px;
+  margin-top: 10px;
+}

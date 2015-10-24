@@ -31,10 +31,10 @@ function renderTranslinkMarkers (array, map) {
     $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
       var buses = data.NextBuses.NextBus;
       buses.forEach(function (bus) {
-        contentRoutes = contentRoutes.concat('<p> Route No: ' + bus.RouteNo[0] + '</p>'
-         + '<p> Next 3 buses: ' + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
+        contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo[0] + '</b>: '
+         + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
          + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
-         + '</p></div>')
+         + '</span></div>')
       })
       callback(contentRoutes);
     });
@@ -54,12 +54,11 @@ function renderTranslinkMarkers (array, map) {
       title: busStop[3]
     })
 
-    contentString = '<div class="infoWindowContent"> <div class="iw-title">Stop No. ' + busStop[5] + ' </div>'
-        + '<p>' + name + ' </p>'
+    contentString = '<div class="infoWindowContent"> <div class="iw-title">Bus Stop No. ' + busStop[5] + ' </div>'
+        + '<p>' + name + '</p>'
         + '<p> At Street: ' + atStreet + '</p>'
-        + '<p>Routes: ' + route + '</p>'
-        + '<p> StopNo ' + busStop[5] + '</p>'
-        + '<div class=><h5>Bus Schedule Estimates</h5>'
+        // + '<p>Routes: ' + route + '</p>'
+        + '<div class=><p>Next buses at:</p>'
         + contentRoutes + '</div>'
 
     translinkMarkers.push(markerTr);
