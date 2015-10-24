@@ -29,7 +29,7 @@ function renderTranslinkMarkers (array, map) {
   contentRoutes = ''
   // console.log("Whole object: ",busStop)
   // console.log("Stop No: ", busStop[5])
-  function getContentRoutes() {
+  function getContentRoutes(callback) {
     $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
     // console.log("Next Buses, ", data.NextBuses.NextBus);
       var buses = data.NextBuses.NextBus;
@@ -40,20 +40,14 @@ function renderTranslinkMarkers (array, map) {
          + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
          + '</p></div>')
       })
-      console.log(contentRoutes)
-      // return contentRoutes
+      callback(contentRoutes);
     });
-    returnContent(contentRoutes);
-
   }
 
-  function returnContent(string) {
-    $('.routes-content').text(string);
-  }
 
-  getContentRoutes();
-
-    // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
+  getContentRoutes(function (contentRoutes) {
+    // once we get here the ajax call is complete
+      // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
     busIcon = "../images/places/busstop.png"
     var markerTr = new google.maps.Marker({
 
@@ -68,7 +62,7 @@ function renderTranslinkMarkers (array, map) {
         + '<p>Routes: ' + route + '</p>'
         + '<p> StopNo ' + busStop[5] + '</p>'
         + '<div class=><h5>Bus Schedule Estimates</h5>'
-        + '<span class="routes-content"></span>' + '</div>'
+        + contentRoutes + '</div>'
     translinkMarkers.push(markerTr);
 
     var infoWindow = new google.maps.InfoWindow({
@@ -82,6 +76,10 @@ function renderTranslinkMarkers (array, map) {
       infoWindow.open(panorama, markerTr);
       prev_infoWindow = infoWindow;
     });
+
+
+  });
+
 
   });
 
