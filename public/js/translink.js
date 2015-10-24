@@ -26,17 +26,26 @@ function renderTranslinkMarkers (array, map) {
   name = busStop[3];
   route = busStop[4];
   atStreet = busStop[2];
-  // console.log("Whole object: ",busStop)
-  // console.log("Stop No: ", busStop[5])
+  contentRoutes = ''
+  function getContentRoutes(callback) {
+    $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
+      var buses = data.NextBuses.NextBus;
+      buses.forEach(function (bus) {
+        contentRoutes = contentRoutes.concat('<p> Route No: ' + bus.RouteNo[0] + '</p>'
+         + '<p> Next 3 buses: ' + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
+         + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
+         + '</p></div>')
+      })
+      callback(contentRoutes);
+    });
+  }
 
-  $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 1200}, function (buses) {
-    // console.log(buses);
-    // console.log("Route name: ", buses.NextBuses.NextBus[0].RouteName)
-    // console.log("Route Number: ",buses.NextBuses.NextBus[0].RouteNo)
-    // console.log("Route Schedule: ", buses.NextBuses.NextBus[0].Schedules)
-  });
-    // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
-    var busIcon = "../images/places/busstop.png"
+
+  getContentRoutes(function (contentRoutes) {
+    // once we get here the ajax call is complete
+      // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
+    busIcon = "../images/places/busstop.png"
+
     var markerTr = new google.maps.Marker({
 
       position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
@@ -49,8 +58,10 @@ function renderTranslinkMarkers (array, map) {
         + '<p>' + name + ' </p>'
         + '<p> At Street: ' + atStreet + '</p>'
         + '<p>Routes: ' + route + '</p>'
-        + '<div><h5>Bus Schedule Estimates</h5>'
-        + '<p> </p></div>'
+        + '<p> StopNo ' + busStop[5] + '</p>'
+        + '<div class=><h5>Bus Schedule Estimates</h5>'
+        + contentRoutes + '</div>'
+
     translinkMarkers.push(markerTr);
 
     var infoWindow = new google.maps.InfoWindow({
@@ -68,6 +79,10 @@ function renderTranslinkMarkers (array, map) {
       var iwBackground = iwOuter.prev();
       iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
     });
+
+
+  });
+
 
   });
 }
