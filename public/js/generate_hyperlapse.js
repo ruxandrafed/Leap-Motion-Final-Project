@@ -20,8 +20,11 @@ function generateHyperlapse(origin, destination) {
   };
 
   hyperlapse.onLoadComplete = function(e) {
+    // encoder.finish();
+    // var binary_gif = encoder.stream().getData()
+    // var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
     hyperlapse.play();
-  $('#hyperlapse-loading').hide();
+    $('#hyperlapse-loading').hide();
   };
 
   // Google Maps API stuff here...

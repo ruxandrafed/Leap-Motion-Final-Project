@@ -4,6 +4,11 @@
  * @copyright Teehan+Lax 2013
  */
 
+// var encoder = new GIFEncoder();
+// encoder.setRepeat(0); //0  -> loop forever, 1+ -> loop n times then stop
+// encoder.setDelay(500); //go to next frame every n milliseconds
+// encoder.start();
+
 Number.prototype.toRad = function() {
 	return this * Math.PI / 180;
 };
@@ -215,6 +220,15 @@ var Hyperlapse = function(container, params) {
 		canvas.setAttribute('height',this.canvas.height);
 		canvas.setAttribute('id', 'canvas');
 		context.drawImage(this.canvas, 0, 0);
+
+		// ****
+ 		// encoder.addFrame(context);
+
+ 		// encoder.finish();
+  	// var binary_gif = encoder.stream().getData()
+  	// var data_url = 'data:image/gif;base64,'+encode64(binary_gif);
+
+	 // ****
 
 		_h_points[_point_index].image = canvas;
 
