@@ -16,7 +16,7 @@ var prev_infoWindow;
 var instaMarkers = [];
 
 function renderInstagramMarkers(array, map) {
-  var instaIcon = "/images/instagram-logo.jpg";
+  var instaIcon = "/images/instagram-icon.png";
 
   array.forEach(function (post) {
 

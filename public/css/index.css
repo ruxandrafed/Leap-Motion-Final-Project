@@ -43,6 +43,11 @@ body {
   text-align: left;
 }
 
+.intro-pic {
+  width: 50%;
+  border-radius: 5px;
+}
+
 .modal-body {
  /* background-color: #FFF3E0;*/
   border-bottom-left-radius: 6px;
@@ -50,7 +55,7 @@ body {
 }
 
 .modal-content  {
-  top: 20%;
+  top: 10%;
 }
 
 .modal-dialog  {
@@ -68,10 +73,23 @@ body {
   border-top-right-radius: 6px;
 }
 
-.modal-title {
+.modal-title-logo {
   font-family: 'Pacifico';
-  font-size: 22px;
-  left: 20px;
+  font-size: 3em;
+  padding-top: 0.1em;
+  margin: auto;
+  text-align: center;
+}
+
+.modal-header img {
+  height: 10vh;
+  position: absolute;
+  margin: auto;
+  display: inline;
+}
+
+.modal-title {
+  height: 10vh;
 }
 
 .pac-container {
@@ -80,11 +98,17 @@ body {
 
 .sidebar-brand {
   font-family: 'Pacifico';
-  font-size: 28px;
+  font-size: 2em;
 }
 
 .sidebar-nav > .sidebar-brand a {
     color: #333;
+}
+
+.sidebar-nav > .sidebar-brand img {
+  width: 100%;
+  margin: 0px;
+  position: absolute;
 }
 
 #directions-panel {
