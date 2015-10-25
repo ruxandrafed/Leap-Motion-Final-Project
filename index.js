@@ -78,7 +78,7 @@ server.register(require('inert'), function (err) {
         })
       });
     }
-  })
+  });
 
   server.route({
     method: 'GET',
@@ -98,7 +98,7 @@ server.register(require('inert'), function (err) {
         });
       })
     }
-  })
+  });
 
   // Realtime data route
 
