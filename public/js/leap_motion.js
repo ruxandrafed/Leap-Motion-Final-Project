@@ -24,6 +24,7 @@ var thumbExtended;
 var twitterClicked = false;
 var translinkClicked = false;
 var placesClicked = false;
+var instagramClicked = false;
 
 var driveAround = false;
 
@@ -283,6 +284,11 @@ function openMenu (hand) {
       $('#add-translink').trigger('click');
     };
 
+    if (instagramClicked) {
+      instagramClicked = false;
+      $('#add-instagram').trigger('click');
+    }
+
     twitterClicked = true;
     $('#add-tweets').trigger('click');
 
@@ -310,6 +316,11 @@ function openMenu (hand) {
       $('#add-translink').trigger('click');
     };
 
+    if (instagramClicked) {
+      instagramClicked = false;
+      $('#add-instagram').trigger('click');
+    }
+
     placesClicked = true;
     $('#add-places').trigger('click');
   }
@@ -332,12 +343,48 @@ function openMenu (hand) {
     };
 
     if (placesClicked) {
-      placesClicked = false
+      placesClicked = false;
       $('#add-places').trigger('click');
     };
 
+    if (instagramClicked) {
+      instagramClicked = false;
+      $('#add-instagram').trigger('click');
+    }
+
       translinkClicked = true;
     $('#add-translink').trigger('click');
+  }
+
+  if (indexFingerExtended
+   && !thumbExtended
+   && middleFingerExtended
+   && ringFingerExtended
+   && pinkyExtended
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))
+   && !(instagramClicked)
+   && hand.pinchStrength < 0.1) {
+
+    if (twitterClicked) {
+      twitterClicked = false;
+      $('#add-tweets').trigger('click');
+    };
+
+    if (placesClicked) {
+      placesClicked = false;
+      $('#add-places').trigger('click');
+    };
+
+    if (translinkClicked) {
+      translinkClicked = false;
+      $('#add-translink').trigger('click');
+    }
+
+      instagramClicked = true;
+    $('#add-instagram').trigger('click');
   }
 
 
@@ -386,7 +433,13 @@ function openMenu (hand) {
     if (translinkClicked) {
       $('#add-translink').trigger('click');
     };
-    
+
+    if (instagramClicked) {
+      $('#add-instagram').trigger('click');
+    }
+
+
+    instagramClicked = false;
     twitterClicked = false;
     translinkClicked = false;
     placesClicked = false;
