@@ -1,37 +1,111 @@
+Skip to content
+This repository
+Search
+Pull requests
+Issues
+Gist
+ @ruxandrafed
+ Unwatch 3
+  Star 0
+ Fork 0 Tulun/Leap-Motion-Final-Project
+ Branch: master  Leap-Motion-Final-Project/public/css/index.css
+5dce6e3  23 hours ago
+@ruxandrafed ruxandrafed Improved layout of modals
+3 contributors @ruxandrafed @stella-maris @Tulun
+RawBlameHistory    195 lines (153 sloc)  2.37 KB
+@import url(https://fonts.googleapis.com/css?family=Ubuntu);
+
 html, body {
-  height: 100vh;
+  height: 95vh;
   margin: 0px;
   padding: 0;
 }
 
-#sidebar {
-  height: 100vh;
+body {
+  font-family: 'Ubuntu', sans-serif;
 }
 
-#streetview, #map {
-  height: 100vh;
+.adp-directions {
+  width: 100%;
+  font-family: 'Ubuntu', sans-serif;
 }
 
-#map {
-  display: none;
+.adp-marker {
+  margin: 5px 5px;
+}
+
+/* Hides fullscreencontrol from Streetview*/
+.gm-style > div:nth-child(10){
+ display:none;
 }
 
 .half-left {
   float: left;
-  width: 50%;
+  width: 47%;
 }
 
 .half-right {
   float: right;
-  width: 50%;
+  width: 53%;
 }
 
-#help-modal {
-  left: 60px;
+.icon-legend {
+  font-size: 12px;
 }
 
-#location-modal {
-  left: 105px;
+.instructions .borderless td {
+  border: none;
+  text-align: left;
+}
+
+.modal-body {
+ /* background-color: #FFF3E0;*/
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.modal-content  {
+  top: 20%;
+}
+
+.modal-dialog  {
+  width: 75%;
+  height: 75%;
+}
+
+/*.modal-footer {
+  background-color: #E3F2FD;
+}*/
+
+.modal-header {
+  background-color: #FF9800;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.modal-title {
+  font-family: 'Pacifico';
+  font-size: 22px;
+  left: 20px;
+}
+
+.pac-container {
+  z-index: 9999;
+}
+
+.sidebar-brand {
+  font-family: 'Pacifico';
+  font-size: 28px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #333;
+}
+
+#directions-panel {
+  width: 45.4%;
+  margin-right: 1em;
+  float: left;
 }
 
 #drive-around {
@@ -43,16 +117,38 @@ html, body {
   left: 195px;
 }
 
+#help-modal {
+  left: 60px;
+}
+
+#hyperlapse {
+  margin-top: 0.8em;
+  width: 52.8%;
+  float: right;
+}
+
+#hyperlapse-loading {
+  margin-top: 0.8em;
+  width: 52.8%;
+  float: right;
+  display: none;
+}
+
+#loading-gif {
+  max-width: 100%;
+}
+
+#location-modal {
+  left: 105px;
+}
+
 #leap-icon {
-
-  left: 280px;
+  right: 105px;
   font-weight: bold;
-
 }
 
 #leap-icon.leap-on{
   color: green;
-
 }
 
 #leap-icon.leap-off{
@@ -60,18 +156,49 @@ html, body {
 }
 
 #left-hand-icon {
-  left: 325px;
+  right: 60px;
 }
+
 #left-hand-icon.detected{
   color: green;
 }
 
+#logo {
+  font-family: 'Pacifico', cursive;
+}
+
+#map {
+  display: none;
+  height: 95vh;
+}
+
+#modal-button {
+  display: none;
+}
+
 #right-hand-icon {
-  left: 370px;
+  right: 15px;
 }
 
 #right-hand-icon.detected{
   color: green;
+}
+
+#sidebar {
+  height: 95vh;
+}
+
+#sidebar-wrapper {
+  background-color: white;
+  box-shadow: 5px 5px 5px #d1d1d1;
+}
+
+#sidebar-wrapper #location-address {
+  width: 19%;
+}
+
+#streetview {
+  height: 95vh;
 }
 
 #menu-toggle, #help-modal, #location-modal, #get-directions-modal,
@@ -79,57 +206,4 @@ html, body {
   position: absolute;
   opacity: 0.9;
   z-index: 1;
-}
-
-.modal-header {
-  background-color: #FF9800;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-.modal-body {
- /* background-color: #FFF3E0;*/
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-
-/*.modal-footer {
-  background-color: #E3F2FD;
-}*/
-
-#modal-button {
-  display: none;
-}
-
-.modal-dialog  {
-  width: 75%;
-  height: 75%;
-}
-
-.modal-content  {
-  top: 25%;
-}
-
-#travel-mode {
-  width: 20%;
-}
-
-#bus-route {
-  width: 40%;
-}
-
-/* Styling google maps directions */
-.adp-directions {
-  width: 100%;
-}
-
-/* Styling search form welcome modal */
-.pac-container {
-  z-index: 9999;
-}
-
-/* Styling search form sidebar */
-
-#sidebar-wrapper #location-address {
-  width: 19%;
 }

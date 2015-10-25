@@ -21,10 +21,10 @@ function createGPMarker(place, map) {
 
   var openNow = isOpen(place);
 
-  var contentString = "<div class='infoWindowContent'> <p>Name: " + name + "</p>"
+  var contentString = "<div class='infoWindowContent'> <div class='iw-title'>" + name + "</div><div class='contentBody'>"
     + "<p>Rating: " + rating + "<span class='stars'> " + starRating + "</span>" + "</p>"
     + "<p>Open: " + openNow + "</p>"
-    + "<p>Type of Establishment: " + placeType + "</p></div>"
+    + "<p>Type of Establishment: " + placeType + "</p></div></div>"
   // var image = {
   //   size: new google.maps.Size(42, 68),
   // };
@@ -69,6 +69,7 @@ function createGPMarker(place, map) {
   });
   googlePlacesMarkers.push(markerP);
 
+
   // Create infowindow for street view
 
   var infoWindow = new google.maps.InfoWindow({
@@ -80,8 +81,17 @@ function createGPMarker(place, map) {
       prev_infoWindow.close();
     };
     infoWindow.open(map.getStreetView(), markerP);
+
     prev_infoWindow = infoWindow;
+    var iwOuter = $('.gm-style-iw');
+    var iwBackground = iwOuter.prev();
+    iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
+
   });
+
+  // This open windows automatically, still buggy
+  // setTimeout(function() {google.maps.event.trigger(markerP, 'click')}, 1000);
+
 }
 
 function isOpen (place){

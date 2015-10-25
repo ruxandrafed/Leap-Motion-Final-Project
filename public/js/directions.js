@@ -13,6 +13,10 @@ function getDirections(directionsDisplay, directionsService, map, origin, destin
     }, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
+        $('#hyperlapse-loading').show();
+        $('#canvas').remove(); // clears if a canvas already exists
+        generateHyperlapse(origin, destination); // generates hyperlapse
+        $('canvas:last').attr("id", "canvas")
       } else {
         window.alert('Directions request failed due to ' + status);
       }

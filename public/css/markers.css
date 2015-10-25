@@ -1,8 +1,20 @@
-/* this is for the star ratings to appear 
+/* this is for the star ratings to appear
 in the infowindow of each marker */
-div.gm-style-iw {
-  background-color: #FFF3E0;
-  
+iwOuter.parent.parent {
+  left: 115px;
+}
+
+.iw-title {
+  font-family: 'Pacifico';
+  font-size: 22px;
+  font-weight: 400;
+
+  color:  #ff9800;
+  /*background-color: #FF9800;*/
+  margin: 1px;
+  padding: 0px;
+  /*padding-left: 12px;*/
+  width: 200px;
 }
 
 span.stars, span.stars span {
@@ -16,3 +28,20 @@ span.stars span {
   background-position: 0 0;
 }
 
+.infoWindowContent {
+  padding: 0px;
+  background: rgba(240, 240, 240, 0);
+}
+
+.contentBody {
+  margin-top: 10px;
+}
+
+/* Styles image in tweet info window */
+
+.twitter-user{
+  border-radius: 5px;
+  float: right;
+  margin-left: 5px;
+  margin-top: 10px;
+}

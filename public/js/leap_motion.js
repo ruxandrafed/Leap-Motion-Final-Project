@@ -24,6 +24,7 @@ var thumbExtended;
 var twitterClicked = false;
 var translinkClicked = false;
 var placesClicked = false;
+var instagramClicked = false;
 
 var driveAround = false;
 
@@ -232,6 +233,8 @@ function streetViewSwipe(frame, gesture) {
 };
 
 function openMenu (hand) {
+  // console.log(hand)
+  // debugger;
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
   var handTranX = hand._translation[0];
@@ -268,43 +271,157 @@ function openMenu (hand) {
    && palmX > -0.3
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
-   && !(twitterClicked)) {
+   && !(twitterClicked)
+   && hand.pinchStrength < 0.85) {
+
+    if (placesClicked) {
+      placesClicked = false
+      $('#add-places').trigger('click');
+    };
+
+    if (translinkClicked) {
+      translinkClicked = false;
+      $('#add-translink').trigger('click');
+    };
+
+    if (instagramClicked) {
+      instagramClicked = false;
+      $('#add-instagram').trigger('click');
+    }
+
     twitterClicked = true;
     $('#add-tweets').trigger('click');
+
   }
   // This toggles the Google Places checkbox to true
   if (indexFingerExtended
-   && (middleFingerExtended)
-   && !(thumbExtended)
-   && !(ringFingerExtended)
-   && !(pinkyExtended)
+   && middleFingerExtended
+   && !thumbExtended
+   && !ringFingerExtended
+   && !pinkyExtended
    && palmX < 0.3
    && palmX > -0.3
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
-   && !(placesClicked)) {
+   && !(placesClicked)
+   && hand.pinchStrength < 0.55) {
+
+    if (twitterClicked) {
+      twitterClicked = false;
+      $('#add-tweets').trigger('click');
+    };
+
+    if (translinkClicked) {
+      translinkClicked = false;
+      $('#add-translink').trigger('click');
+    };
+
+    if (instagramClicked) {
+      instagramClicked = false;
+      $('#add-instagram').trigger('click');
+    }
+
     placesClicked = true;
     $('#add-places').trigger('click');
   }
 
   if (indexFingerExtended
-   && (thumbExtended)
-   && (middleFingerExtended)
-   && !(ringFingerExtended)
-   && !(pinkyExtended)
+   && thumbExtended
+   && middleFingerExtended
+   && !ringFingerExtended
+   && !pinkyExtended
    && palmX < 0.3
    && palmX > -0.3
    && hand.confidence > 0.35
    && !($('#wrapper').hasClass('toggled'))
-   && !(translinkClicked)) {
+   && !(translinkClicked)
+   && hand.pinchStrength < 0.1) {
+
+    if (twitterClicked) {
+      twitterClicked = false;
+      $('#add-tweets').trigger('click');
+    };
+
+    if (placesClicked) {
+      placesClicked = false;
+      $('#add-places').trigger('click');
+    };
+
+    if (instagramClicked) {
+      instagramClicked = false;
+      $('#add-instagram').trigger('click');
+    }
+
       translinkClicked = true;
     $('#add-translink').trigger('click');
+  }
+
+  if (indexFingerExtended
+   && !thumbExtended
+   && middleFingerExtended
+   && ringFingerExtended
+   && pinkyExtended
+   && palmX < 0.3
+   && palmX > -0.3
+   && hand.confidence > 0.35
+   && !($('#wrapper').hasClass('toggled'))
+   && !(instagramClicked)
+   && hand.pinchStrength < 0.1) {
+
+    if (twitterClicked) {
+      twitterClicked = false;
+      $('#add-tweets').trigger('click');
+    };
+
+    if (placesClicked) {
+      placesClicked = false;
+      $('#add-places').trigger('click');
+    };
+
+    if (translinkClicked) {
+      translinkClicked = false;
+      $('#add-translink').trigger('click');
+    }
+
+      instagramClicked = true;
+    $('#add-instagram').trigger('click');
+  }
+
+
+  // var scrollYMax = Math.min(380.9, window.scrollY += 10)
+  // var scrollYMin = Math.max(window.scrollY -= 10, 0)
+  //moves window down
+  if (hand.pinchStrength > 0.7
+   && hand._translation[1] > 1
+   && $('#wrapper').hasClass('toggled')) {
+    window.scroll(0, window.scrollY += 10);
+  }
+
+  //moves window up
+
+  if (hand.pinchStrength > 0.7
+   && hand._translation[1] < -1
+   && $('#wrapper').hasClass('toggled')) {
+    window.scroll(0, window.scrollY -= 10);
+  }
+
+  if (window.scrollY > 450) {
+    window.scrollY = 450
+  }
+
+  if (window.scrollY < 0) {
+    window.scrollY = 0
   }
 
 
   // Removes all checkboxes
 
-  if (hand.grabStrength == 1) {
+  if (hand.grabStrength == 1
+   && !($('#wrapper').hasClass('toggled'))
+   && !indexFingerExtended
+   && !middleFingerExtended
+   && !ringFingerExtended
+   && !pinkyExtended) {
 
     if (twitterClicked) {
       $('#add-tweets').trigger('click');
@@ -316,7 +433,13 @@ function openMenu (hand) {
     if (translinkClicked) {
       $('#add-translink').trigger('click');
     };
-    
+
+    if (instagramClicked) {
+      $('#add-instagram').trigger('click');
+    }
+
+
+    instagramClicked = false;
     twitterClicked = false;
     translinkClicked = false;
     placesClicked = false;

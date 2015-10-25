@@ -23,6 +23,9 @@
     <!-- Markers Css -->
     <link href="css/markers.css" rel="stylesheet">
 
+    <!-- Google Font Pacifico -->
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -49,7 +52,56 @@
                   <h4 class="modal-title">Instructions</h4>
                 </div>
                 <div class="modal-body">
-                  <p>Some text in the modal.</p>
+                  <div class="container instructions">
+                      <p><strong>Activate/Deactivate Leap Motion:</strong>
+                      To activate, place open right hand palm above controller. Close palm into fist to deactivate.</p>
+                      <p><strong>Move in Google StreetView:</strong>
+                      To move right/left, place right hand palm perpendicular to controller, pointing to screen, and slowly tilt to the right/left.
+                      To move forward, place open right hand palm above controller and towards screen, and wiggle your fingers.</p>
+                      <p><strong>Open/Close Sidebar</strong>
+                      To open sidebar, place right hand palm perpendicular to controller, pointing to screen, and swipe palm from right to left.
+                      To close sidebar, rotate palm with thumb down, and swipe from left to right.</p>
+                      <p><strong>Toggle Markers</strong>
+                      Point index to screen for first checkbox; add middle finger to toggle second checkbox, etc.</p>
+                      <p><strong>Toggle StreetView Only/Side-by-Side</strong>
+                      I've no idea. Jason knows!</p>
+                      <hr>
+                      <table class="table borderless condensed table-responsive" id="icons-legend">
+                          <tr>
+                            <td><img id="open-sidebar-icon" src="/images/icons/open-sidebar.jpg" alt="Open sidebar" class="img-responsive info-icons"></td>
+                            <td><img id="close-sidebar-icon" src="/images/icons/close-sidebar.jpg" alt="Close sidebar" class="img-responsive info-icons"></td>
+                            <td><img id="show-instructions-icon" src="/images/icons/info.jpg" alt="Instructions" class="img-responsive info-icons"></td>
+                            <td><img id="change-location-icon" src="/images/icons/change-location.jpg" alt="Change location" class="img-responsive info-icons"></td>
+                            <td><img id="side-by-side-icon" src="/images/icons/side-by-side.jpg" alt="Switch to side-by-side view" class="img-responsive info-icons"></td>
+                            <td><img id="streetview-icon" src="/images/icons/streetview-only.jpg" alt="Switch to streetview only mode" class="img-responsive info-icons"></td>
+                          </tr>
+                          <tr>
+                            <td class="icon-legend">Open sidebar</td>
+                            <td class="icon-legend">Close sidebar</td>
+                            <td class="icon-legend">Instructions</td>
+                            <td class="icon-legend">Change location</td>
+                            <td class="icon-legend">Side-by-side</td>
+                            <td class="icon-legend">Streetview only</td>
+                          </tr>
+                          <tr>
+                            <td><img id="get-directions-icon" src="/images/icons/get-directions.jpg" alt="Get directions" class="img-responsive info-icons"></td>
+                            <td><img id="leap-active-icon" src="/images/icons/leap-active.jpg" alt="Leap Motion active" class="img-responsive info-icons"></td>
+                            <td><img id="leap-inactive-icon" src="/images/icons/leap-inactive.jpg" alt="Leap Motion inactive" class="img-responsive info-icons"></td>
+                            <td><img id="right-hand-active-icon" src="/images/icons/right-hand-active.jpg" alt="Right hand active" class="img-responsive info-icons"></td>
+                            <td><img id="left-hand-inactive-icon" src="/images/icons/left-hand-inactive.jpg" alt="Left hand inactive" class="img-responsive info-icons"></td>
+                            <td><img id="pegman-icon" src="/images/icons/pegman.jpg" alt="Pegman" class="info-icons"></td>
+                          </tr>
+                          <tr>
+                            <td class="icon-legend">Get directions</td>
+                            <td class="icon-legend">Leap Motion active</td>
+                            <td class="icon-legend">Leap Motion inactive</td>
+                            <td class="icon-legend">Right hand active</td>
+                            <td class="icon-legend">Left hand inactive</td>
+                            <td class="icon-legend">Draggable pegman</td>
+                          </tr>
+                      </table>
+                      <div id="icon-legend"></div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -70,50 +122,38 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Get Directions or Simulate Bus Route:</h4>
+                  <h4 class="modal-title">Get directions</h4>
                 </div>
                 <div class="modal-body">
 
                   <div class="container address-search-form">
 
                       <div class="row">
-                        <div class="col-sm-12">
-                          <p>Enter Address: </p>
+                        <div class="col-sm-3">
+                          <p>Destination address: </p>
                         </div>
-                      </div>
 
-                      <div class="row">
-                        <div class="col-sm-6" id="locationField">
+                        <div class="col-sm-7" id="locationField">
                           <input id="location-address3" type="text" class="form-control" placeholder="Street, City, State"/>
                         </div>
 
-                        <div class="col sm-1">
-                          <p><button class="btn btn-primary" id="map-address-btn3"><span>Giddy up!</span></button></p>
+                        <div class="col-sm-1">
+                          <p><button class="btn btn-success" id="map-address-btn3"><span>Giddy up!</span></button></p>
                         </div>
                       </div>
 
                       <div class="row">
+                        <div class="col-sm-3">
+                          Travel Mode:
+                        </div>
 
-                        <div class="col-sm-8">
-                          Travel mode:
+                        <div class="col-sm-7">
                           <select id="travel-mode" class="form-control">
                             <option value="DRIVING">Driving</option>
                             <option value="WALKING">Walking</option>
                             <option value="BICYCLING">Bicycling</option>
                             <option value="TRANSIT">Transit</option>
                           </select>
-                          <br>
-
-                          <!-- Bus Routes Simulator Embedded Here -->
-                          <p>Simulate Bus Route:</p>
-                          <select id="bus-route" class="form-control">
-                              <option value="4">#004</option>
-                              <option value="5">#005</option>
-                              <option value="6">#006</option>
-                              <option value="9">#009</option>
-                          </select>
-                          <br>
-                          <button class="btn btn-primary" id="simulate-bus-route"><span>Go</span></button>
                         </div>
                       </div>
 
@@ -147,25 +187,27 @@
                   <div class="container address-search-form">
 
                       <div class="row">
-                        <div class="col-sm-12">
-                          <p>Enter Address: </p>
+                        <div class="col-sm-3">
+                          <p>Where do you want to go? </p>
                         </div>
-                      </div>
 
-                      <div class="row">
-                        <div class="col-sm-6" id="locationField">
+                        <div class="col-sm-7" id="locationField">
                           <input id="location-address2" type="text" class="form-control" placeholder="Street, City, State"/>
                         </div>
 
                         <div class="col sm-1">
-                          <p><button class="btn btn-primary" id="map-address-btn2"><span>Giddy up!</span></button></p>
+                          <p><button class="btn btn-success" id="map-address-btn2"><span>Giddy up!</span></button></p>
                         </div>
                       </div>
 
                       <div class="row">
-                        <div class="col-sm-12">
-                          <p>Not sure where to go? <button class="btn btn-primary" id="geolocate-address-btn2"><span>Current location</span></button> or
-                          <button class="btn btn-primary" id="citycentre-address-btn2"><span>City centre</span></button></p>
+                        <div class="col-sm-3">
+                          <p>Not sure where to go?</p>
+                        </div>
+
+                        <div class="col-sm-8">
+                          <button class="btn btn-success" id="geolocate-address-btn2"><span>Current location</span></button> or
+                          <button class="btn btn-success" id="citycentre-address-btn2"><span>City centre</span></button>
                         </div>
                       </div>
 
@@ -196,37 +238,38 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="container address-search-form">
-
-                        <div class="row">
-                          <div class="col-sm-12">
-                            <p>Enter Address: </p>
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <div class="col-sm-6" id="locationField">
-                            <input id="location-address" type="text" class="form-control" placeholder="Street, City, State"/>
-                          </div>
-
-                          <div class="col sm-1">
-                            <p><button class="btn btn-primary" id="map-address-btn"><span>Giddy up!</span></button></p>
-                          </div>
-                        </div>
+                  <div class="container address-search-form">
 
                       <div class="row">
-                        <div class="col-sm-12">
-                          <p>Not sure where to go? <button class="btn btn-primary" id="geolocate-address-btn"><span>Current location</span></button> or
-                          <button class="btn btn-primary" id="citycentre-address-btn"><span>City centre</span></button></p>
+                        <div class="col-sm-3">
+                          <p>Where do you want to go? </p>
+                        </div>
+
+                        <div class="col-sm-7" id="locationField">
+                          <input id="location-address" type="text" class="form-control" placeholder="Street, City, State"/>
+                        </div>
+
+                        <div class="col sm-1">
+                          <p><button class="btn btn-success" id="map-address-btn"><span>Giddy up!</span></button></p>
                         </div>
                       </div>
 
-                    </div>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p>Not sure where to go?</p>
+                        </div>
 
+                        <div class="col-sm-8">
+                          <button class="btn btn-success" id="geolocate-address-btn"><span>Current location</span></button> or
+                          <button class="btn btn-success" id="citycentre-address-btn"><span>City centre</span></button>
+                        </div>
+                      </div>
+
+                  </div>
                 </div>
-             <!--    <div class="modal-footer">
+                <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div> -->
+                </div>
               </div>
 
             </div>
@@ -252,10 +295,13 @@
                     <li>
                       <input type="checkbox" name="add-translink" id="add-translink"> Bus stations<br>
                     </li>
-                    <p>Is this your first rodeo?</p>
                     <li>
-                      <a href="#help-modal" class="btn btn-default" id="help-modal" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                      <input type="checkbox" name="add-instagram" id="add-instagram"> Instagram posts<br>
                     </li>
+<!--                     <li>
+                       <p>Is this your first rodeo?</p>
+                      <a href="#help-modal" class="btn btn-default" id="help-modal" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                    </li> -->
                 </li>
             </ul>
         </div>
@@ -272,11 +318,11 @@
                         <a href="#location-modal" class="btn btn-default" id="location-modal" data-toggle="modal" data-target="#myModalLocation" id="modal-help-button"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
                         <a href="" class="btn btn-default" id="drive-around"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></a>
                         <a href="#get-directions-modal" class="btn btn-default" id="get-directions-modal" data-toggle="modal" data-target="#myModalDirections"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
-                        <div class="leap-buttons text-center">
-                          <span id="leap-icon" class="btn btn-default glyphicon glyphicon-off"></span>
-                          <span id="left-hand-icon" class="btn btn-default glyphicon glyphicon-hand-left"></span>
-                          <span id="right-hand-icon" class="btn btn-default glyphicon glyphicon-hand-right"></span>
-                        </div>
+
+                        <span id="leap-icon" class="btn btn-default glyphicon glyphicon-off"></span>
+                        <span id="left-hand-icon" class="btn btn-default glyphicon glyphicon-hand-left"></span>
+                        <span id="right-hand-icon" class="btn btn-default glyphicon glyphicon-hand-right"></span>
+
 
                         <!-- Street View Embedded Here -->
                         <div id="map"></div>
@@ -284,6 +330,10 @@
 
                         <!-- Directions Embedded Here -->
                         <div id="directions-panel"></div>
+
+                        <!-- Hyperlapse Embedded Here -->
+                        <div id="hyperlapse-loading"><img id="loading-gif" src="images/loading.gif"></div>
+                        <div id="hyperlapse"></div>
 
                     </div>
                 </div>
@@ -310,10 +360,15 @@
     <script type="text/javascript" src="js/google_places.js"></script>
     <script type="text/javascript" src="js/twitter.js"></script>
     <script type="text/javascript" src="js/directions.js"></script>
+    <script type="text/javascript" src="js/instagram.js"></script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places&callback=initialize">
     </script>
 
+    <script type="text/javascript" src="js/generate_hyperlapse.js"></script>
+    <script src="js/hyperlapse/three.min.js"></script>
+    <script src="js/hyperlapse/GSVPano.js"></script>
+    <script src="js/hyperlapse/Hyperlapse.js"></script>
 
     <script src="js/translink.js"></script>
 
