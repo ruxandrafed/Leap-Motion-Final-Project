@@ -31,7 +31,8 @@ function renderInstagramMarkers(array, map) {
     var infoWindow = new google.maps.InfoWindow({
       content: '<div class="infoWindowContent"> <div class="iw-title">@' + post.user.username + ': </div>'
         + '<img src="' + post.images.standard_resolution.url + '" width="200px">'
-        + '<p> Posted by: <a href="http://www.instagram.com/' + post.user.username + '">@' + post.user.username + '</a></p></div>'
+        + '<p> Posted by: <a href="http://www.instagram.com/' + post.user.username + '">@' + post.user.username + '</a></p></div>',
+      disableAutoPan: true
     });
 
     markerInsta.addListener('click', function() {

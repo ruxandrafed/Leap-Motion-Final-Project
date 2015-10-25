@@ -73,7 +73,8 @@ function createGPMarker(place, map) {
   // Create infowindow for street view
 
   var infoWindow = new google.maps.InfoWindow({
-    content: contentString
+    content: contentString,
+    disableAutoPan: true
   });
 
   markerP.addListener('click', function() {

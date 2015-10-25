@@ -64,7 +64,8 @@ function renderTranslinkMarkers (array, map) {
     translinkMarkers.push(markerTr);
 
     var infoWindow = new google.maps.InfoWindow({
-      content: contentString
+      content: contentString,
+      disableAutoPan: true
     })
 
     markerTr.addListener('click', function() {
