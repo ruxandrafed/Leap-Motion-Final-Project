@@ -8,8 +8,7 @@ $(function() {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-    google.maps.event.trigger(map, 'resize');
-    // map.setZoom(map.getZoom());
+    resizeMP();
   });
 
   $("#drive-around").on("click", function(e) {
@@ -18,8 +17,7 @@ $(function() {
     $("#map").toggle().toggleClass('half-left');
     $("streetview").toggleClass('half-right');
     $("#get-directions-modal").toggle()
-    google.maps.event.trigger(panorama, "resize");
-    google.maps.event.trigger(map, "resize");
+    resizeMP();
   });
 
 });
