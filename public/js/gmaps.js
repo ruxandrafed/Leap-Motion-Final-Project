@@ -37,7 +37,6 @@ function initialize() {
     disableAutoPan: true
   });
 
-
   map.setStreetView(panorama);
 
 
