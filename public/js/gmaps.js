@@ -355,6 +355,12 @@ function initialize() {
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
+
+  function resizeMP() {
+    google.maps.event.trigger(panorama, "resize");
+    google.maps.event.trigger(map, "resize");
+  }
+
 }
 
 
