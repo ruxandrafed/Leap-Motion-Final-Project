@@ -34,7 +34,7 @@ function renderTranslinkMarkers (array, map) {
         contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo[0] + '</b>: '
          + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
          + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
-         + '</span></div>')
+         + '</span><br></div>')
       })
       callback(contentRoutes);
     });
