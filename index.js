@@ -100,17 +100,7 @@ server.register(require('inert'), function (err) {
     }
   })
 
-  // Realtime data route
-
-  // server.route({
-  //   method: 'GET',
-  //   path: '/realtime',
-  //   handler: function (req, reply) {
-
-  //   }
-  // })
-
-  // // Add public directory handler
+  // Add public directory handler
   server.route({
     method: 'GET',
     path: '/{param*}',

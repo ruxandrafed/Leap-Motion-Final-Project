@@ -237,7 +237,7 @@ function initialize() {
 
   $("#map-address-btn3").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      loadLeap();
     };
     e.preventDefault();
     var origin = panorama.position;
@@ -253,6 +253,18 @@ function initialize() {
     };
     e.preventDefault();
   });
+
+  // $("#simulate-bus-routes").on("click", function(e) {
+  //   if (!(leapActive)){
+  //     loadLeap(map);
+  //   };
+  //   e.preventDefault();
+  //   var origin = panorama.position;
+  //   var destination = $("#location-address3").val();
+  //   var travelMode = $("#travel-mode").val();
+  //   getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
+  //   hideModals();
+  // })
 
   // Checkboxes hiding markers
 
@@ -356,9 +368,19 @@ function initialize() {
     Leap.loop({enableGestures: true}, move);
   };
 
+
+//   function addBusRoutesLayers(map) {
+
+//     var ctaLayer = new google.maps.KmlLayer({
+//       url: 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml',
+//       map: map
+//     });
+
+//   }
+
+// addBusRoutesLayers(map);
+
 }
-
-
 
 
 

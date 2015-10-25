@@ -276,6 +276,43 @@
           </div>
         </div>
 
+        <!-- Bus Routes Modal -->
+        <div class="container">
+
+          <div class="modal fade" id="myModalBusRoutes" tabindex='-1' role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Simulate Bus Routes</h4>
+                </div>
+                <div class="modal-body">
+
+                  <div class="container">
+
+                      <div class="row">
+
+                        <div class="col-sm-1">
+                          <p><button class="btn btn-success" id="simulate-bus-routes"><span>Giddy up!</span></button></p>
+                        </div>
+
+                      </div>
+
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
@@ -318,6 +355,7 @@
                         <a href="#location-modal" class="btn btn-default" id="location-modal" data-toggle="modal" data-target="#myModalLocation" id="modal-help-button"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></a>
                         <a href="" class="btn btn-default" id="drive-around"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></a>
                         <a href="#get-directions-modal" class="btn btn-default" id="get-directions-modal" data-toggle="modal" data-target="#myModalDirections"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
+                        <a href="#simulate-bus-route" class="btn btn-default" id="bus-routes-modal" data-toggle="modal" data-target="#myModalBusRoutes"><span class="glyphicon glyphicon-bed" aria-hidden="true"></span></a>
 
                         <span id="leap-icon" class="btn btn-default glyphicon glyphicon-off"></span>
                         <span id="left-hand-icon" class="btn btn-default glyphicon glyphicon-hand-left"></span>
