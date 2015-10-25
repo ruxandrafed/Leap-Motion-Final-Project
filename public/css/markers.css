@@ -39,7 +39,7 @@ span.stars span {
 
 /* Styles image in tweet info window */
 
-.gm-style img {
+.twitter-user{
   border-radius: 5px;
   float: right;
   margin-left: 5px;
