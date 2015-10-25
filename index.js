@@ -65,7 +65,7 @@ server.register(require('inert'), function (err) {
     handler: function (req, reply) {
       params = req.query;
       url = 'http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu&lat=' +
-        params.lat + "&long=" + params.lng + "&radius=50"
+        params.lat + "&long=" + params.lng + "&radius=100"
       // console.log(url)
 
       request(url, function (error, response, body) {
