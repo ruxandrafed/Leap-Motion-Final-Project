@@ -33,7 +33,7 @@ function renderTwitterMarkers (array, map) {
     twitterMarkers.push(markerTw);
 
     var infoWindow = new google.maps.InfoWindow({
-      content: '<div class="infoWindowContent"><img src="' + tweet[5] + '"><div class="iw-title">@' + tweet[4] + ': </div><p>' + tweet[3] + '</p>'
+      content: '<div class="infoWindowContent"><img class="twitter-user" src="' + tweet[5] + '"><div class="iw-title">@' + tweet[4] + ': </div><p>' + tweet[3] + '</p>'
         + '<p> Posted by: <a href="http://www.twitter.com/' + tweet[4] + '">@' + tweet[4] + '</a></p>'
         + '<p> On: ' + tweet[2] + '</p></div>'
     });
