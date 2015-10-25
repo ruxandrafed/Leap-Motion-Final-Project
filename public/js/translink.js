@@ -26,10 +26,10 @@ function renderTranslinkMarkers (array, map) {
   name = busStop[3];
   route = busStop[4];
   atStreet = busStop[2];
-  contentRoutes = ''
   function getContentRoutes(callback) {
     $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
       var buses = data.NextBuses.NextBus;
+      contentRoutes = ''
       buses.forEach(function (bus) {
         contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo[0] + '</b>: '
          + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
