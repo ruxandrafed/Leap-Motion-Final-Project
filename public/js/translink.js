@@ -24,12 +24,12 @@ function renderTranslinkMarkers (array, map) {
   function getContentRoutes(callback) {
     $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
       var buses = data.NextBuses.NextBus;
-      contentRoutes = ''
+      contentRoutes = '';
       buses.forEach(function (bus) {
         contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo[0] + '</b>: '
          + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
          + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
-         + '</span></div>')
+         + '</span><br></div>')
       })
       callback(contentRoutes);
     });
