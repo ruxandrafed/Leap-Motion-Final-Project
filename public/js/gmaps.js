@@ -356,11 +356,6 @@ function initialize() {
     Leap.loop({enableGestures: true}, move);
   };
 
-  function resizeMP() {
-    google.maps.event.trigger(panorama, "resize");
-    google.maps.event.trigger(map, "resize");
-  }
-
 }
 
 

@@ -8,7 +8,7 @@ $(function() {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-    resizeMP();
+    google.maps.event.trigger(panorama, "resize");
   });
 
   $("#drive-around").on("click", function(e) {
