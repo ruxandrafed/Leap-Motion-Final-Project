@@ -11,7 +11,7 @@ function translink (lat, lng, map) {
   });
 };
 
-var prev_infoWindow;
+// var prev_infoWindow;
 
 var translinkMarkers = [];
 
