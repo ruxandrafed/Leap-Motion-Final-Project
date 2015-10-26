@@ -25,16 +25,19 @@ function renderTwitterMarkers (array, map) {
   array.filter(function (tweet) {
     return !filterTwMarker(tweet);
     }).forEach(function (tweet) {
-      twitterMarkers.push(tweet);
-      createTwMarker(tweet);
+      var markerTw = createTwMarker(tweet);
+      twitterMarkers.push(markerTw);
     });
 }
 
 function filterTwMarker(result) {
+  if twitterMarkers.length > 0 {
   return twitterMarkers.some(function (value) {
     // Checks if a tweet with the exact timestamp exists
-    return value[2] === result[2];
+    return value.title === result[2];
   });
+  }
+
 }
 
 function createTwMarker(tweet) {
@@ -45,7 +48,7 @@ function createTwMarker(tweet) {
     icon: tweetIcon,
     title: tweet[2]
   });
-  twitterMarkers.push(markerTw);
+  // twitterMarkers.push(markerTw);
 
   var infoWindow = new google.maps.InfoWindow({
     content: '<div class="infoWindowContent"><img class="twitter-user" src="' + tweet[5] + '"><div class="iw-title">@' + tweet[4] + ': </div><p>' + tweet[3] + '</p>'

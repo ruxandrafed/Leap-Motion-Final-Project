@@ -55,7 +55,7 @@ function initialize() {
     map.setCenter(panorama.position);
 
     if(placesCheckbox.is(":checked")) {
-      clearOverlays(googlePlacesMarkers)
+      clearOverlays(googlePlacesMarkers);
       var request = {
         location: panorama.location.latLng,
         radius: '50',
@@ -307,7 +307,7 @@ function initialize() {
   function checkboxesListeners() {
 
     placesCheckbox.change(function() {
-      // clearOverlays(googlePlacesMarkers);
+      clearOverlays(googlePlacesMarkers);
       if($(this).is(":checked")) {
         var request = {
           location: panorama.location.latLng,
@@ -331,7 +331,7 @@ function initialize() {
     });
 
     tweetsCheckbox.change(function() {
-      // clearOverlays(twitterMarkers);
+      clearOverlays(twitterMarkers);
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -347,7 +347,7 @@ function initialize() {
     });
 
     instagramCheckbox.change(function() {
-      // clearOverlays(instaMarkers);
+      clearOverlays(instaMarkers);
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -363,7 +363,7 @@ function initialize() {
     })
 
     translinkCheckbox.change(function() {
-      // clearOverlays(translinkMarkers);
+      clearOverlays(translinkMarkers);
       if($(this).is(":checked")) {
         var lat = panorama.position.lat().toPrecision(7);
         var lng = panorama.position.lng().toPrecision(7);
