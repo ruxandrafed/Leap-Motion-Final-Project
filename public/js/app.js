@@ -8,7 +8,6 @@ $(function() {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-    google.maps.event.trigger(panorama, "resize");
   });
 
   $("#drive-around").on("click", function(e) {

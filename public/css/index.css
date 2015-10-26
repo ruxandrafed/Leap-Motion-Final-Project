@@ -214,6 +214,8 @@ body {
 
 #streetview {
   height: 95vh;
+  /* avoid grey area on sidebar toggle*/
+  width: 100hh;
 }
 
 #menu-toggle, #help-modal, #location-modal, #get-directions-modal,
