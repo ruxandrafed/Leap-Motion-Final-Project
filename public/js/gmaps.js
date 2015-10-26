@@ -13,6 +13,7 @@ function initialize() {
   // Basic Street View embed for homepage starts here
   var map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
+    mapTypeControl: false,
     zoom: 18
   });
 
@@ -254,6 +255,7 @@ function initialize() {
     var currentCenter = panorama.getPosition();
     var map = new google.maps.Map(document.getElementById('map'), {
       center: currentCenter,
+      mapTypeControl: false,
       zoom: 18
     });
 
@@ -289,6 +291,7 @@ function initialize() {
     var currentCenter = panorama.getPosition();
     var map = new google.maps.Map(document.getElementById('map'), {
       center: currentCenter,
+      mapTypeControl: false,
       zoom: 18
     });
     map.setStreetView(panorama);
@@ -418,6 +421,7 @@ function initialize() {
     var currentCenter = map.getCenter();
     var map = new google.maps.Map(document.getElementById('map'), {
       center: currentCenter,
+      mapTypeControl: false,
       zoom: 18
     });
     map.setStreetView(panorama);
@@ -426,6 +430,7 @@ function initialize() {
       map: map,
       preserveViewport: true
     });
+    debugger;
     google.maps.event.addListenerOnce(ctaLayer, 'defaultviewport_changed', function() {
       center = ctaLayer.getDefaultViewport().getCenter();
       map.panTo(center);
