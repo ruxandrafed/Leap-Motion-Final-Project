@@ -412,8 +412,8 @@ function initialize() {
     if (array.length > 0) {
       for (var i = 0; i < array.length; i++ ) {
         array[i].setMap(null);
+        array.splice(i);
       }
-      array = [];
     }
   }
 
