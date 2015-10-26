@@ -1,41 +1,42 @@
-function getTweets(lat, lng, panorama) {
+var prev_infoWindow;
+var twitterMarkers = [];
 
-  var allTweets = [];
+function getTweets(lat, lng, panorama) {
+  twitterMarkers.forEach(function(marker)
+  {
+    marker.setMap(null);
+  });
 
   $.ajax({
     method: 'get',
     url: '/tweets' ,
     data: {geocode: lat + ',' + lng + ',0.05km'},
-    success: function (tweets) {
-      tweets.statuses.forEach(function(tweet) {
-        if (tweet.geo) {
-          allTweets.push([tweet.geo.coordinates[0], tweet.geo.coordinates[1], tweet.created_at, tweet.text, tweet.user.screen_name, tweet.user.profile_image_url]);
-        };
-        renderTwitterMarkers(allTweets, map);
-      });
-    }
+    success: renderTwitterMarkers
   });
-
 }
 
-var prev_infoWindow;
-var twitterMarkers = [];
+function withGeo(tweet) { return !!tweet.geo; }
 
-function renderTwitterMarkers (array, map) {
-  array.forEach(function (tweet) {
+
+function renderTwitterMarkers (array) {
+  twitterMarkers = array.statuses.filter(withGeo)
+  .map(function (tweet) {
     var tweetIcon = "/images/twitter-icon-logo.png";
     var markerTw = new google.maps.Marker({
-      position: {lat: tweet[0], lng: tweet[1]},
+      position:
+      {
+        lat: tweet.geo.coordinates[0],
+        lng: tweet.geo.coordinates[1]
+      },
       map: panorama,
       icon: tweetIcon,
-      title: tweet[2]
+      title: tweet.created_at
     });
-    twitterMarkers.push(markerTw);
 
     var infoWindow = new google.maps.InfoWindow({
-      content: '<div class="infoWindowContent"><img class="twitter-user" src="' + tweet[5] + '"><div class="iw-title">@' + tweet[4] + ': </div><p>' + tweet[3] + '</p>'
-        + '<p> Posted by: <a href="http://www.twitter.com/' + tweet[4] + '">@' + tweet[4] + '</a></p>'
-        + '<p> On: ' + tweet[2] + '</p></div>',
+      content: '<div class="infoWindowContent"><img class="twitter-user" src="' + tweet.user.profile_image_url + '"><div class="iw-title">@' + tweet.user.screen_name + ': </div><p>' + tweet.text + '</p>'
+        + '<p> Posted by: <a href="http://www.twitter.com/' + tweet.user.screen_name + '">@' + tweet.user.screen_name + '</a></p>'
+        + '<p> On: ' + tweet.created_at + '</p></div>',
       disableAutoPan: true
     });
 
@@ -52,7 +53,7 @@ function renderTwitterMarkers (array, map) {
 
     google.maps.event.trigger(markerTw, 'click')
 
-
+    return markerTw;
   });
 
 }

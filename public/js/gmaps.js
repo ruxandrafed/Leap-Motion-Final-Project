@@ -409,6 +409,10 @@ function initialize() {
   };
 
   function clearOverlays(array) {
+    // array.forEach(function(marker) {
+    //   marker.setMap(null);
+    // });
+    // array = [];
     if (array.length > 0) {
       for (var i = 0; i < array.length; i++ ) {
         array[i].setMap(null);

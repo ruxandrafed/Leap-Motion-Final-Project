@@ -26,10 +26,21 @@ function renderTranslinkMarkers (array, map) {
       var buses = data.NextBuses.NextBus;
       contentRoutes = '';
       buses.forEach(function (bus) {
-        contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo[0] + '</b>: '
+        if (bus.Schedules[0].Schedule[2]) {
+        contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo + '</b>: '
          + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
          + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
          + '</span><br></div>')
+        } else {
+          if (bus.Schedules[0].Schedule[1]){
+            contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo + '</b>: '
+             + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
+            + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + '</span><br></div>')
+          } else {
+            contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo + '</b>: '
+             + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + '</span><br></div>')
+          }
+        }
       })
       callback(contentRoutes);
     });
