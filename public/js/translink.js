@@ -2,13 +2,7 @@ function translink (lat, lng, map) {
 
   busMarkerInfo = [];
 
-  $.getJSON("/translink/stops", {lat: lat, lng: lng}, function (data) {
-    stops = data.Stops.Stop;
-    stops.forEach(function (stop) {
-      busMarkerInfo.push([stop.Latitude[0], stop.Longitude[0], stop.AtStreet[0], stop.Name[0], stop.Routes[0], stop.StopNo[0]])
-    });
-    renderTranslinkMarkers(busMarkerInfo, map);
-  });
+  $.getJSON("/translink/stops", {lat: lat, lng: lng}, renderTranslinkMarkers)
 };
 
 // var prev_infoWindow;
@@ -16,16 +10,19 @@ function translink (lat, lng, map) {
 var translinkMarkers = [];
 
 
-function renderTranslinkMarkers (array, map) {
-  array.forEach(function (busStop) {
-  name = busStop[3];
-  route = busStop[4];
-  atStreet = busStop[2];
-  function getContentRoutes(callback) {
-    $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
+function renderTranslinkMarkers (data, map) {
+  stops = data.Stops.Stop;
+  stops.map(function (stop) {
+    console.log(stop)
+    name = stop.Name;
+    route = stop.Routes;
+    atStreet = stop.AtStreet[0];
+    stopNo = stop.StopNo;
+    function getContentRoutes(callback) {
+    $.getJSON("/translink/buses", {stopNo: stopNo, count: 3, timeFrame: 90}, function (data) {
       var buses = data.NextBuses.NextBus;
       contentRoutes = '';
-      buses.forEach(function (bus) {
+      buses.map(function (bus) {
         if (bus.Schedules[0].Schedule[2]) {
         contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo + '</b>: '
          + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
@@ -53,13 +50,13 @@ function renderTranslinkMarkers (array, map) {
 
     var markerTr = new google.maps.Marker({
 
-      position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
+      position: {lat: parseFloat(stop.Latitude), lng: parseFloat(stop.Longitude)},
       map: panorama,
       icon: busIcon,
-      title: busStop[3]
+      title: atStreet
     })
 
-    contentString = '<div class="infoWindowContent"> <div class="iw-title">Bus Stop No. ' + busStop[5] + ' </div>'
+    contentString = '<div class="infoWindowContent"> <div class="iw-title">Bus Stop No. ' + stopNo + ' </div>'
         + '<p>' + name + '</p>'
         + '<p> At Street: ' + atStreet + '</p>'
         // + '<p>Routes: ' + route + '</p>'
