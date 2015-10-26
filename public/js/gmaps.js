@@ -259,6 +259,7 @@ function initialize() {
   function checkboxesListeners() {
 
     placesCheckbox.change(function() {
+      clearOverlays(googlePlacesMarkers)
       if($(this).is(":checked")) {
         var request = {
           location: panorama.location.latLng,
@@ -282,6 +283,7 @@ function initialize() {
     });
 
     tweetsCheckbox.change(function() {
+      clearOverlays(twitterMarkers)
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -297,6 +299,7 @@ function initialize() {
     });
 
     instagramCheckbox.change(function() {
+      clearOverlays(instaMarkers)
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -312,6 +315,7 @@ function initialize() {
     })
 
     translinkCheckbox.change(function() {
+      clearOverlays(translinkMarkers)
       if($(this).is(":checked")) {
         var lat = panorama.position.lat().toPrecision(7);
         var lng = panorama.position.lng().toPrecision(7);
@@ -355,6 +359,15 @@ function initialize() {
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
+
+  function clearOverlays(array) {
+    if (array.length > 0) {
+      for (var i in array) {
+        array[i].setMap(null);
+      }
+      array.length = 0;
+    }
+  }
 
 }
 

@@ -6,7 +6,6 @@ function translink (lat, lng, map) {
   //   console.log(data);
   // };
 
-
   $.getJSON("/translink/stops", {lat: lat, lng: lng}, function (data) {
     stops = data.Stops.Stop;
     stops.forEach(function (stop) {
@@ -16,7 +15,7 @@ function translink (lat, lng, map) {
   });
 };
 
-var prev_infoWindow;
+// var prev_infoWindow;
 
 var translinkMarkers = [];
 
