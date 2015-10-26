@@ -65,7 +65,7 @@ server.register(require('inert'), function (err) {
     handler: function (req, reply) {
       params = req.query;
       url = 'http://api.translink.ca/rttiapi/v1/stops?apikey=aGNpR72RV528weEJ7zZu&lat=' +
-        params.lat + "&long=" + params.lng + "&radius=50"
+        params.lat + "&long=" + params.lng + "&radius=100"
       // console.log(url)
 
       request(url, function (error, response, body) {
@@ -78,7 +78,7 @@ server.register(require('inert'), function (err) {
         })
       });
     }
-  })
+  });
 
   server.route({
     method: 'GET',
@@ -98,19 +98,9 @@ server.register(require('inert'), function (err) {
         });
       })
     }
-  })
+  });
 
-  // Realtime data route
-
-  // server.route({
-  //   method: 'GET',
-  //   path: '/realtime',
-  //   handler: function (req, reply) {
-
-  //   }
-  // })
-
-  // // Add public directory handler
+  // Add public directory handler
   server.route({
     method: 'GET',
     path: '/{param*}',

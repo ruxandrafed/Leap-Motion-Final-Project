@@ -6,48 +6,121 @@ html, body {
   padding: 0;
 }
 
-#logo {
-  font-family: 'Pacifico', cursive;
-} 
-
 body {
   font-family: 'Ubuntu', sans-serif;
-
 }
 
-#sidebar {
-  height: 95vh;
+.adp-directions {
+  width: 100%;
+  font-family: 'Ubuntu', sans-serif;
 }
 
-.sidebar-brand {
-  font-family: 'Pacifico';
-  font-size: 28px;
+.adp-marker {
+  margin: 5px 5px;
 }
 
-#streetview, #map {
-  height: 95vh;
-}
-
-#map {
-  display: none;
+/* Hides fullscreencontrol from Streetview*/
+.gm-style > div:nth-child(10){
+ display:none;
 }
 
 .half-left {
   float: left;
-  width: 50%;
+  width: 47%;
 }
 
 .half-right {
   float: right;
+  width: 53%;
+}
+
+.icon-legend {
+  font-size: 12px;
+}
+
+.instructions .borderless td {
+  border: none;
+  text-align: left;
+}
+
+.intro-pic {
   width: 50%;
+  border-radius: 5px;
 }
 
-#help-modal {
-  left: 60px;
+.modal-body {
+ /* background-color: #FFF3E0;*/
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
-#location-modal {
-  left: 105px;
+.modal-content  {
+  top: 10%;
+}
+
+.modal-dialog  {
+  width: 75%;
+  height: 75%;
+}
+
+/*.modal-footer {
+  background-color: #E3F2FD;
+}*/
+
+.modal-header {
+  background-color: #FF9800;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.modal-title-logo {
+  font-family: 'Pacifico';
+  font-size: 3em;
+  padding-top: 0.1em;
+  margin: auto;
+  text-align: center;
+}
+
+.modal-header img {
+  height: 10vh;
+  position: absolute;
+  margin: auto;
+  display: inline;
+}
+
+.modal-title {
+  height: 10vh;
+}
+
+.pac-container {
+  z-index: 9999;
+}
+
+.sidebar-brand {
+  font-family: 'Pacifico';
+  font-size: 2em;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #333;
+}
+
+
+.sidebar-nav > .sidebar-brand img {
+  width: 100%;
+  margin: 0px;
+  position: absolute;
+}
+
+#bus-routes-modal {
+  display: none;
+  left: 240px;
+}
+
+#directions-panel {
+  width: 45.4%;
+  margin-right: 1em;
+  float: left;
 }
 
 #drive-around {
@@ -59,10 +132,33 @@ body {
   left: 195px;
 }
 
+#help-modal {
+  left: 60px;
+}
 
+#hyperlapse {
+  margin-top: 0.8em;
+  width: 52.8%;
+  float: right;
+}
+
+#hyperlapse-loading {
+  margin-top: 0.8em;
+  width: 52.8%;
+  float: right;
+  display: none;
+}
+
+#loading-gif {
+  max-width: 100%;
+}
+
+#location-modal {
+  left: 105px;
+}
 
 #leap-icon {
-  left: 640px;
+  right: 105px;
   font-weight: bold;
 }
 
@@ -75,81 +171,36 @@ body {
 }
 
 #left-hand-icon {
-  left: 45px;
-  margin-top: -2px;
+  right: 60px;
 }
+
 #left-hand-icon.detected{
   color: green;
 }
 
+#logo {
+  font-family: 'Pacifico', cursive;
+}
+
+#map {
+  display: none;
+  height: 95vh;
+}
+
+#modal-button {
+  display: none;
+}
+
 #right-hand-icon {
-  left: 90px;
-  margin-top: -2px;
+  right: 15px;
 }
 
 #right-hand-icon.detected{
   color: green;
 }
 
-#menu-toggle, #help-modal, #location-modal, #get-directions-modal,
-#leap-icon, #right-hand-icon, #left-hand-icon, #drive-around, #get-directions {
-  position: absolute;
-  opacity: 0.9;
-  z-index: 1;
-}
-
-.modal-title {
-  font-family: 'Pacifico';
-  font-size: 22px;
-  left: 20px;
-}
-
-.modal-header {
-  background-color: #FF9800;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-}
-
-.modal-body {
- /* background-color: #FFF3E0;*/
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-}
-
-/*.modal-footer {
-  background-color: #E3F2FD;
-}*/
-
-#modal-button {
-  display: none;
-}
-
-.modal-dialog  {
-  width: 75%;
-  height: 75%;
-}
-
-.modal-content  {
-  top: 25%;
-}
-
-/* Styling google maps directions */
-.adp-directions {
-  width: 100%;
-  font-family: 'Ubuntu', sans-serif;
-}
-
-.adp-marker {
-  margin: 5px 5px;
-}
-
-/* Styling search form welcome modal */
-.pac-container {
-  z-index: 9999;
-}
-
-.sidebar-nav > .sidebar-brand a {
-    color: #333;
+#sidebar {
+  height: 95vh;
 }
 
 #sidebar-wrapper {
@@ -157,14 +208,19 @@ body {
   box-shadow: 5px 5px 5px #d1d1d1;
 }
 
-
-/* Styling search form sidebar */
-
 #sidebar-wrapper #location-address {
   width: 19%;
 }
 
-.instructions .borderless td {
-  border: none;
-  text-align: center;
+#streetview {
+  height: 95vh;
+  /* avoid grey area on sidebar toggle*/
+  width: 100hh;
+}
+
+#menu-toggle, #help-modal, #location-modal, #get-directions-modal,
+#leap-icon, #right-hand-icon, #left-hand-icon, #drive-around, #get-directions, #bus-routes-modal {
+  position: absolute;
+  opacity: 0.9;
+  z-index: 1;
 }

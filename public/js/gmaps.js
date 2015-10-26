@@ -13,6 +13,7 @@ function initialize() {
   // Basic Street View embed for homepage starts here
   var map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
+    mapTypeControl: false,
     zoom: 18
   });
 
@@ -27,10 +28,15 @@ function initialize() {
 
   panorama.setOptions({
     'addressControlOptions': {
-    'position': google.maps.ControlPosition.BOTTOM_CENTER
-    }
+      'position': google.maps.ControlPosition.BOTTOM_CENTER
+    },
   });
 
+  // Making a fake infowindow to force applying styling on start
+  var infoWindow = new google.maps.InfoWindow({
+    content: '',
+    disableAutoPan: true
+  });
 
   map.setStreetView(panorama);
 
@@ -49,6 +55,7 @@ function initialize() {
     map.setCenter(panorama.position);
 
     if(placesCheckbox.is(":checked")) {
+      clearOverlays(googlePlacesMarkers)
       var request = {
         location: panorama.location.latLng,
         radius: '50',
@@ -62,14 +69,17 @@ function initialize() {
     };
 
     if(tweetsCheckbox.is(":checked")) {
+      clearOverlays(twitterMarkers)
       getTweets(lat, lng, panorama);
     };
 
     if(translinkCheckbox.is(":checked")) {
+      clearOverlays(translinkMarkers)
       translink(lat, lng, panorama);
     };
 
     if(instagramCheckbox.is(":checked")) {
+      clearOverlays(instaMarkers)
       getInstagramPosts(lat, lng, panorama);
     };
 
@@ -147,11 +157,11 @@ function initialize() {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
 
-        // Point streetview camera to a marker
-       var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
-       var pov = panorama.getPov();
-       pov.heading = heading;
-       panorama.setPov(pov);
+       //  // Point streetview camera to a marker
+       // var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
+       // var pov = panorama.getPov();
+       // pov.heading = heading;
+       // panorama.setPov(pov);
 
       }, function() {
         handleNoGeolocation(browserSupportFlag);
@@ -179,6 +189,7 @@ function initialize() {
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
     $('#myModalDirections').modal('hide').fadeOut('slow');
+    $('#myModalBusRoutes').modal('hide').fadeOut('slow');
   }
 
   $("#map-address-btn").on("click", function(e) {
@@ -237,12 +248,21 @@ function initialize() {
 
   $("#map-address-btn3").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      loadLeap();
     };
     e.preventDefault();
     var origin = panorama.position;
     var destination = $("#location-address3").val();
     var travelMode = $("#travel-mode").val();
+
+    // Clears map if any bus routes exist on it
+    var currentCenter = panorama.getPosition();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      mapTypeControl: false,
+      zoom: 18
+    });
+
     getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
     hideModals();
   })
@@ -254,11 +274,40 @@ function initialize() {
     e.preventDefault();
   });
 
+  $("#simulate-bus-routes").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap(map);
+    };
+    e.preventDefault();
+    hideModals();
+    var route = $("#select-bus-routes").val();
+    addBusRoutesLayers(route, map);
+    // var origin = panorama.position;
+    // var destination = $("#location-address3").val();
+    // getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
+  });
+
+  $("#clear-bus-routes").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap(map);
+    };
+    // Clears map if any bus routes exist on it
+    var currentCenter = panorama.getPosition();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      mapTypeControl: false,
+      zoom: 18
+    });
+    map.setStreetView(panorama);
+    hideModals();
+  })
+
   // Checkboxes hiding markers
 
   function checkboxesListeners() {
 
     placesCheckbox.change(function() {
+      clearOverlays(googlePlacesMarkers)
       if($(this).is(":checked")) {
         var request = {
           location: panorama.location.latLng,
@@ -282,6 +331,7 @@ function initialize() {
     });
 
     tweetsCheckbox.change(function() {
+      clearOverlays(twitterMarkers)
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -297,6 +347,7 @@ function initialize() {
     });
 
     instagramCheckbox.change(function() {
+      clearOverlays(instaMarkers)
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -312,6 +363,7 @@ function initialize() {
     })
 
     translinkCheckbox.change(function() {
+      clearOverlays(translinkMarkers)
       if($(this).is(":checked")) {
         var lat = panorama.position.lat().toPrecision(7);
         var lng = panorama.position.lng().toPrecision(7);
@@ -346,7 +398,7 @@ function initialize() {
       createGPMarker(result, map);
      });
    };
- };
+ }
 
   // Loads Leap Motion controller
 
@@ -355,9 +407,42 @@ function initialize() {
     $('#leap-icon').addClass('leap-on');
     Leap.loop({enableGestures: true}, move);
   };
+
+  function clearOverlays(array) {
+    if (array.length > 0) {
+      for (var i = 0; i < array.length; i++ ) {
+        array[i].setMap(null);
+      }
+      array.length = 0;
+    }
+  }
+
+  function addBusRoutesLayers(route, map) {
+    $("#directions-panel").hide();
+    $("#hyperlapse").hide();
+    $("#hyperlapse-loading").hide();
+
+    var currentCenter = map.getCenter();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      mapTypeControl: false,
+      zoom: 18
+    });
+    map.setStreetView(panorama);
+    var ctaLayer = new google.maps.KmlLayer({
+      url: 'http://nb.translink.ca/geodata/' + route + '.kmz',
+      map: map,
+      preserveViewport: true
+    });
+    debugger;
+    google.maps.event.addListenerOnce(ctaLayer, 'defaultviewport_changed', function() {
+      center = ctaLayer.getDefaultViewport().getCenter();
+      map.panTo(center);
+      map.fitBounds(ctaLayer.getDefaultViewport());
+    });
+  }
+
 }
-
-
 
 
 

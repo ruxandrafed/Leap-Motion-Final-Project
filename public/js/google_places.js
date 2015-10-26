@@ -73,24 +73,25 @@ function createGPMarker(place, map) {
   // Create infowindow for street view
 
   var infoWindow = new google.maps.InfoWindow({
-    content: contentString
+    content: contentString,
+    disableAutoPan: true
   });
 
   markerP.addListener('click', function() {
-    if (prev_infoWindow) {
-      prev_infoWindow.close();
-    };
+    // if (prev_infoWindow) {
+    //   prev_infoWindow.close();
+    // };
     infoWindow.open(map.getStreetView(), markerP);
 
-    prev_infoWindow = infoWindow;
+    // prev_infoWindow = infoWindow;
     var iwOuter = $('.gm-style-iw');
     var iwBackground = iwOuter.prev();
     iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
-  
+
   });
 
   // This open windows automatically, still buggy
-  // setTimeout(function() {google.maps.event.trigger(markerP, 'click')}, 1000);
+  google.maps.event.trigger(markerP, 'click')
 
 }
 

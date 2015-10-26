@@ -2,11 +2,6 @@ function translink (lat, lng, map) {
 
   busMarkerInfo = [];
 
-  // $.getJSON ("/realtime"), function (data) {
-  //   console.log(data);
-  // };
-
-
   $.getJSON("/translink/stops", {lat: lat, lng: lng}, function (data) {
     stops = data.Stops.Stop;
     stops.forEach(function (stop) {
@@ -16,7 +11,7 @@ function translink (lat, lng, map) {
   });
 };
 
-var prev_infoWindow;
+// var prev_infoWindow;
 
 var translinkMarkers = [];
 
@@ -26,17 +21,25 @@ function renderTranslinkMarkers (array, map) {
   name = busStop[3];
   route = busStop[4];
   atStreet = busStop[2];
-  // console.log("Whole object: ",busStop)
-  // console.log("Stop No: ", busStop[5])
+  function getContentRoutes(callback) {
+    $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 90}, function (data) {
+      var buses = data.NextBuses.NextBus;
+      contentRoutes = '';
+      buses.forEach(function (bus) {
+        contentRoutes = contentRoutes.concat('<span><b> #' + bus.RouteNo[0] + '</b>: '
+         + bus.Schedules[0].Schedule[0].ExpectedLeaveTime + ', '
+         + bus.Schedules[0].Schedule[1].ExpectedLeaveTime + ', ' + bus.Schedules[0].Schedule[2].ExpectedLeaveTime
+         + '</span><br></div>')
+      })
+      callback(contentRoutes);
+    });
+  }
 
-  $.getJSON("/translink/buses", {stopNo: busStop[5], count: 3, timeFrame: 1200}, function (buses) {
-    // console.log(buses);
-    // console.log("Route name: ", buses.NextBuses.NextBus[0].RouteName)
-    // console.log("Route Number: ",buses.NextBuses.NextBus[0].RouteNo)
-    // console.log("Route Schedule: ", buses.NextBuses.NextBus[0].Schedules)
-  });
-    // busIcon = "https://maps.gstatic.com/mapfiles/ms2/micons/bus.png"
-    var busIcon = "../images/places/busstop.png"
+
+  getContentRoutes(function (contentRoutes) {
+    // once we get here the ajax call is complete
+    busIcon = "../images/places/busstop.png"
+
     var markerTr = new google.maps.Marker({
 
       position: {lat: parseFloat(busStop[0]), lng: parseFloat(busStop[1])},
@@ -45,29 +48,38 @@ function renderTranslinkMarkers (array, map) {
       title: busStop[3]
     })
 
-    contentString = '<div class="infoWindowContent"> <div class="iw-title">Stop No. ' + busStop[5] + ' </div>'
-        + '<p>' + name + ' </p>'
+    contentString = '<div class="infoWindowContent"> <div class="iw-title">Bus Stop No. ' + busStop[5] + ' </div>'
+        + '<p>' + name + '</p>'
         + '<p> At Street: ' + atStreet + '</p>'
-        + '<p>Routes: ' + route + '</p>'
-        + '<div><h5>Bus Schedule Estimates</h5>'
-        + '<p> </p></div>'
+        // + '<p>Routes: ' + route + '</p>'
+        + '<div class=><p>Next buses at:</p>'
+        + contentRoutes + '</div>'
+
     translinkMarkers.push(markerTr);
 
     var infoWindow = new google.maps.InfoWindow({
-      content: contentString
+      content: contentString,
+      disableAutoPan: true
     })
 
     markerTr.addListener('click', function() {
-      if (prev_infoWindow) {
-        prev_infoWindow.close();
-      };
+      // if (prev_infoWindow) {
+      //   prev_infoWindow.close();
+      // };
       infoWindow.open(panorama, markerTr);
-      prev_infoWindow = infoWindow;
+      // prev_infoWindow = infoWindow;
 
       var iwOuter = $('.gm-style-iw');
       var iwBackground = iwOuter.prev();
       iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
     });
+
+    google.maps.event.trigger(markerTr, 'click')
+
+
+
+  });
+
 
   });
 }
