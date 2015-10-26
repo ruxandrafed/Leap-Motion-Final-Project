@@ -69,7 +69,6 @@ function initialize() {
     };
 
     if(tweetsCheckbox.is(":checked")) {
-      clearOverlays(twitterMarkers)
       getTweets(lat, lng, panorama);
     };
 
@@ -381,9 +380,11 @@ function initialize() {
 
   checkboxesListeners();
 
+  // Google Places Generate Markers
+
   var listOfMarkers= [];
 
-  function includedInList(result) {
+  function filterGPMarker(result) {
     return listOfMarkers.some(function (value) {
       return value.id === result.id;
     });
@@ -392,7 +393,7 @@ function initialize() {
  function getPlacesInfo(results, status) {
    if (status == google.maps.places.PlacesServiceStatus.OK) {
      results.filter(function (result) {
-      return !includedInList(result);
+      return !filterGPMarker(result);
      }).forEach(function (result) {
       listOfMarkers.push(result);
       createGPMarker(result, map);
