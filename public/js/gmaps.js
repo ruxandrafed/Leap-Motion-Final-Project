@@ -45,6 +45,7 @@ function initialize() {
 
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var directionsService = new google.maps.DirectionsService;
+  var drawingManager = new google.maps.drawing.DrawingManager;
 
 
   // Event listeners when the map changes
@@ -184,6 +185,7 @@ function initialize() {
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
     $('#myModalDirections').modal('hide').fadeOut('slow');
+    $('#myModalBusRoutes').modal('hide').fadeOut('slow');
   }
 
   $("#map-address-btn").on("click", function(e) {
@@ -259,17 +261,18 @@ function initialize() {
     e.preventDefault();
   });
 
-  // $("#simulate-bus-routes").on("click", function(e) {
-  //   if (!(leapActive)){
-  //     loadLeap(map);
-  //   };
-  //   e.preventDefault();
-  //   var origin = panorama.position;
-  //   var destination = $("#location-address3").val();
-  //   var travelMode = $("#travel-mode").val();
-  //   getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
-  //   hideModals();
-  // })
+  $("#simulate-bus-routes").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap(map);
+    };
+    e.preventDefault();
+    hideModals();
+    var route = $("#select-bus-routes").val();
+    addBusRoutesLayers(route, map);
+    // var origin = panorama.position;
+    // var destination = $("#location-address3").val();
+    // getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
+  })
 
   // Checkboxes hiding markers
 
@@ -374,16 +377,18 @@ function initialize() {
   };
 
 
-//   function addBusRoutesLayers(map) {
-
-//     var ctaLayer = new google.maps.KmlLayer({
-//       url: 'http://googlemaps.github.io/js-v2-samples/ggeoxml/cta.kml',
-//       map: map
-//     });
-
-//   }
-
-// addBusRoutesLayers(map);
+  function addBusRoutesLayers(route, map) {
+    var ctaLayer = new google.maps.KmlLayer({
+      url: 'http://nb.translink.ca/geodata/' + route + '.kmz',
+      map: map,
+      preserveViewport: true
+    });
+    google.maps.event.addListenerOnce(ctaLayer, 'defaultviewport_changed', function() {
+      center = ctaLayer.getDefaultViewport().getCenter();
+      map.panTo(center);
+      map.fitBounds(ctaLayer.getDefaultViewport());
+    });
+  }
 
 }
 
