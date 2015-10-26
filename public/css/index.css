@@ -208,10 +208,10 @@ body {
   box-shadow: 5px 5px 5px #d1d1d1;
 }
 
-#sidebar-wrapper #location-address {
+/*#sidebar-wrapper #location-address {
   width: 19%;
 }
-
+*/
 #streetview {
   height: 95vh;
   /* avoid grey area on sidebar toggle*/

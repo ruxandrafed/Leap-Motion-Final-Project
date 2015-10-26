@@ -51,6 +51,10 @@ function renderTwitterMarkers (array) {
       iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
     });
 
+    var iwOuter = $('.gm-style-iw');
+      var iwBackground = iwOuter.prev();
+      iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
+    
     google.maps.event.trigger(markerTw, 'click')
 
     return markerTw;
