@@ -69,16 +69,17 @@ function initialize() {
     };
 
     if(tweetsCheckbox.is(":checked")) {
+      clearOverlays(twitterMarkers);
       getTweets(lat, lng, panorama);
     };
 
     if(translinkCheckbox.is(":checked")) {
-      clearOverlays(translinkMarkers)
+      clearOverlays(translinkMarkers);
       translink(lat, lng, panorama);
     };
 
     if(instagramCheckbox.is(":checked")) {
-      clearOverlays(instaMarkers)
+      clearOverlays(instaMarkers);
       getInstagramPosts(lat, lng, panorama);
     };
 
