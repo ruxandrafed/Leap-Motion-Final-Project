@@ -288,6 +288,7 @@ function initialize() {
       center: currentCenter,
       zoom: 18
     });
+    map.setStreetView(panorama);
     hideModals();
   })
 
@@ -412,6 +413,7 @@ function initialize() {
       center: currentCenter,
       zoom: 18
     });
+    map.setStreetView(panorama);
     var ctaLayer = new google.maps.KmlLayer({
       url: 'http://nb.translink.ca/geodata/' + route + '.kmz',
       map: map,
