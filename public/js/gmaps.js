@@ -282,6 +282,9 @@ function initialize() {
   });
 
   $("#clear-bus-routes").on("click", function(e) {
+    if (!(leapActive)){
+      loadLeap(map);
+    };
     // Clears map if any bus routes exist on it
     var currentCenter = panorama.getPosition();
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -408,6 +411,10 @@ function initialize() {
   }
 
   function addBusRoutesLayers(route, map) {
+    $("#directions-panel").hide();
+    $("#hyperlapse").hide();
+    $("#hyperlapse-loading").hide();
+
     var currentCenter = map.getCenter();
     var map = new google.maps.Map(document.getElementById('map'), {
       center: currentCenter,
