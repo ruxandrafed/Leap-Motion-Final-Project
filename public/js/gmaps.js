@@ -31,6 +31,11 @@ function initialize() {
     },
   });
 
+  // Making a fake infowindow to force applying styling on start
+  var infoWindow = new google.maps.InfoWindow({
+    content: '',
+    disableAutoPan: true
+  });
 
   map.setStreetView(panorama);
 
