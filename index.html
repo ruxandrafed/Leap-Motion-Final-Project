@@ -305,8 +305,8 @@
 
                       <div class="row">
 
-                        <div class="col-sm-3">
-                          Choose bus route:
+                        <div class="col-sm-2">
+                          Choose route:
                         </div>
 
                         <div class="col-sm-7">
@@ -462,8 +462,12 @@
                           </select>
                         </div>
 
-                        <div class="col-sm-2">
-                          <p><button class="btn btn-success" id="simulate-bus-routes"><span>Simulate route</span></button></p>
+                        <div class="col-sm-1">
+                          <p><button class="btn btn-success" id="simulate-bus-routes"><span>Show</span></button></p>
+                        </div>
+
+                        <div class="col-sm-1">
+                          <p><button class="btn btn-success" id="clear-bus-routes"><span>Clear map</span></button></p>
                         </div>
 
                       </div>
@@ -565,9 +569,10 @@
     <script type="text/javascript" src="js/directions.js"></script>
     <script type="text/javascript" src="js/instagram.js"></script>
     <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places,drawing&callback=initialize">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8n_uL9tSYPCEwO9PzU_quAXQFvL1Hf74&libraries=places&callback=initialize">
     </script>
 
+    <!-- Hyperlapse -->
     <script type="text/javascript" src="js/generate_hyperlapse.js"></script>
     <script src="js/hyperlapse/three.min.js"></script>
     <script src="js/hyperlapse/GSVPano.js"></script>

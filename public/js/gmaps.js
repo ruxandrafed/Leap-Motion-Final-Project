@@ -45,7 +45,6 @@ function initialize() {
 
   var directionsDisplay = new google.maps.DirectionsRenderer;
   var directionsService = new google.maps.DirectionsService;
-  var drawingManager = new google.maps.drawing.DrawingManager;
 
 
   // Event listeners when the map changes
@@ -250,6 +249,14 @@ function initialize() {
     var origin = panorama.position;
     var destination = $("#location-address3").val();
     var travelMode = $("#travel-mode").val();
+
+    // Clears map if any bus routes exist on it
+    var currentCenter = panorama.getPosition();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      zoom: 18
+    });
+
     getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
     hideModals();
   })
@@ -272,6 +279,16 @@ function initialize() {
     // var origin = panorama.position;
     // var destination = $("#location-address3").val();
     // getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
+  });
+
+  $("#clear-bus-routes").on("click", function(e) {
+    // Clears map if any bus routes exist on it
+    var currentCenter = panorama.getPosition();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      zoom: 18
+    });
+    hideModals();
   })
 
   // Checkboxes hiding markers
@@ -390,6 +407,11 @@ function initialize() {
   }
 
   function addBusRoutesLayers(route, map) {
+    var currentCenter = map.getCenter();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      zoom: 18
+    });
     var ctaLayer = new google.maps.KmlLayer({
       url: 'http://nb.translink.ca/geodata/' + route + '.kmz',
       map: map,
