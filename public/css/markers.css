@@ -8,9 +8,8 @@ iwOuter.parent.parent {
   font-family: 'Pacifico';
   font-size: 22px;
   font-weight: 400;
-
   color:  #ff9800;
-  /*background-color: #FF9800;*/
+  text-shadow: 1px 1px black;
   margin: 1px;
   padding: 0px;
   /*padding-left: 12px;*/

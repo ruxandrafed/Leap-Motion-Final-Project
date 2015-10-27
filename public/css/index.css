@@ -82,7 +82,7 @@ body {
   font-family: 'Pacifico';
   font-size: 3em;
   padding-top: 0.1em;
-  margin: auto;
+  margin-top: 17px;
   text-align: center;
 }
 
@@ -119,14 +119,22 @@ position: relative;
   left: 240px;
 }
 
+#clear-hyperlapse {
+  display: none;
+}
+
 #directions-panel {
-  width: 45.4%;
+/*  width: 45.4%;*/
   margin-right: 1em;
-  float: left;
+/*  float: left;*/
 }
 
 #drive-around {
   left: 150px;
+}
+
+#generate-hyperlapse {
+  display: none;
 }
 
 #get-directions-modal {
@@ -139,16 +147,22 @@ position: relative;
 }
 
 #hyperlapse {
-  margin-top: 0.8em;
-  width: 52.8%;
-  float: right;
+  display: none;
+}
+
+#hyperlapse-buttons {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 #hyperlapse-loading {
-  margin-top: 0.8em;
-  width: 52.8%;
-  float: right;
   display: none;
+}
+
+#hyperlapse-loading img {
+  display: block;
+  width: auto;
+  margin: auto;
 }
 
 #loading-gif {
@@ -191,6 +205,28 @@ position: relative;
 
 #modal-button {
   display: none;
+}
+
+<<<<<<< HEAD
+#map-address-btn {
+  margin-left: 15px;
+=======
+#help-btn {
+  background-color: #4144B4;
+  border-color: #4144B4
+}
+
+#map-address-btn, #map-address-btn2 {
+  margin-left: 15px;
+  margin-top: 2px;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+#simulate-bus-routes {
+  margin-top: 2px;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
 }
 
 #right-hand-icon {

@@ -86,7 +86,7 @@ function createGPMarker(place, map) {
     // prev_infoWindow = infoWindow;
     var iwOuter = $('.gm-style-iw');
     var iwBackground = iwOuter.prev();
-    iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
+    iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.6)', 'border-radius' : '5px'});
 
   });
 
