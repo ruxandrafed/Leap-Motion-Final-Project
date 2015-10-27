@@ -253,6 +253,11 @@ function initialize() {
     e.preventDefault();
   });
 
+    $("#myModalHelp").on('hidden.bs.modal', function(e){
+    helpOpen = false;
+    e.preventDefault();
+  });
+
   $("#simulate-bus-routes").on("click", function(e) {
     if (!(leapActive)){
       var my_controller = loadLeap();
@@ -387,7 +392,7 @@ function initialize() {
 
   function loadLeap() {
     leapActive=true;
-    $('#leap-icon').addClass('leap-on');
+    // $('#leap-icon').addClass('leap-on');
     my_controller = new Leap.Controller({enableGestures: true});
     my_controller.on('frame', move)
     my_controller.connect();
