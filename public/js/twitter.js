@@ -10,7 +10,7 @@ function getTweets(lat, lng, panorama) {
   $.ajax({
     method: 'get',
     url: '/tweets' ,
-    data: {geocode: lat + ',' + lng + ',0.05km', count: 5},
+    data: {geocode: lat + ',' + lng + ',0.05km', count: 3},
     success: renderTwitterMarkers
   });
 }

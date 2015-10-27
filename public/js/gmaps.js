@@ -172,8 +172,9 @@ function initialize() {
 
   $("#map-address-btn").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
+    debugger
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -182,8 +183,9 @@ function initialize() {
 
   $("#citycentre-address-btn").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
+    debugger
     e.preventDefault();
     panorama.setPosition(vancouver);
     hideModals();
@@ -192,14 +194,15 @@ function initialize() {
   $("#geolocate-address-btn").on("click", function(e) {
     geolocate();
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
+    debugger
     hideModals();
   })
 
   $("#map-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     var address = $("#location-address2").val() ;
@@ -209,7 +212,7 @@ function initialize() {
 
   $("#citycentre-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
@@ -218,7 +221,7 @@ function initialize() {
 
   $("#geolocate-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     geolocate();
     hideModals();
@@ -226,7 +229,7 @@ function initialize() {
 
   $("#map-address-btn3").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     var origin = panorama.position;
@@ -247,14 +250,14 @@ function initialize() {
 
   $("#myModal").on('hidden.bs.modal', function(e){
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
   });
 
   $("#simulate-bus-routes").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     hideModals();
@@ -267,7 +270,7 @@ function initialize() {
 
   $("#clear-bus-routes").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      var my_controller = loadLeap();
     };
     // Clears map if any bus routes exist on it
     var currentCenter = panorama.getPosition();
@@ -381,10 +384,13 @@ function initialize() {
 
   // Loads Leap Motion controller
 
-  function loadLeap(map) {
-    leapActive==true;
+  function loadLeap() {
+    leapActive=true;
     $('#leap-icon').addClass('leap-on');
-    Leap.loop({enableGestures: true}, move);
+    my_controller = new Leap.Controller({enableGestures: true});
+    my_controller.on('frame', move)
+    my_controller.connect();
+    return my_controller
   };
 
   // Removes infowindows from panorama
