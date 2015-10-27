@@ -193,6 +193,18 @@ position: relative;
   display: none;
 }
 
+#help-btn {
+  background-color: #4144B4;
+  border-color: #4144B4
+}
+
+#map-address-btn {
+  margin-left: 15px;
+  margin-top: 2px;
+  background-color: #2BAC82;
+  border-color: #2BAC82;
+}
+
 #right-hand-icon {
   right: 15px;
 }
