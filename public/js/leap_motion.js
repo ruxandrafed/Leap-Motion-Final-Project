@@ -394,7 +394,7 @@ function openMenu (hand) {
   if (hand.pinchStrength > 0.7
    && hand._translation[1] > 1
    && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY += 10);
+    window.scroll(0, window.scrollY += 20);
   }
 
   //moves window up
@@ -402,7 +402,7 @@ function openMenu (hand) {
   if (hand.pinchStrength > 0.7
    && hand._translation[1] < -1
    && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY -= 10);
+    window.scroll(0, window.scrollY -= 20);
   }
 
   if (window.scrollY > 450) {

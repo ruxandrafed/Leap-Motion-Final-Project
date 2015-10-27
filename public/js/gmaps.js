@@ -2,6 +2,7 @@ var panorama;
 var vancouver = {lat: 49.283281, lng: -123.122786};
 
 
+
 function initialize() {
 
   var leapActive = false;
@@ -55,7 +56,8 @@ function initialize() {
     map.setCenter(panorama.position);
 
     if(placesCheckbox.is(":checked")) {
-      clearOverlays(googlePlacesMarkers)
+      clearOverlays(googlePlacesMarkers);
+      googlePlacesMarkers = [];
       var request = {
         location: panorama.location.latLng,
         radius: '50',
@@ -69,49 +71,24 @@ function initialize() {
     };
 
     if(tweetsCheckbox.is(":checked")) {
-      clearOverlays(twitterMarkers)
+      clearOverlays(twitterMarkers);
+      twitterMarkers = [];
       getTweets(lat, lng, panorama);
     };
 
     if(translinkCheckbox.is(":checked")) {
-      clearOverlays(translinkMarkers)
+      clearOverlays(translinkMarkers);
+      translinkMarkers = [];
       translink(lat, lng, panorama);
     };
 
     if(instagramCheckbox.is(":checked")) {
-      clearOverlays(instaMarkers)
+      clearOverlays(instaMarkers);
+      instaMarkers = [];
       getInstagramPosts(lat, lng, panorama);
     };
 
   });
-
-
-  // map.addListener('bounds_changed', function() {
-
-  //   var mapCenter = map.center;
-
-  //   if(placesCheckbox.is(":checked")) {
-  //     var request = {
-  //       location: panorama.location.latLng,
-  //       radius: '50',
-  //       types: ['bakery', 'bank', 'bar', 'book_store',
-  //       'cafe', 'clothing_store', 'convenience_store', 'gas_station', 'shopping_mall',
-  //       'library', 'liquor_store', 'movie_theatre', 'night_club', 'pharmacy', 'subway_station',
-  //       'train_station', 'store', 'restaurant', 'grocery_or_supermarket', 'salon']
-  //     };
-
-  //     service.search(request, getPlacesInfo);
-  //   };
-
-  //   if(tweetsCheckbox.is(":checked")) {
-  //     getTweets(lat, lng, map);
-  //   };
-
-  //   if(translinkCheckbox.is(":checked")) {
-  //   translink(lat, lng, map);
-  //   };
-
-  // });
 
 
   // Create the autocomplete object, restricting the search to geographical location types.
@@ -185,6 +162,7 @@ function initialize() {
     }
   }
 
+  // Welcome modal stuff
   function hideModals() {
     $('#myModal').modal('hide').fadeOut('slow');
     $('#myModalLocation').modal('hide').fadeOut('slow');
@@ -194,8 +172,9 @@ function initialize() {
 
   $("#map-address-btn").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
+    debugger
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -204,8 +183,9 @@ function initialize() {
 
   $("#citycentre-address-btn").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
+    debugger
     e.preventDefault();
     panorama.setPosition(vancouver);
     hideModals();
@@ -214,14 +194,15 @@ function initialize() {
   $("#geolocate-address-btn").on("click", function(e) {
     geolocate();
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
+    debugger
     hideModals();
   })
 
   $("#map-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     var address = $("#location-address2").val() ;
@@ -231,7 +212,7 @@ function initialize() {
 
   $("#citycentre-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     panorama.setPosition(vancouver);
@@ -240,7 +221,7 @@ function initialize() {
 
   $("#geolocate-address-btn2").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     geolocate();
     hideModals();
@@ -248,7 +229,7 @@ function initialize() {
 
   $("#map-address-btn3").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     var origin = panorama.position;
@@ -269,14 +250,14 @@ function initialize() {
 
   $("#myModal").on('hidden.bs.modal', function(e){
     if (!(leapActive)){
-      loadLeap();
+      var my_controller = loadLeap();
     };
     e.preventDefault();
   });
 
   $("#simulate-bus-routes").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      var my_controller = loadLeap();
     };
     e.preventDefault();
     hideModals();
@@ -289,7 +270,7 @@ function initialize() {
 
   $("#clear-bus-routes").on("click", function(e) {
     if (!(leapActive)){
-      loadLeap(map);
+      var my_controller = loadLeap();
     };
     // Clears map if any bus routes exist on it
     var currentCenter = panorama.getPosition();
@@ -314,6 +295,7 @@ function initialize() {
 
     placesCheckbox.change(function() {
       clearOverlays(googlePlacesMarkers)
+      googlePlacesMarkers = [];
       if($(this).is(":checked")) {
         var request = {
           location: panorama.location.latLng,
@@ -337,7 +319,8 @@ function initialize() {
     });
 
     tweetsCheckbox.change(function() {
-      clearOverlays(twitterMarkers)
+      clearOverlays(twitterMarkers);
+      twitterMarkers = [];
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -353,7 +336,8 @@ function initialize() {
     });
 
     instagramCheckbox.change(function() {
-      clearOverlays(instaMarkers)
+      clearOverlays(instaMarkers);
+      instaMarkers = [];
       if($(this).is(":checked")) {
         var lat = panorama.position.lat();
         var lng = panorama.position.lng();
@@ -369,7 +353,8 @@ function initialize() {
     })
 
     translinkCheckbox.change(function() {
-      clearOverlays(translinkMarkers)
+      clearOverlays(translinkMarkers);
+      translinkMarkers = [];
       if($(this).is(":checked")) {
         var lat = panorama.position.lat().toPrecision(7);
         var lng = panorama.position.lng().toPrecision(7);
@@ -388,19 +373,16 @@ function initialize() {
   checkboxesListeners();
 
   var listOfMarkers= [];
-
-  function includedInList(result) {
-    return listOfMarkers.some(function (value) {
-      return value.id === result.id;
-    });
-  }
+  // Checks if GooglePlace marker exists already
+  // function includedInList(result) {
+  //   return listOfMarkers.some(function (value) {
+  //     return value.id === result.id;
+  //   });
+  // }
 
  function getPlacesInfo(results, status) {
    if (status == google.maps.places.PlacesServiceStatus.OK) {
-     results.filter(function (result) {
-      return !includedInList(result);
-     }).forEach(function (result) {
-      listOfMarkers.push(result);
+     results.map(function (result) {
       createGPMarker(result, map);
      });
    };
@@ -408,22 +390,21 @@ function initialize() {
 
   // Loads Leap Motion controller
 
-  function loadLeap(map) {
-    leapActive==true;
+  function loadLeap() {
+    leapActive=true;
     $('#leap-icon').addClass('leap-on');
-    Leap.loop({enableGestures: true}, move);
+    my_controller = new Leap.Controller({enableGestures: true});
+    my_controller.on('frame', move)
+    my_controller.connect();
+    return my_controller
   };
 
+  // Removes infowindows from panorama
   function clearOverlays(array) {
-    // array.forEach(function(marker) {
-    //   marker.setMap(null);
-    // });
-    // array = [];
     if (array.length > 0) {
-      for (var i = 0; i < array.length; i++ ) {
+      for (var i = 0; i < array.length; i++) {
         array[i].setMap(null);
       }
-      array.length = 0;
     }
   }
 
@@ -444,7 +425,6 @@ function initialize() {
       map: map,
       preserveViewport: true
     });
-    debugger;
     google.maps.event.addListenerOnce(ctaLayer, 'defaultviewport_changed', function() {
       center = ctaLayer.getDefaultViewport().getCenter();
       map.panTo(center);

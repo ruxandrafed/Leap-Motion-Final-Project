@@ -1,24 +1,24 @@
 function getInstagramPosts(lat, lng, panorama) {
 
   $.ajax({
-      type: "GET",
-      dataType: "jsonp",
-      cache: false,
-      url: "https://api.instagram.com/v1/media/search?lat=" + lat + "&lng=" + lng + "&access_token=30927509.aff6da2.eee5673b0d90434cb82c7a37fdae4bc5&callback=data",
-      success: function(data) {
-        renderInstagramMarkers(data.data, map);
-      }
-  });
+    type: "GET",
+    dataType: "jsonp",
+    cache: false,
+    url: "https://api.instagram.com/v1/media/search?lat=" + lat + "&lng=" + lng + "&distance=100&access_token=30927509.aff6da2.eee5673b0d90434cb82c7a37fdae4bc5&callback=data",
+    success: renderInstagramMarkers
+  })
+};
 
-  }
 
 var prev_infoWindow;
 var instaMarkers = [];
 
-function renderInstagramMarkers(array, map) {
+function renderInstagramMarkers(array) {
+
+  data=array.data;
   var instaIcon = "/images/instagram-icon.png";
 
-  array.forEach(function (post) {
+  instaMarkers = data.map(function (post) {
 
     var markerInsta = new google.maps.Marker({
       position: {lat: post.location.latitude, lng: post.location.longitude},
@@ -26,7 +26,6 @@ function renderInstagramMarkers(array, map) {
       icon: instaIcon,
       title: post.user.username
     });
-    instaMarkers.push(markerInsta);
 
     var infoWindow = new google.maps.InfoWindow({
       content: '<div class="infoWindowContent"> <div class="iw-title">@' + post.user.username + ': </div>'
@@ -53,6 +52,8 @@ function renderInstagramMarkers(array, map) {
       iwBackground.children(':nth-child(4)').css({'background' : 'rgba(240, 240, 240, 0.9)', 'border-radius' : '5px'});
 
     google.maps.event.trigger(markerInsta, 'click')
+
+    return markerInsta
 
   });
 
