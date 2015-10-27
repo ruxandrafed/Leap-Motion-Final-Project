@@ -174,7 +174,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -185,7 +184,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    
     e.preventDefault();
     panorama.setPosition(vancouver);
     hideModals();
@@ -196,7 +194,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    
     hideModals();
   })
 
@@ -232,6 +229,7 @@ function initialize() {
       var my_controller = loadLeap();
     };
     e.preventDefault();
+    $('#hyperlapse').empty();
     var origin = panorama.position;
     var destination = $("#location-address3").val();
     var travelMode = $("#travel-mode").val();
@@ -263,9 +261,6 @@ function initialize() {
     hideModals();
     var route = $("#select-bus-routes").val();
     addBusRoutesLayers(route, map);
-    // var origin = panorama.position;
-    // var destination = $("#location-address3").val();
-    // getDirections(directionsDisplay, directionsService, map, origin, destination, travelMode);
   });
 
   $("#clear-bus-routes").on("click", function(e) {
@@ -287,7 +282,7 @@ function initialize() {
     $(this).closest(".modal").one("hidden.bs.modal", function() {
       $("#myModalHelp").modal("show")
     }).modal("hide")
-  })
+  });
 
   // Checkboxes hiding markers
 
