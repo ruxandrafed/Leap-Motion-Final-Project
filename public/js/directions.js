@@ -6,6 +6,8 @@ function getDirections(directionsDisplay, directionsService, map, origin, destin
   $("#hyperlapse").show();
 
   directionsDisplay.setMap(map);
+  map.setStreetView(panorama);
+
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
   calculateAndDisplayRoute(directionsService, directionsDisplay);
