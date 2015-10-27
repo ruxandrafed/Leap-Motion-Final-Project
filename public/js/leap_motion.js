@@ -15,6 +15,9 @@ var currentHeading=265;
 var allFingersExtended=false;
 
 var hand;
+var hands;
+var left;
+var right;
 var middleFingerExtended;
 var indexFingerExtended;
 var ringFingerExtended;
@@ -28,6 +31,8 @@ var instagramClicked = false;
 
 var driveAround = false;
 
+var helpOpen = false;
+
 function move(frame) {
 
 
@@ -40,6 +45,9 @@ function move(frame) {
   //     });
   //     return;
   // }
+  if (!frame.valid) { 
+    leapOn = false;
+  }
 
   if (frame.valid) {
     detectHands(frame)
@@ -51,6 +59,20 @@ function move(frame) {
     hand = frame.hands[0];
     openMenu(hand);
   }
+  //   if (frame.gestures.length > 1) {
+  //     frame.gestures.forEach(function(gesture){
+  //       filterGesture("circle", streetViewCircle)(frame, gesture);
+  //     });
+  //   }
+  // }
+  // if(frame.valid && frame.gestures.length > 0){
+  //   // console.log(frame.gestures);
+  //   // debugger;
+  //     frame.gestures.forEach(function(gesture){
+  //       filterGesture("swipe", streetViewSwipe)(frame, gesture);
+  //     });
+  //     return;
+  // }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
@@ -75,7 +97,10 @@ function move(frame) {
     }
   };
   // Motion commands
-  if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right' && leapOn) {
+  if (frame.valid
+   && frame.hands.length == 1
+   && frame.hands[0].type=='right'
+   && leapOn) {
     hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
       if (previousFrame) {
@@ -83,6 +108,12 @@ function move(frame) {
       }
     };
   };
+
+  if (frame.valid
+   && frame.hands.length == 2) {
+    hands = frame.hands;
+    help(hands);
+  }
 
 
   previousFrame = frame;
@@ -141,7 +172,7 @@ function movement (hand) {
     currentPitch = Math.min(90, currentPitch += 0.75);
   }
   if (axis[0] > 0.8
-   && hand.palmNormal[2] >= 0.2
+   && hand.palmNormal[2] >= 0
    && hand.palmPosition[2] > -38
    && hand.palmPosition[1] < 150) {
     currentPitch = Math.max(currentPitch -= 0.75, -90);
@@ -228,9 +259,44 @@ function moveForward (hand, pov) {
   };
 };
 
-function streetViewSwipe(frame, gesture) {
+// var indexFinger = 1;
+
+// function streetViewCircle(frame, gesture) {
 //   console.log(gesture);
-};
+//   console.log(frame);
+//   if (gesture.pointableIds.length == 1
+//    && frame.fingers[1].extended
+//    && !helpOpen) {
+//       helpOpen = true;
+//   }
+
+//   if (gesture.pointableIds.length == 1
+//    && frame.fingers[1].extended
+//    && helpOpen) {
+//     if (!(isClockwise(frame, gesture))) {
+//       helpOpen = false; 
+//     } 
+//   }
+//   if (helpOpen) {
+//     $('.glyphicon-info-sign').trigger('click');
+//   } else {
+//     $('#myModalHelp').modal('toggle');
+//   }
+//   //     $('#myModalHelp').modal('toggle');
+//   //     $('.glyphicon-info-sign').trigger('click');
+//   // }
+
+//   // if (gesture.pointableIds.length == 1
+//   //  && frame.fingers[1].extended
+//   //  && helpOpen) {
+//   //   if (!(isClockwise(frame, gesture))) {
+//   //     helpOpen = false;
+//   //     // $('myModalHelp')
+//   //     $('#myModalHelp').hide(); 
+//   //   } 
+//   // }
+
+// };
 
 function openMenu (hand) {
   // console.log(hand)
@@ -252,12 +318,18 @@ function openMenu (hand) {
   // These two gestures open and close the side-menu
 
   // Close menu
-  if ($('#wrapper').hasClass('toggled') && hand._translation[0] > 6 && palmX > 0.8) {
+  if ($('#wrapper').hasClass('toggled')
+   && hand._translation[0] > 6 
+   && palmX > 0.8
+   && hand.palmPosition[2] < -10) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
   // Open menu
-  if (!($('#wrapper').hasClass('toggled')) && hand._translation[0] < -6 && palmX <-0.8) {
+  if (!($('#wrapper').hasClass('toggled'))
+   && hand._translation[0] < -6
+   && palmX <-0.8
+   && hand.palmPosition[2] < -10) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
@@ -457,6 +529,25 @@ function closeDriveView () {
   $('#drive-around').trigger('click')
 }
 
+function help (hands) {
+
+
+  if (hands[0].type =='left') {
+    left = hands[0];
+    right = hands[1];
+  } else {
+    left = hands[1];
+    right = hands[0];
+  }
+  // open up help menu
+  if (left.palmNormal[0] >= 0.7
+   && right.palmNormal[0] <= -0.7
+   && !helpOpen) {
+    helpOpen = true;
+    $('#myModalHelp').modal('toggle');
+  }
+}
+
 
 // ==== utility functions =====
 
@@ -490,7 +581,9 @@ function isClockwise(frame, gesture) {
     var direction = frame.pointable(pointableID).direction;
     var dotProduct = Leap.vec3.dot(direction, gesture.normal);
 
-    if (dotProduct  >  0) clockwise = true;
+    if (dotProduct  >  0) {
+      clockwise = true;
+    }
 
     return clockwise;
 }

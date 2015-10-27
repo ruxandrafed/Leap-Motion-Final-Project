@@ -174,7 +174,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    debugger
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -185,7 +184,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    debugger
     e.preventDefault();
     panorama.setPosition(vancouver);
     hideModals();
@@ -196,7 +194,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    debugger
     hideModals();
   })
 
@@ -252,6 +249,11 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
+    e.preventDefault();
+  });
+
+    $("#myModalHelp").on('hidden.bs.modal', function(e){
+    helpOpen = false;
     e.preventDefault();
   });
 
@@ -392,7 +394,7 @@ function initialize() {
 
   function loadLeap() {
     leapActive=true;
-    $('#leap-icon').addClass('leap-on');
+    // $('#leap-icon').addClass('leap-on');
     my_controller = new Leap.Controller({enableGestures: true});
     my_controller.on('frame', move)
     my_controller.connect();
