@@ -17,8 +17,23 @@ $(function() {
     $("streetview").toggleClass('half-right');
     $("#get-directions-modal").toggle();
     $("#bus-routes-modal").toggle();
+    $("#directions-panel").empty();
+    $("#all-hyperlapse").hide();
     google.maps.event.trigger(panorama, "resize");
     google.maps.event.trigger(map, "resize");
   });
+
+  $("#bus-routes-modal").on("click", function(e) {
+    e.preventDefault();
+    // Clears directions and hyperlapse divs
+    $("#directions-panel").empty();
+    $("#all-hyperlapse").hide();
+  });
+
+  $("#location-modal").on("click", function(e) {
+    e.preventDefault();
+    $("#directions-panel").empty();
+    $("#all-hyperlapse").hide();
+  })
 
 });

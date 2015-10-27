@@ -1,9 +1,8 @@
 function getDirections(directionsDisplay, directionsService, map, origin, destination, selectedMode) {
 
   $("#clear-hyperlapse").hide();
-
   $("#directions-panel").show();
-  $("#generate-hyperlapse").show();
+  $("#all-hyperlapse").show();
   $("#hyperlapse").show();
 
   directionsDisplay.setMap(map);
