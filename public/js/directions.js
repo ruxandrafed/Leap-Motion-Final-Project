@@ -1,6 +1,5 @@
 function getDirections(directionsDisplay, directionsService, map, origin, destination, selectedMode) {
 
-  $('#canvas').remove(); // clears if a canvas already exists
   $("#clear-hyperlapse").hide();
 
   $("#directions-panel").show();

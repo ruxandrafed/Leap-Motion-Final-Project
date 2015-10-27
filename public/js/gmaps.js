@@ -229,6 +229,7 @@ function initialize() {
       var my_controller = loadLeap();
     };
     e.preventDefault();
+    $('#hyperlapse').empty();
     var origin = panorama.position;
     var destination = $("#location-address3").val();
     var travelMode = $("#travel-mode").val();
