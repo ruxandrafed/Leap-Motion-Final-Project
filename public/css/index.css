@@ -82,7 +82,7 @@ body {
   font-family: 'Pacifico';
   font-size: 3em;
   padding-top: 0.1em;
-  margin: auto;
+  margin-top: 17px;
   text-align: center;
 }
 
@@ -191,6 +191,10 @@ position: relative;
 
 #modal-button {
   display: none;
+}
+
+#map-address-btn {
+  margin-left: 15px;
 }
 
 #right-hand-icon {
