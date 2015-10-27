@@ -1,6 +1,8 @@
 function generateHyperlapse(origin, destination) {
 
-  var hyperlapseDivWidth = $("div#hyperlapse").width() - 5;
+  $('#canvas').remove(); // clears if a canvas already exists
+
+  var hyperlapseDivWidth = $("#all-hyperlapse").width();
 
   var hyperlapse = new Hyperlapse(document.getElementById('hyperlapse'), {
     lookat: origin,
@@ -21,7 +23,9 @@ function generateHyperlapse(origin, destination) {
 
   hyperlapse.onLoadComplete = function(e) {
     hyperlapse.play();
-  $('#hyperlapse-loading').hide();
+    $('#hyperlapse').show();
+    $('#clear-hyperlapse').show();
+    $('#hyperlapse-loading').hide();
   };
 
   // Google Maps API stuff here...
@@ -41,6 +45,14 @@ function generateHyperlapse(origin, destination) {
     } else {
       console.log(status);
     }
+  });
+
+  $('canvas:last').attr("id", "canvas");
+
+  $("#clear-hyperlapse").on("click", function(e) {
+    $("#hyperlapse").empty();
+    $("#hyperlapse").hide();
+    $("#clear-hyperlapse").hide();
   });
 
 }

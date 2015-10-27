@@ -1,6 +1,7 @@
 function getDirections(directionsDisplay, directionsService, map, origin, destination, selectedMode) {
 
   $("#directions-panel").show();
+  $("#generate-hyperlapse").show();
   $("#hyperlapse").show();
 
   directionsDisplay.setMap(map);
@@ -16,10 +17,13 @@ function getDirections(directionsDisplay, directionsService, map, origin, destin
     }, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
-        $('#hyperlapse-loading').show();
-        $('#canvas').remove(); // clears if a canvas already exists
-        generateHyperlapse(origin, destination); // generates hyperlapse
-        $('canvas:last').attr("id", "canvas")
+
+        $("#generate-hyperlapse").on("click", function(e) {
+            $('#hyperlapse-loading').show();
+            // $("#generate-hyperlapse").hide();
+            generateHyperlapse(origin, destination); // generates hyperlapse
+        });
+
       } else {
         window.alert('Directions request failed due to ' + status);
       }
