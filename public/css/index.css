@@ -41,7 +41,12 @@ body {
 .instructions .borderless td {
   border: none;
   text-align: left;
+  /*font-size: 0.7em;*/
 }
+
+/*.instructions p {
+  font-size: 0.7em;
+}*/
 
 .intro-pic {
   width: 50%;
@@ -55,11 +60,11 @@ body {
 }
 
 .modal-content  {
-  top: 10%;
+  top: 5%;
 }
 
 .modal-dialog  {
-  width: 75%;
+  width: 70%;
   height: 75%;
 }
 
@@ -82,14 +87,11 @@ body {
 }
 
 .modal-header img {
-  height: 10vh;
-  position: absolute;
-  margin: auto;
-  display: inline;
+  max-width: 100%;
 }
 
 .modal-title {
-  height: 10vh;
+position: relative;
 }
 
 .pac-container {

@@ -1,7 +1,7 @@
 {
-  "name": "leap_van",
+  "name": "giddyup_van",
   "version": "1.0.0",
-  "description": "leap motiong combined with google streeview and API mashup",
+  "description": "leap motion combined with google streeview and API mashup",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
     "leap_motion",
     "google_street_view"
   ],
-  "author": "Rux, Jason, Marya",
+  "author": "Rux, Jason, Mary",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Tulun/Leap-Motion-Final-Project/issues"
@@ -28,6 +28,7 @@
     "request": "^2.65.0",
     "socket.io": "^1.3.7",
     "twitter": "^1.2.5",
-    "xml2js": "^0.4.13"
+    "xml2js": "^0.4.13",
+  
   }
 }

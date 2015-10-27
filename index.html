@@ -246,18 +246,30 @@
 
               <!-- Modal content-->
               <div class="modal-content">
-                <div class="modal-header">
+                <div class="container-fluid modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <div class="modal-title"><img src="images/site-logo.png" id="#sitelogow">
-                  <div class="modal-title-logo">Welcome!</div></div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <div class="modal-title">
+                        <img src="images/site-logo.png" id="#sitelogow">
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="modal-title-logo">Welcome!</div>
+                    </div>
+                  </div>
                 </div>
+
                 <div class="modal-body">
 
                   <div class="container-fluid">
-                    <p>Take a virtual walk around Vancouver with Leap Motion and Google Street View.</p>
+                    <p>Take a virtual tour around Vancouver with Leap Motion and Google Street View.</p>
                     <p>Experience the beauty of the city, feel its pulse, and discover exciting places.</p>
+                    <button class="btn btn-success" id="help-btn"data-target="#myModalHelp">Get started</button>
+                   <!--  <button="#help-modal" class="btn btn-success" id="open-help-button" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"> Get started</a> -->
                     <!-- <img src="images/intro-pic.jpg" class="intro-pic"> -->
                   </div>
+                  <br>
                   <br>
                   <div class="container-fluid address-search-form">
 
