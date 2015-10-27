@@ -193,8 +193,26 @@ position: relative;
   display: none;
 }
 
+<<<<<<< HEAD
 #map-address-btn {
   margin-left: 15px;
+=======
+#help-btn {
+  background-color: #4144B4;
+  border-color: #4144B4
+}
+
+#map-address-btn, #map-address-btn2 {
+  margin-left: 15px;
+  margin-top: 2px;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+#simulate-bus-routes {
+  margin-top: 2px;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
 }
 
 #right-hand-icon {

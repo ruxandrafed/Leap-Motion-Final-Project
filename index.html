@@ -236,7 +236,7 @@
                         </div>
 
                         <div class="col sm-1">
-                          <p><button class="btn btn-success" id="map-address-btn2"><span>Giddy up!</span></button></p>
+                          <button class="btn btn-primary" id="map-address-btn2">Giddy up!</button>
                         </div>
                       </div>
 
@@ -246,8 +246,8 @@
                         </div>
 
                         <div class="col-sm-8">
-                          <button class="btn btn-success" id="geolocate-address-btn2"><span>Current location</span></button> or
-                          <button class="btn btn-success" id="citycentre-address-btn2"><span>City centre</span></button>
+                          <button class="btn btn-link" id="geolocate-address-btn2"><span>Current location</span></button> or
+                          <button class="btn btn-link" id="citycentre-address-btn2"><span>City centre</span></button>
                         </div>
                       </div>
 
@@ -289,11 +289,18 @@
                 <div class="modal-body">
 
                   <div class="container-fluid">
-                    <p>Take a virtual tour around Vancouver with Leap Motion and Google Street View.</p>
-                    <p>Experience the beauty of the city, feel its pulse, and discover exciting places.</p>
-                    <button class="btn btn-success" id="help-btn"data-target="#myModalHelp">Get started</button>
-                   <!--  <button="#help-modal" class="btn btn-success" id="open-help-button" data-toggle="modal" data-target="#myModalHelp" id="modal-help-button"> Get started</a> -->
-                    <!-- <img src="images/intro-pic.jpg" class="intro-pic"> -->
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <p>Take a virtual tour around Vancouver with Leap Motion and Google Street View.</p>
+                      </div>
+                      <div class="col-sm-5">
+                        <p>Experience the beauty of the city, feel its pulse, and discover exciting places.</p>
+                      </div>
+                      <div class="col-sm-2">
+                        <button class="btn btn-info" id="help-btn"data-target="#myModalHelp"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>  Get started</button>
+                      </div>
+                    <!-- <img src="images/intro-pic.jpg" class="intro-pic"> --> 
+                    </div>
                   </div>
                   <br>
                   <br>
@@ -308,8 +315,8 @@
                           <input id="location-address" type="text" class="form-control" placeholder="Street, City, State"/>
                         </div>
 
-                        <div class="col sm-2">
-                          <button class="btn btn-success" id="map-address-btn">Giddy up!</button>
+                        <div class="col sm-1">
+                          <button class="btn btn-primary" id="map-address-btn">Giddy up!</button>
                         </div>
                       </div>
 
@@ -319,8 +326,8 @@
                         </div>
 
                         <div class="col-sm-8">
-                          <button class="btn btn-success" id="geolocate-address-btn"><span>Current location</span></button> or
-                          <button class="btn btn-success" id="citycentre-address-btn"><span>City centre</span></button>
+                          <button class="btn btn-link" id="geolocate-address-btn">Current location</button> or
+                          <button class="btn btn-link" id="citycentre-address-btn">City centre</button>
                         </div>
                       </div>
 
@@ -352,7 +359,7 @@
                       </div>
                     </div>
                     <div class="col-sm-6">
-                      <div class="modal-title-logo">Welcome!</div>
+                      <div class="modal-title-logo">Bus info</div>
                     </div>
                   </div>
                 </div>
@@ -520,11 +527,11 @@
                         </div>
 
                         <div class="col-sm-1">
-                          <p><button class="btn btn-success" id="simulate-bus-routes"><span>Show</span></button></p>
+                          <p><button class="btn btn-primary" id="simulate-bus-routes"><span>Show</span></button></p>
                         </div>
 
                         <div class="col-sm-1">
-                          <p><button class="btn btn-success" id="clear-bus-routes"><span>Clear map</span></button></p>
+                          <p><button class="btn btn-link" id="clear-bus-routes"><span>Clear map</span></button></p>
                         </div>
 
                       </div>
