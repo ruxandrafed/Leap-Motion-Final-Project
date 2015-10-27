@@ -1,7 +1,5 @@
 function generateHyperlapse(origin, destination) {
 
-  $('#canvas').remove(); // clears if a canvas already exists
-
   var hyperlapseDivWidth = $("#all-hyperlapse").width();
 
   var hyperlapse = new Hyperlapse(document.getElementById('hyperlapse'), {

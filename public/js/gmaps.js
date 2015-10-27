@@ -174,7 +174,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    debugger
     e.preventDefault();
     var address = $("#location-address").val() ;
     changeMapCoordinates(address);
@@ -185,7 +184,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    debugger
     e.preventDefault();
     panorama.setPosition(vancouver);
     hideModals();
@@ -196,7 +194,6 @@ function initialize() {
     if (!(leapActive)){
       var my_controller = loadLeap();
     };
-    debugger
     hideModals();
   })
 
