@@ -281,6 +281,12 @@ function initialize() {
     });
     map.setStreetView(panorama);
     hideModals();
+  });
+
+  $("#help-btn").on("click", function(e) {
+    $(this).closest(".modal").one("hidden.bs.modal", function() {
+      $("#myModalHelp").modal("show")
+    }).modal("hide")
   })
 
   // Checkboxes hiding markers
