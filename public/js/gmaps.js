@@ -113,6 +113,15 @@ function initialize() {
 
          panorama.setPosition((results[0].geometry.location));      // center the map on address
 
+          // Resets map
+          var currentCenter = panorama.getPosition();
+          var map = new google.maps.Map(document.getElementById('map'), {
+            center: currentCenter,
+            mapTypeControl: false,
+            zoom: 18
+          });
+          map.setStreetView(panorama);
+
          // Point streetview camera to a marker
          var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
          var pov = panorama.getPov();
@@ -134,11 +143,13 @@ function initialize() {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
 
-       //  // Point streetview camera to a marker
-       // var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
-       // var pov = panorama.getPov();
-       // pov.heading = heading;
-       // panorama.setPov(pov);
+        // Resets map
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: initialLocation,
+          mapTypeControl: false,
+          zoom: 18
+        });
+        map.setStreetView(panorama);
 
       }, function() {
         handleNoGeolocation(browserSupportFlag);
@@ -214,6 +225,16 @@ function initialize() {
     e.preventDefault();
     panorama.setPosition(vancouver);
     hideModals();
+
+    // Resets map
+    var currentCenter = panorama.getPosition();
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      mapTypeControl: false,
+      zoom: 18
+    });
+    map.setStreetView(panorama);
+
   })
 
   $("#geolocate-address-btn2").on("click", function(e) {
