@@ -26,12 +26,12 @@ body {
 
 .half-left {
   float: left;
-  width: 47%;
+  width: 50%;
 }
 
 .half-right {
   float: right;
-  width: 53%;
+  width: 50%;
 }
 
 .icon-legend {
@@ -117,6 +117,19 @@ position: relative;
 #bus-routes-modal {
   display: none;
   left: 240px;
+}
+
+#bus-route-info-box {
+  position: absolute;
+  display: none;
+  top: 40px;
+  opacity: 0.9;
+  z-index: 1;
+  margin-left: 1px;
+  background-color: white;
+  border-radius: 4px;
+  padding: 5px;
+  color: #FF9800;
 }
 
 #clear-hyperlapse {
@@ -208,21 +221,22 @@ position: relative;
 }
 
 #help-btn {
-  background-color: #4144B4;
-  border-color: #4144B4
+  background-color: #2D85A2;
+  border-color: #2D85A2;
 }
 
-#map-address-btn, #map-address-btn2 {
+#map-address-btn, #map-address-btn2, #map-address-btn3 {
   margin-left: 15px;
-  margin-top: 2px;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #0ACF00;
+  border-color: #0ACF00;
+  padding-left: 17.5px;
+  padding-right: 17.5px;
 }
 
 #simulate-bus-routes {
   margin-top: 2px;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #0ACF00;
+  border-color: #0ACF00;
 }
 
 #right-hand-icon {

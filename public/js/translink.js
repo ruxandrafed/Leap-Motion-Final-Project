@@ -11,7 +11,7 @@ var translinkMarkers = [];
 
 function renderTranslinkMarkers (data) {
   stops = data.Stops.Stop;
-  
+
   stops.map(function (stop) {
     name = stop.Name;
     route = stop.Routes;
@@ -86,3 +86,23 @@ function getContentRoutes(callback) {
     callback(contentRoutes);
   });
 }
+
+function getTranslinkBusRoutesInfo(route) {
+
+  $.ajax({
+    method: 'get',
+    url: '/translink/routes' ,
+    data: {route: route},
+    success: renderBusRouteInfoMarker
+  });
+
+}
+
+function renderBusRouteInfoMarker(details) {
+  var routeDetails = JSON.parse(details);
+  var routeName = routeDetails.Route.Name[0];
+  var routeNumber = routeDetails.Route.RouteNo[0];
+  $('#bus-route-info-box').show();
+  $('#bus-route-info-box').text("Bus #" + routeNumber + ": " + routeName);
+}
+

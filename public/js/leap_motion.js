@@ -111,7 +111,7 @@ function move(frame) {
     var hand = frame.hands[0];
 
     // Close your first with your right hand to deactivate Leap Motion
-    if (hand.grabStrength >= 0.98
+    if (hand.grabStrength == 1
      && hand.type=='right'
      && hand.confidence > 0.4) {
       leapOn = false;

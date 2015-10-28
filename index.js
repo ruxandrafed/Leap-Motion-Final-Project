@@ -59,7 +59,8 @@ server.register(require('inert'), function (err) {
     }
   });
 
-  // translink get method 
+
+  // translink get stops
   server.route({
     method: 'GET',
     path: '/translink/stops',
@@ -81,6 +82,27 @@ server.register(require('inert'), function (err) {
     }
   });
 
+    // translink get routes
+  server.route({
+    method: 'GET',
+    path: '/translink/routes',
+    handler: function (req, reply) {
+      params = req.query;
+      url = 'http://api.translink.ca/rttiapi/v1/routes/' +
+        params.route + "?apikey=aGNpR72RV528weEJ7zZu"
+      request(url, function (error, response, body) {
+        xml = body;
+        parseString(xml, function (err, result){
+          data = JSON.stringify(result)
+          if (!error && response.statusCode == 200) {
+            reply(data);
+          }
+        })
+      });
+    }
+  });
+
+  // translink get bus estimates
   server.route({
     method: 'GET',
     path: '/translink/buses',
