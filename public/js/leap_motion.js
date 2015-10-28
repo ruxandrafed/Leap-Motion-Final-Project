@@ -76,6 +76,15 @@ function move(frame) {
     scrollUpOrDown(hand);
   }
 
+  // Directions Api Controls
+  if (frame.valid
+   && frame.hands.length == 1
+   && frame.hands[0].type =='right'
+   && !leapOn) {
+    hand = frame.hands[0];
+    directionsApiMenu(hand)
+  } 
+
   // if (frame.valid
   //  && frame.hands.length == 1
   //  && frame.hands[0].type == 'left') {
@@ -93,11 +102,13 @@ function move(frame) {
       $('#sunglasses-icon').addClass('not-level');
     }
   }
-  //   if (frame.gestures.length > 1) {
-  //     frame.gestures.forEach(function(gesture){
-  //       filterGesture("circle", streetViewCircle)(frame, gesture);
-  //     });
-  //   }
+
+  // // Opens help meunu
+  // if (frame.gestures.length > 0
+  //   && previousFrame) {
+  //   frame.gestures.forEach(function(gesture) {
+  //     filterGesture('keyTap', streetViewKeyTap)(frame, gesture);
+  //   });
   // }
   // if(frame.valid && frame.gestures.length > 0){
   //   // console.log(frame.gestures);
@@ -111,7 +122,9 @@ function move(frame) {
   if(frame.valid
    && frame.hands.length == 1 
    && frame.hands[0].type=='right') {
+
     var hand = frame.hands[0];
+
     // Close your first with your right hand to deactivate Leap Motion
     if (hand.grabStrength == 1
      && hand.type=='right'
@@ -120,6 +133,7 @@ function move(frame) {
       $('#leap-icon').removeClass('leap-on');
       $('#leap-icon').addClass('leap-off');
     }
+
     // Place right palm opened up near the sensor to turn on
     if (hand.grabStrength < 1
      && hand.type=='right'
@@ -132,6 +146,7 @@ function move(frame) {
       $('#leap-icon').removeClass('leap-off');
     }
   };
+
   // Motion commands
   if (frame.valid
    && frame.hands.length == 1
@@ -139,7 +154,7 @@ function move(frame) {
    && leapOn) {
     hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
-      if (previousFrame && hand.timeVisible > 0.1) {
+      if (previousFrame) {
         movement(hand);
       }
     };
@@ -250,52 +265,6 @@ function movement (hand) {
       moveForward(hand, pov);
   }
 
-  if (hand.palmPosition[0] > 50
-   && hand.palmPosition[1] > 150
-   && !(driveAround)
-   // && hand.palmNormal[0] > -0.3
-   // && hand.palmNormal[0] < 0.25
-   && indexFingerExtended
-   && !(middleFingerExtended)
-   && !(ringFingerExtended)
-   && !(thumbExtended)
-   && !(pinkyExtended)
-   && hand.confidence > 0.3) {
-    openDriveView();
-  }
-
-  if (hand.palmPosition[0] > 50
-   && hand.palmPosition[1] > 150
-   && driveAround
-   // && hand.palmNormal[0] > -0.3
-   // && hand.palmNormal[0] < 0.25
-   && indexFingerExtended
-   && middleFingerExtended
-   && !(thumbExtended)
-   && !(ringFingerExtended)
-   && !(pinkyExtended)
-   && hand.confidence > 0.3) {
-    closeDriveView();
-  }
-
-  if (hand.palmPosition[0] > 50
-   && hand.palmPosition[1] > 150
-   && driveAround
-   // && hand.palmNormal[0] > -0.3
-   // && hand.palmNormal[0] < 0.25
-   && indexFingerExtended
-   && middleFingerExtended
-   && thumbExtended
-   && !(ringFingerExtended)
-   && !(pinkyExtended)
-   && hand.confidence > 0.3
-   && $('#map').hasClass('half-left')
-   && !directionsSearchOpen) {
-    openDirectionsSearchBar();
-  }
-
-
-
 };
 
 function moveForward (hand, pov) {
@@ -315,42 +284,9 @@ function moveForward (hand, pov) {
 
 // var indexFinger = 1;
 
-// function streetViewCircle(frame, gesture) {
-//   console.log(gesture);
-//   console.log(frame);
-//   if (gesture.pointableIds.length == 1
-//    && frame.fingers[1].extended
-//    && !helpOpen) {
-//       helpOpen = true;
-//   }
-
-//   if (gesture.pointableIds.length == 1
-//    && frame.fingers[1].extended
-//    && helpOpen) {
-//     if (!(isClockwise(frame, gesture))) {
-//       helpOpen = false; 
-//     } 
-//   }
-//   if (helpOpen) {
-//     $('.glyphicon-info-sign').trigger('click');
-//   } else {
-//     $('#myModalHelp').modal('toggle');
-//   }
-//   //     $('#myModalHelp').modal('toggle');
-//   //     $('.glyphicon-info-sign').trigger('click');
-//   // }
-
-//   // if (gesture.pointableIds.length == 1
-//   //  && frame.fingers[1].extended
-//   //  && helpOpen) {
-//   //   if (!(isClockwise(frame, gesture))) {
-//   //     helpOpen = false;
-//   //     // $('myModalHelp')
-//   //     $('#myModalHelp').hide(); 
-//   //   } 
-//   // }
-
-// };
+function streetViewKeyTap(frame, gesture) {
+  $('#myModalHelp').modal('toggle')
+};
 
 function openMenu (hand) {
 
@@ -381,6 +317,52 @@ function openMenu (hand) {
    && hand.palmPosition[2] < -10) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+}
+
+function directionsApiMenu (hand) {
+  console.log(indexFingerExtended)
+  if (hand.palmPosition[0] > 40
+   // && hand.palmPosition[1] > 125
+   && !(driveAround)
+   // && hand.palmNormal[0] > -0.3
+   // && hand.palmNormal[0] < 0.25
+   && indexFingerExtended
+   && !(middleFingerExtended)
+   && !(ringFingerExtended)
+   && !(thumbExtended)
+   && !(pinkyExtended)) {
+    console.log("Hello world")
+    openDriveView();
+  }
+
+  if (hand.palmPosition[0] > 40
+   // && hand.palmPosition[1] > 125
+   && driveAround
+   // && hand.palmNormal[0] > -0.3
+   // && hand.palmNormal[0] < 0.25
+   && indexFingerExtended
+   && middleFingerExtended
+   && !(thumbExtended)
+   && !(ringFingerExtended)
+   && !(pinkyExtended)) {
+    closeDriveView();
+  }
+
+  if (hand.palmPosition[0] > 60
+   // && hand.palmPosition[1] > 150
+   && driveAround
+   // && hand.palmNormal[0] > -0.3
+   // && hand.palmNormal[0] < 0.25
+   && indexFingerExtended
+   && middleFingerExtended
+   && thumbExtended
+   && !(ringFingerExtended)
+   && !(pinkyExtended)
+   && hand.confidence > 0.25
+   && $('#map').hasClass('half-left')
+   && !directionsSearchOpen) {
+    openDirectionsSearchBar();
   }
 }
 
@@ -584,6 +566,7 @@ function scrollUpOrDown (hand) {
 
 
 function openDriveView () {
+  console.log("In Open drive view")
   driveAround = true;
   $('#drive-around').trigger('click')
 }
@@ -598,23 +581,23 @@ function openDirectionsSearchBar () {
   $('#get-directions-modal').trigger('click')
 }
 
-function help (hands) {
+// function help (hands) {
 
-  if (hands[0].type =='left') {
-    left = hands[0];
-    right = hands[1];
-  } else {
-    left = hands[1];
-    right = hands[0];
-  }
-  // open up help menu
-  if (left.palmNormal[0] >= 0.7
-   && right.palmNormal[0] <= -0.7
-   && !helpOpen) {
-    helpOpen = true;
-    $('#myModalHelp').modal('toggle');
-  }
-}
+//   if (hands[0].type =='left') {
+//     left = hands[0];
+//     right = hands[1];
+//   } else {
+//     left = hands[1];
+//     right = hands[0];
+//   }
+//   // open up help menu
+//   if (left.palmNormal[0] >= 0.7
+//    && right.palmNormal[0] <= -0.7
+//    && !helpOpen) {
+//     helpOpen = true;
+//     $('#myModalHelp').modal('toggle');
+//   }
+// }
 
 // function pinching (hand) {
 

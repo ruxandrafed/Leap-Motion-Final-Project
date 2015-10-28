@@ -59,7 +59,7 @@ server.register(require('inert'), function (err) {
     }
   });
 
-  // translink get method
+  // translink get method 
   server.route({
     method: 'GET',
     path: '/translink/stops',
@@ -71,7 +71,7 @@ server.register(require('inert'), function (err) {
 
       request(url, function (error, response, body) {
         xml = body;
-        parseString(xml, function (err, result){
+        parseString(xml, function (err, result) {
           data = JSON.stringify(result)
           if (!error && response.statusCode == 200) {
             reply(data);
