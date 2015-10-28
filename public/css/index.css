@@ -221,21 +221,22 @@ position: relative;
 }
 
 #help-btn {
-  background-color: #4144B4;
-  border-color: #4144B4
+  background-color: #2D85A2;
+  border-color: #2D85A2;
 }
 
-#map-address-btn, #map-address-btn2 {
+#map-address-btn, #map-address-btn2, #map-address-btn3 {
   margin-left: 15px;
-  margin-top: 2px;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #0ACF00;
+  border-color: #0ACF00;
+  padding-left: 17.5px;
+  padding-right: 17.5px;
 }
 
 #simulate-bus-routes {
   margin-top: 2px;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #0ACF00;
+  border-color: #0ACF00;
 }
 
 #right-hand-icon {
