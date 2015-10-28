@@ -24,6 +24,10 @@ $(function() {
     $('#bus-route-info-box').hide();
     google.maps.event.trigger(panorama, "resize");
     google.maps.event.trigger(map, "resize");
+
+    // Clears bus routes from map
+    $("#clear-bus-routes").trigger("click");
+
   });
 
   $("#bus-routes-modal").on("click", function(e) {
@@ -31,7 +35,6 @@ $(function() {
     // Clears directions and hyperlapse divs
     $("#directions-panel").empty();
     $("#all-hyperlapse").hide();
-    $('#bus-route-info-box').show();
   });
 
   $("#location-modal").on("click", function(e) {
