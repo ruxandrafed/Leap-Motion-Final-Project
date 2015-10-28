@@ -31,6 +31,7 @@ $(function() {
     // Clears directions and hyperlapse divs
     $("#directions-panel").empty();
     $("#all-hyperlapse").hide();
+    $('#bus-route-info-box').show();
   });
 
   $("#location-modal").on("click", function(e) {
