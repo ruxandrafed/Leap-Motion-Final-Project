@@ -55,6 +55,13 @@ function move(frame) {
     detectHands(frame)
   };
 
+  // if (frame.valid
+  //  && frame.hands.length == 1
+  //  && frame.hands[0].type == 'right'
+  //  && !leapOn) {
+  //   spock
+  // }
+
   if (frame.valid 
    && frame.hands.length == 1
    && frame.hands[0].type == 'left') {
@@ -79,18 +86,11 @@ function move(frame) {
   // Directions Api Controls
   if (frame.valid
    && frame.hands.length == 1
-   && frame.hands[0].type =='right'
-   && !leapOn) {
+   && frame.hands[0].type =='right') {
     hand = frame.hands[0];
     directionsApiMenu(hand)
   } 
 
-  // if (frame.valid
-  //  && frame.hands.length == 1
-  //  && frame.hands[0].type == 'left') {
-  //   hand = frame.hands[0] 
-  //   pinching(hand)
-  // }
 
   if (frame.valid 
    && frame.hands.length == 1
@@ -103,21 +103,6 @@ function move(frame) {
     }
   }
 
-  // // Opens help meunu
-  // if (frame.gestures.length > 0
-  //   && previousFrame) {
-  //   frame.gestures.forEach(function(gesture) {
-  //     filterGesture('keyTap', streetViewKeyTap)(frame, gesture);
-  //   });
-  // }
-  // if(frame.valid && frame.gestures.length > 0){
-  //   // console.log(frame.gestures);
-  //   // debugger;
-  //     frame.gestures.forEach(function(gesture){
-  //       filterGesture("swipe", streetViewSwipe)(frame, gesture);
-  //     });
-  //     return;
-  // }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
   if(frame.valid
    && frame.hands.length == 1 
@@ -126,7 +111,7 @@ function move(frame) {
     var hand = frame.hands[0];
 
     // Close your first with your right hand to deactivate Leap Motion
-    if (hand.grabStrength == 1
+    if (hand.grabStrength >= 0.98
      && hand.type=='right'
      && hand.confidence > 0.4) {
       leapOn = false;
@@ -160,12 +145,6 @@ function move(frame) {
     };
   };
 
-  // Open help
-  if (frame.valid
-   && frame.hands.length == 2) {
-    hands = frame.hands;
-    help(hands);
-  }
 
 
   previousFrame = frame;
@@ -173,6 +152,8 @@ function move(frame) {
 };
 
 function detectHands (frame) {
+  // This tells us which hands are in the frame by
+  // lighting up the hands icon on the page
   hands = frame.hands;
   if (hands.length == 0) {
     $('#right-hand-icon').removeClass('detected');
@@ -209,12 +190,6 @@ function movement (hand) {
   pinkyExtended = hand.pinky.extended;
   thumbExtended = hand.thumb.extended;
 
-  // if (middleFingerExtended && indexFingerExtended && ringFingerExtended && pinkyExtended) {
-  //   allFingersExtended = true;
-  // } else {
-  //   allFingersExtended = false;
-  // };
-  // console.log("All finger are extended?" + allFingersExtended)
 
   // This controls the up down view of looking at a frame
   if (axis[0] < -0.6
@@ -321,44 +296,45 @@ function openMenu (hand) {
 }
 
 function directionsApiMenu (hand) {
-  console.log(indexFingerExtended)
-  if (hand.palmPosition[0] > 40
-   // && hand.palmPosition[1] > 125
-   && !(driveAround)
-   // && hand.palmNormal[0] > -0.3
-   // && hand.palmNormal[0] < 0.25
+
+  middleFingerExtended = hand.middleFinger.extended;
+  indexFingerExtended = hand.indexFinger.extended;
+  ringFingerExtended = hand.ringFinger.extended;
+  pinkyExtended = hand.pinky.extended;
+  thumbExtended = hand.thumb.extended;
+  if (hand.palmPosition[0] > 60
+   && hand.palmPosition[1] > 125
+   && !driveAround
    && indexFingerExtended
-   && !(middleFingerExtended)
-   && !(ringFingerExtended)
-   && !(thumbExtended)
-   && !(pinkyExtended)) {
+   && !middleFingerExtended
+   && !ringFingerExtended
+   && !thumbExtended
+   && !pinkyExtended
+   && hand.confidence > 0.25) {
     console.log("Hello world")
     openDriveView();
   }
 
-  if (hand.palmPosition[0] > 40
-   // && hand.palmPosition[1] > 125
+  if (hand.palmPosition[0] > 60
+   && hand.palmPosition[1] > 125
    && driveAround
-   // && hand.palmNormal[0] > -0.3
-   // && hand.palmNormal[0] < 0.25
    && indexFingerExtended
    && middleFingerExtended
-   && !(thumbExtended)
-   && !(ringFingerExtended)
-   && !(pinkyExtended)) {
+   && !thumbExtended
+   && !ringFingerExtended
+   && !pinkyExtended
+   && hand.confidence > 0.25) {
     closeDriveView();
   }
 
   if (hand.palmPosition[0] > 60
-   // && hand.palmPosition[1] > 150
+   && hand.palmPosition[1] > 125
    && driveAround
-   // && hand.palmNormal[0] > -0.3
-   // && hand.palmNormal[0] < 0.25
    && indexFingerExtended
    && middleFingerExtended
    && thumbExtended
-   && !(ringFingerExtended)
-   && !(pinkyExtended)
+   && !ringFingerExtended
+   && !pinkyExtended
    && hand.confidence > 0.25
    && $('#map').hasClass('half-left')
    && !directionsSearchOpen) {
@@ -581,47 +557,6 @@ function openDirectionsSearchBar () {
   $('#get-directions-modal').trigger('click')
 }
 
-// function help (hands) {
-
-//   if (hands[0].type =='left') {
-//     left = hands[0];
-//     right = hands[1];
-//   } else {
-//     left = hands[1];
-//     right = hands[0];
-//   }
-//   // open up help menu
-//   if (left.palmNormal[0] >= 0.7
-//    && right.palmNormal[0] <= -0.7
-//    && !helpOpen) {
-//     helpOpen = true;
-//     $('#myModalHelp').modal('toggle');
-//   }
-// }
-
-// function pinching (hand) {
-
-//   if(hand.pinchStrength >= 0.85) {
-//     var pinchingFinger = findPinchingFingerType(hand);
-//     console.log(pinchingFinger.type);
-//   }
-
-//   function findPinchingFingerType(hand) {
-//     var pincher;
-//     var closest = 500;
-//     for(var f = 1; f < 5; f++) {
-//         current = hand.fingers[f];
-//         distance = Leap.vec3.distance(hand.thumb.tipPosition, current.tipPosition);
-//         if(current != hand.thumb && distance < closest)
-//         {
-//             closest = distance;
-//             pincher = current; 
-//         }
-//     } 
-//     return pincher;
-//   }
-// }
-
 
 // ==== utility functions =====
 
@@ -661,4 +596,55 @@ function isClockwise(frame, gesture) {
 
     return clockwise;
 }
+
+// Gestures being worked on:
+
+  // // Opens help meunu
+  // if (frame.gestures.length > 0
+  //   && previousFrame) {
+  //   frame.gestures.forEach(function(gesture) {
+  //     filterGesture('keyTap', streetViewKeyTap)(frame, gesture);
+  //   });
+  // }
+  // if(frame.valid && frame.gestures.length > 0){
+  //   // console.log(frame.gestures);
+  //   // debugger;
+  //     frame.gestures.forEach(function(gesture){
+  //       filterGesture("swipe", streetViewSwipe)(frame, gesture);
+  //     });
+  //     return;
+  // }
+
+
+// Experiments with pinching
+
+  // if (frame.valid
+  //  && frame.hands.length == 1
+  //  && frame.hands[0].type == 'left') {
+  //   hand = frame.hands[0] 
+  //   pinching(hand)
+  // }
+
+// function pinching (hand) {
+
+//   if(hand.pinchStrength >= 0.85) {
+//     var pinchingFinger = findPinchingFingerType(hand);
+//     console.log(pinchingFinger.type);
+//   }
+
+//   function findPinchingFingerType(hand) {
+//     var pincher;
+//     var closest = 500;
+//     for(var f = 1; f < 5; f++) {
+//         current = hand.fingers[f];
+//         distance = Leap.vec3.distance(hand.thumb.tipPosition, current.tipPosition);
+//         if(current != hand.thumb && distance < closest)
+//         {
+//             closest = distance;
+//             pincher = current; 
+//         }
+//     } 
+//     return pincher;
+//   }
+// }
 
