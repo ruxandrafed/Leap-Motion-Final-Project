@@ -19,6 +19,8 @@ $(function() {
     $("#bus-routes-modal").toggle();
     $("#directions-panel").empty();
     $("#all-hyperlapse").hide();
+    // Hides bus route info if present
+    $('#bus-route-info-box').hide();
     google.maps.event.trigger(panorama, "resize");
     google.maps.event.trigger(map, "resize");
   });

@@ -5,6 +5,9 @@ function getDirections(directionsDisplay, directionsService, map, origin, destin
   $("#all-hyperlapse").show();
   $("#hyperlapse").show();
 
+  // Hides bus route info if present
+  $('#bus-route-info-box').hide();
+
   directionsDisplay.setMap(map);
   map.setStreetView(panorama);
 
