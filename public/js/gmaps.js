@@ -206,8 +206,10 @@ function initialize() {
     };
     e.preventDefault();
     var address = $("#location-address").val() ;
-    changeMapCoordinates(address);
-    hideModals();
+    if (address != "") {
+      changeMapCoordinates(address);
+      hideModals();
+    }
   })
 
   $("#citycentre-address-btn").on("click", function(e) {
@@ -233,8 +235,10 @@ function initialize() {
     };
     e.preventDefault();
     var address = $("#location-address2").val() ;
-    changeMapCoordinates(address);
-    hideModals();
+    if (address != "") {
+      changeMapCoordinates(address);
+      hideModals();
+    }
   })
 
   $("#citycentre-address-btn2").on("click", function(e) {

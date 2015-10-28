@@ -8,7 +8,7 @@ $(function() {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-    resetMap(map); // This thing causes errors, but it seems to fix our issue
+    // resetMap(map); // This thing causes errors, but it seems to fix our issue
   });
 
   $("#drive-around").on("click", function(e) {
@@ -51,11 +51,11 @@ $(function() {
 });
 
 
-// This thing causes errors, but it seems to fix our issue
-function resetMap(m) {
-   x = m.getZoom();
-   c = m.getCenter();
-   google.maps.event.trigger(m, 'resize');
-   m.setZoom(x);
-   m.setCenter(c);
-};
+// // This thing causes errors, but it seems to fix our issue
+// function resetMap(m) {
+//    x = m.getZoom();
+//    c = m.getCenter();
+//    google.maps.event.trigger(m, 'resize');
+//    m.setZoom(x);
+//    m.setCenter(c);
+// };
