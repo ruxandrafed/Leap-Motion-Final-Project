@@ -38,9 +38,14 @@ $(function() {
   });
 
   $("#location-modal").on("click", function(e) {
+    $("#location-address2").val("");
     e.preventDefault();
     $("#directions-panel").empty();
     $("#all-hyperlapse").hide();
+  })
+
+  $("#get-directions-modal").on("click", function(e) {
+    $("#location-address3").val("");
   })
 
 });
