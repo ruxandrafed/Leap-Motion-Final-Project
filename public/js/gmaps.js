@@ -323,7 +323,7 @@ function initialize() {
     }).modal("hide")
   });
 
-  $("#get-directions-modal").on('hidden.bs.modal', function(e){
+  $("#myModalDirections").on('hidden.bs.modal', function(e){
     directionsSearchOpen = false;
     e.preventDefault();
   })
@@ -433,7 +433,7 @@ function initialize() {
     leapActive=true;
     // $('#leap-icon').addClass('leap-on');
     my_controller = new Leap.Controller({enableGestures: true});
-    my_controller.on('frame', move)
+    my_controller.on('frame', leapStreetView)
     my_controller.connect();
     return my_controller
   };

@@ -1,13 +1,3 @@
-// function palmPosition(hand) {
-//     var position = hand.palmNormal;
-//     var orientation;
-//     if (position[1] > 0.75)
-//         orientation = "up";
-//     else
-//         orientation = "down";
-
-//     return orientation;
-// }
 var leapOn = true;
 var previousFrame;
 var currentPitch=0;
@@ -34,26 +24,7 @@ var directionsSearchOpen = false;
 
 var helpOpen = false;
 
-function move(frame) {
-
-
-
-  // if(frame.valid && frame.gestures.length > 0){
-  //   // console.log(frame.gestures);
-  //   // debugger;
-  //     frame.gestures.forEach(function(gesture){
-  //       console.log(gesture)
-  //       filterGesture("key", streetViewSwipe)(frame, gesture);
-  //     });
-  //     return;
-  // }
-  // if (!frame.valid) { 
-  //   leapOn = false;
-  // }
-
-  if (frame.valid) {
-    detectHands(frame)
-  };
+function leapStreetView(frame) {
 
   // if (frame.valid
   //  && frame.hands.length == 1
@@ -61,6 +32,15 @@ function move(frame) {
   //  && !leapOn) {
   //   spock
   // }
+
+  var leftHandOnly = leftOnly(frame)
+  var rightHandOnly = rightOnly(frame)
+
+
+  // Always detect if hands are present
+  if (frame.valid) {
+    detectHands(frame)
+  };
 
   if (frame.valid 
    && frame.hands.length == 1
@@ -146,10 +126,29 @@ function move(frame) {
   };
 
 
-
   previousFrame = frame;
 
 };
+
+function leftOnly(frame) {
+  if (frame.valid
+   && frame.hands.length == 1
+   && frame.hands[0].type == 'left') {
+    return true
+  } else {
+    return false
+  }
+}
+
+function rightOnly(frame) {
+  if (frame.valid
+   && frame.hands.length == 1
+   && frame.hands[0].type == 'right') {
+    return true
+  } else {
+    return false
+  }
+}
 
 function detectHands (frame) {
   // This tells us which hands are in the frame by
@@ -311,7 +310,6 @@ function directionsApiMenu (hand) {
    && !thumbExtended
    && !pinkyExtended
    && hand.confidence > 0.25) {
-    console.log("Hello world")
     openDriveView();
   }
 
@@ -542,7 +540,6 @@ function scrollUpOrDown (hand) {
 
 
 function openDriveView () {
-  console.log("In Open drive view")
   driveAround = true;
   $('#drive-around').trigger('click')
 }
@@ -647,4 +644,19 @@ function isClockwise(frame, gesture) {
 //     return pincher;
 //   }
 // }
+
+  // Filtures Gestures
+  // if(frame.valid && frame.gestures.length > 0){
+  //   // console.log(frame.gestures);
+  //   // debugger;
+  //     frame.gestures.forEach(function(gesture){
+  //       console.log(gesture)
+  //       filterGesture("key", streetViewSwipe)(frame, gesture);
+  //     });
+  //     return;
+  // }
+  // if (!frame.valid) { 
+  //   leapOn = false;
+  // }
+
 
