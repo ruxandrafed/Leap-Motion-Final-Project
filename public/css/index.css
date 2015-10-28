@@ -229,6 +229,8 @@ position: relative;
   margin-left: 15px;
   background-color: #0ACF00;
   border-color: #0ACF00;
+  padding-left: 17.5px;
+  padding-right: 17.5px;
 }
 
 #simulate-bus-routes {
