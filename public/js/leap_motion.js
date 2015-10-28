@@ -30,6 +30,7 @@ var placesClicked = false;
 var instagramClicked = false;
 
 var driveAround = false;
+var directionsSearchOpen = false;
 
 var helpOpen = false;
 
@@ -60,6 +61,27 @@ function move(frame) {
     hand = frame.hands[0];
     openMenu(hand);
   }
+
+  if (frame.valid
+   && frame.hands.length == 1
+   && frame.hands[0].type == 'left') {
+    hand = frame.hands[0];
+    toggleMarkers(hand);
+  }
+
+
+  if (frame.valid
+   && frame.hands.length == 1
+   && frame.hands[0].type == 'left') {
+    scrollUpOrDown(hand);
+  }
+
+  // if (frame.valid
+  //  && frame.hands.length == 1
+  //  && frame.hands[0].type == 'left') {
+  //   hand = frame.hands[0] 
+  //   pinching(hand)
+  // }
 
   if (frame.valid 
    && frame.hands.length == 1
@@ -117,11 +139,12 @@ function move(frame) {
    && leapOn) {
     hand = frame.hands[0];
     if (!(hand.grabStrength > 0.85)) {
-      if (previousFrame) {
+      if (previousFrame && hand.timeVisible > 0.1) {
         movement(hand);
       }
     };
   };
+
   // Open help
   if (frame.valid
    && frame.hands.length == 2) {
@@ -266,8 +289,9 @@ function movement (hand) {
    && !(ringFingerExtended)
    && !(pinkyExtended)
    && hand.confidence > 0.3
-   && $('#map').hasClass('half-left')) {
-    closeDriveView();
+   && $('#map').hasClass('half-left')
+   && !directionsSearchOpen) {
+    openDirectionsSearchBar();
   }
 
 
@@ -329,21 +353,16 @@ function moveForward (hand, pov) {
 // };
 
 function openMenu (hand) {
-  // console.log(hand)
-  // debugger;
+
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
   var handTranX = hand._translation[0];
 
-  middleFingerExtended = hand.middleFinger.extended;
-  indexFingerExtended = hand.indexFinger.extended;
-  ringFingerExtended = hand.ringFinger.extended;
-  pinkyExtended = hand.pinky.extended;
-  thumbExtended = hand.thumb.extended;
-
-
-  // console.log(palmX);
-  // console.log(handVelocX);
+  var middleFingerExtended = hand.middleFinger.extended;
+  var indexFingerExtended = hand.indexFinger.extended;
+  var ringFingerExtended = hand.ringFinger.extended;
+  var pinkyExtended = hand.pinky.extended;
+  var thumbExtended = hand.thumb.extended;
 
   // These two gestures open and close the side-menu
 
@@ -363,6 +382,19 @@ function openMenu (hand) {
     $("#wrapper").toggleClass("toggled");
     $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
   }
+}
+
+function toggleMarkers (hand) { 
+
+  var palmX = hand.palmNormal[0];
+  var handVelocX = hand.palmVelocity[0];
+  var handTranX = hand._translation[0];
+
+  var middleFingerExtended = hand.middleFinger.extended;
+  var indexFingerExtended = hand.indexFinger.extended;
+  var ringFingerExtended = hand.ringFinger.extended;
+  var pinkyExtended = hand.pinky.extended;
+  var thumbExtended = hand.thumb.extended;
   // This toggles the twitter checkbox to true
   if (indexFingerExtended
    && !(ringFingerExtended)
@@ -489,34 +521,7 @@ function openMenu (hand) {
     $('#add-instagram').trigger('click');
   }
 
-
-  // var scrollYMax = Math.min(380.9, window.scrollY += 10)
-  // var scrollYMin = Math.max(window.scrollY -= 10, 0)
-  //moves window down
-  if (hand.pinchStrength > 0.7
-   && hand._translation[1] > 1
-   && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY += 20);
-  }
-
-  //moves window up
-
-  if (hand.pinchStrength > 0.7
-   && hand._translation[1] < -1
-   && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY -= 20);
-  }
-
-  if (window.scrollY > 450) {
-    window.scrollY = 450
-  }
-
-  if (window.scrollY < 0) {
-    window.scrollY = 0
-  }
-
-
-  // Removes all checkboxes
+    // Removes all checkboxes
 
   if (hand.grabStrength == 1
    && !($('#wrapper').hasClass('toggled'))
@@ -548,6 +553,35 @@ function openMenu (hand) {
   }
 }
 
+function scrollUpOrDown (hand) {
+  // var scrollYMax = Math.min(380.9, window.scrollY += 10)
+  // var scrollYMin = Math.max(window.scrollY -= 10, 0)
+  //moves window down
+  if (hand.pinchStrength > 0.7
+   && hand._translation[1] > 1
+   && $('#wrapper').hasClass('toggled')) {
+    window.scroll(0, window.scrollY += 20);
+  }
+
+  //moves window up
+
+  if (hand.pinchStrength > 0.7
+   && hand._translation[1] < -1
+   && $('#wrapper').hasClass('toggled')) {
+    window.scroll(0, window.scrollY -= 20);
+  }
+
+  if (window.scrollY > 450) {
+    window.scrollY = 450
+  }
+
+  if (window.scrollY < 0) {
+    window.scrollY = 0
+  }
+}
+
+
+
 
 function openDriveView () {
   driveAround = true;
@@ -559,8 +593,12 @@ function closeDriveView () {
   $('#drive-around').trigger('click')
 }
 
-function help (hands) {
+function openDirectionsSearchBar () {
+  directionsSearchOpen = true;
+  $('#get-directions-modal').trigger('click')
+}
 
+function help (hands) {
 
   if (hands[0].type =='left') {
     left = hands[0];
@@ -577,6 +615,29 @@ function help (hands) {
     $('#myModalHelp').modal('toggle');
   }
 }
+
+// function pinching (hand) {
+
+//   if(hand.pinchStrength >= 0.85) {
+//     var pinchingFinger = findPinchingFingerType(hand);
+//     console.log(pinchingFinger.type);
+//   }
+
+//   function findPinchingFingerType(hand) {
+//     var pincher;
+//     var closest = 500;
+//     for(var f = 1; f < 5; f++) {
+//         current = hand.fingers[f];
+//         distance = Leap.vec3.distance(hand.thumb.tipPosition, current.tipPosition);
+//         if(current != hand.thumb && distance < closest)
+//         {
+//             closest = distance;
+//             pincher = current; 
+//         }
+//     } 
+//     return pincher;
+//   }
+// }
 
 
 // ==== utility functions =====

@@ -1,5 +1,5 @@
 function getDirections(directionsDisplay, directionsService, map, origin, destination, selectedMode) {
-
+  directionsSearchOpen = false;
   $("#clear-hyperlapse").hide();
   $("#directions-panel").show();
   $("#all-hyperlapse").show();

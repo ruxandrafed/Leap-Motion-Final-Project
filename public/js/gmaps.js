@@ -268,17 +268,18 @@ function initialize() {
     hideModals();
   })
 
+  // Turn on leap motion when closing the modal with close or X
   $("#myModal").on('hidden.bs.modal', function(e){
     if (!(leapActive)){
-      leapOn = true;
+        leapOn = true;
       var my_controller = loadLeap();
     };
     e.preventDefault();
   });
 
     $("#myModalHelp").on('hidden.bs.modal', function(e){
-    helpOpen = false;
-    e.preventDefault();
+      helpOpen = false;
+      e.preventDefault();
   });
 
   $("#simulate-bus-routes").on("click", function(e) {
@@ -311,6 +312,11 @@ function initialize() {
       $("#myModalHelp").modal("show")
     }).modal("hide")
   });
+
+  $("#get-directions-modal").on('hidden.bs.modal', function(e){
+    directionsSearchOpen = false;
+    e.preventDefault();
+  })
 
   // Checkboxes hiding markers
 
@@ -395,7 +401,7 @@ function initialize() {
 
   checkboxesListeners();
 
-  var listOfMarkers= [];
+  // var listOfMarkers= [];
   // Checks if GooglePlace marker exists already
   // function includedInList(result) {
   //   return listOfMarkers.some(function (value) {
