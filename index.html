@@ -63,28 +63,27 @@
                 <div class="modal-body">
                   <div class="container-fluid instructions">
                       <p><strong>Activate/Deactivate Leap Motion:</strong><br>
-                      <span>Note: All commands are in context relative to the leap motion device, not the screen. Keep this in mind! </span> <br>
-                      To activate, place your <em>right</em> hand, palm hovering above controller. <br>To deactivate, close your right hand into a fist.
+                      <span>Note: All commands are in context relative to the leap motion device, not the screen. Keep this in mind!<br>
+                      To activate, place your right hand, palm hovering above controller. To deactivate, close your right hand into a fist.
                       </p>
                       <p><strong>Move in Google StreetView:</strong><br>
-                      To turn right, slowly tilt your right hand pinky-side down. <br>To turn left, slowly tilt your right hand thumb-side down.<br>
-                      To move forward, shift right hand forward and quiver from side-to-side.
+                      To turn right, slowly tilt your right hand pinky-side down. To turn left, slowly tilt your right hand thumb-side down. To move forward, shift right hand forward and quiver from side-to-side.
                       </p>
                       <p><strong>Open/Close Sidebar:</strong><br>
-                      Hover <em>left</em> hand palm down above controller.  Verify that left hand has registered with Leap Motion; left hand button should turn green.
-                        <p>To open, swipe to the right, left hand palm facing right.<br>To close sidebar, swipe to the left, palm facing left.
-                        </p>
+                      Hover left hand palm down above controller.  Verify that left hand has registered with Leap Motion; left hand button should turn green.
+                      To open, swipe to the right, left hand palm facing right. To close sidebar, swipe to the left, palm facing left.</p>
                       </p>
                       <p><strong>Toggle Markers:</strong><br>
-                        Use left hand for these commands.
-                        <p>To see:</p>
-                        <p>Tweets: Use index finger and point to the screen.<br>
-                        Google Places: Use index and middle finger (peace sign) and point to the screen.<br>
-                        Bus Stops: Use thumb, index and middle finger and point to the screen.<br>
-                        Instagram: Tuck in thumb, only having the four fingers pointing to the screen.
+                      Use left hand for these commands:
+                      <ul>
+                        <li>Tweets: Use index finger and point to the screen.</li>
+                        <li>Google Places: Use index and middle finger (peace sign) and point to the screen.</li>
+                        <li>Bus Stops: Use thumb, index and middle finger and point to the screen.</li>
+                        <li>Instagram: Tuck in thumb, only having the four fingers pointing to the screen.</li>
+                      </ul>
                         </p>
                       </p>
-                      <p><strong>Toggle StreetView Only/Side-by-Side</strong>
+                      <p><strong>Toggle StreetView Only/Side-by-Side:</strong><br>
                       To open, place right hand up and to the right of the leap motion (but not too far forward). Extend your index finger forward with the rest of your fingers tucked.<br> To close, same hand position as open, index and middle finger extended.</p>
                       <hr>
                       <div class="table-responsive" id="icons-legend">
@@ -298,7 +297,7 @@
                       <div class="col-sm-2">
                         <button class="btn btn-info" id="help-btn"data-target="#myModalHelp"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>  Get started</button>
                       </div>
-                    <!-- <img src="images/intro-pic.jpg" class="intro-pic"> --> 
+                    <!-- <img src="images/intro-pic.jpg" class="intro-pic"> -->
                     </div>
                   </div>
                   <br>
@@ -588,6 +587,7 @@
                         <a href="" class="btn btn-default" id="drive-around"><span class="glyphicon glyphicon-road" aria-hidden="true"></span></a>
                         <a href="#get-directions-modal" class="btn btn-default" id="get-directions-modal" data-toggle="modal" data-target="#myModalDirections"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>
                         <a href="#simulate-bus-route" class="btn btn-default" id="bus-routes-modal" data-toggle="modal" data-target="#myModalBusRoutes"><span class="glyphicon glyphicon-bed" aria-hidden="true"></span></a>
+                        <div id="bus-route-info-box"></div>
 
                         <span id="leap-icon" class="btn btn-default glyphicon glyphicon-off"></span>
                         <span id="left-hand-icon" class="btn btn-default glyphicon glyphicon-hand-left"></span>

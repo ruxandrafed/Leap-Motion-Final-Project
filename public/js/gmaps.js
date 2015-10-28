@@ -51,6 +51,7 @@ function initialize() {
 
   // Event listeners when the map changes
   panorama.addListener('pano_changed', function() {
+
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
     map.setCenter(panorama.position);
@@ -113,6 +114,17 @@ function initialize() {
 
          panorama.setPosition((results[0].geometry.location));      // center the map on address
 
+          // Resets map
+          var currentCenter = panorama.getPosition();
+          map = new google.maps.Map(document.getElementById('map'), {
+            center: currentCenter,
+            mapTypeControl: false,
+            zoom: 18
+          });
+
+          // Hides bus route info if present
+          $('#bus-route-info-box').hide();
+
          // Point streetview camera to a marker
          var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
          var pov = panorama.getPov();
@@ -134,11 +146,16 @@ function initialize() {
         initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         panorama.setPosition(initialLocation);
 
-       //  // Point streetview camera to a marker
-       // var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
-       // var pov = panorama.getPov();
-       // pov.heading = heading;
-       // panorama.setPov(pov);
+        // Resets map
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: initialLocation,
+          mapTypeControl: false,
+          zoom: 18
+        });
+        map.setStreetView(panorama);
+
+        // Hides bus route info if present
+        $('#bus-route-info-box').hide();
 
       }, function() {
         handleNoGeolocation(browserSupportFlag);
@@ -214,6 +231,16 @@ function initialize() {
     e.preventDefault();
     panorama.setPosition(vancouver);
     hideModals();
+
+    // Resets map
+    var currentCenter = panorama.getPosition();
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: currentCenter,
+      mapTypeControl: false,
+      zoom: 18
+    });
+    map.setStreetView(panorama);
+
   })
 
   $("#geolocate-address-btn2").on("click", function(e) {
@@ -230,13 +257,14 @@ function initialize() {
     };
     e.preventDefault();
     $('#hyperlapse').empty();
+    $("#generate-hyperlapse").show();
     var origin = panorama.position;
     var destination = $("#location-address3").val();
     var travelMode = $("#travel-mode").val();
 
     // Clears map if any bus routes exist on it
     var currentCenter = panorama.getPosition();
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       center: currentCenter,
       mapTypeControl: false,
       zoom: 18
@@ -274,11 +302,15 @@ function initialize() {
     };
     // Clears map if any bus routes exist on it
     var currentCenter = panorama.getPosition();
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       center: currentCenter,
       mapTypeControl: false,
       zoom: 18
     });
+
+    // Hides bus route info if present
+    $('#bus-route-info-box').hide();
+
     map.setStreetView(panorama);
     hideModals();
   });
@@ -414,7 +446,7 @@ function initialize() {
     $("#hyperlapse-loading").hide();
 
     var currentCenter = map.getCenter();
-    var map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('map'), {
       center: currentCenter,
       mapTypeControl: false,
       zoom: 18
@@ -430,6 +462,7 @@ function initialize() {
       map.panTo(center);
       map.fitBounds(ctaLayer.getDefaultViewport());
     });
+    getTranslinkBusRoutesInfo(route);
   }
 
 }

@@ -1,12 +1,16 @@
 function getDirections(directionsDisplay, directionsService, map, origin, destination, selectedMode) {
 
   $("#clear-hyperlapse").hide();
-
   $("#directions-panel").show();
-  $("#generate-hyperlapse").show();
+  $("#all-hyperlapse").show();
   $("#hyperlapse").show();
 
+  // Hides bus route info if present
+  $('#bus-route-info-box').hide();
+
   directionsDisplay.setMap(map);
+  map.setStreetView(panorama);
+
   directionsDisplay.setPanel(document.getElementById('directions-panel'));
 
   calculateAndDisplayRoute(directionsService, directionsDisplay);

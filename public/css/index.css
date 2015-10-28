@@ -26,12 +26,12 @@ body {
 
 .half-left {
   float: left;
-  width: 47%;
+  width: 50%;
 }
 
 .half-right {
   float: right;
-  width: 53%;
+  width: 50%;
 }
 
 .icon-legend {
@@ -117,6 +117,19 @@ position: relative;
 #bus-routes-modal {
   display: none;
   left: 240px;
+}
+
+#bus-route-info-box {
+  position: absolute;
+  display: none;
+  top: 40px;
+  opacity: 0.9;
+  z-index: 1;
+  margin-left: 1px;
+  background-color: white;
+  border-radius: 4px;
+  padding: 5px;
+  color: #FF9800;
 }
 
 #clear-hyperlapse {
