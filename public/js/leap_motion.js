@@ -41,13 +41,14 @@ function move(frame) {
   //   // console.log(frame.gestures);
   //   // debugger;
   //     frame.gestures.forEach(function(gesture){
-  //       filterGesture("swipe", streetViewSwipe)(frame, gesture);
+  //       console.log(gesture)
+  //       filterGesture("key", streetViewSwipe)(frame, gesture);
   //     });
   //     return;
   // }
-  if (!frame.valid) { 
-    leapOn = false;
-  }
+  // if (!frame.valid) { 
+  //   leapOn = false;
+  // }
 
   if (frame.valid) {
     detectHands(frame)
@@ -58,6 +59,17 @@ function move(frame) {
    && frame.hands[0].type == 'left') {
     hand = frame.hands[0];
     openMenu(hand);
+  }
+
+  if (frame.valid 
+   && frame.hands.length == 1
+   && frame.hands[0].type == 'right') {
+    hand = frame.hands[0]
+    if (hand.palmNormal[2] <= 0.1 && hand.palmNormal[2] >= -0.2) {
+      $('#sunglasses-icon').removeClass('not-level');
+    } else {
+      $('#sunglasses-icon').addClass('not-level');
+    }
   }
   //   if (frame.gestures.length > 1) {
   //     frame.gestures.forEach(function(gesture){
@@ -74,7 +86,9 @@ function move(frame) {
   //     return;
   // }
   // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
-  if(frame.valid && frame.hands.length == 1 && frame.hands[0].type=='right') {
+  if(frame.valid
+   && frame.hands.length == 1 
+   && frame.hands[0].type=='right') {
     var hand = frame.hands[0];
     // Close your first with your right hand to deactivate Leap Motion
     if (hand.grabStrength == 1
@@ -86,11 +100,11 @@ function move(frame) {
     }
     // Place right palm opened up near the sensor to turn on
     if (hand.grabStrength < 1
-        && hand.type=='right'
-        && hand.palmPosition[0] > -15
-        && hand.palmPosition[0] < 20
-        && hand.palmPosition[2] > -10
-        && hand.palmPosition[2] < 20) {
+     && hand.type=='right'
+     && hand.palmPosition[0] > -15
+     && hand.palmPosition[0] < 20
+     && hand.palmPosition[2] > -10
+     && hand.palmPosition[2] < 20) {
       leapOn = true;
       $('#leap-icon').addClass('leap-on');
       $('#leap-icon').removeClass('leap-off');
@@ -108,7 +122,7 @@ function move(frame) {
       }
     };
   };
-
+  // Open help
   if (frame.valid
    && frame.hands.length == 2) {
     hands = frame.hands;
@@ -166,13 +180,13 @@ function movement (hand) {
 
   // This controls the up down view of looking at a frame
   if (axis[0] < -0.6
-   && hand.palmNormal[2] <= -0.2
+   && hand.palmNormal[2] < -0.2
    && hand.palmPosition[2] > -38
    && hand.palmPosition[1] < 150) {
     currentPitch = Math.min(90, currentPitch += 0.75);
   }
   if (axis[0] > 0.8
-   && hand.palmNormal[2] >= 0
+   && hand.palmNormal[2] > 0.1
    && hand.palmPosition[2] > -38
    && hand.palmPosition[1] < 150) {
     currentPitch = Math.max(currentPitch -= 0.75, -90);
@@ -240,6 +254,22 @@ function movement (hand) {
    && hand.confidence > 0.3) {
     closeDriveView();
   }
+
+  if (hand.palmPosition[0] > 50
+   && hand.palmPosition[1] > 150
+   && driveAround
+   // && hand.palmNormal[0] > -0.3
+   // && hand.palmNormal[0] < 0.25
+   && indexFingerExtended
+   && middleFingerExtended
+   && thumbExtended
+   && !(ringFingerExtended)
+   && !(pinkyExtended)
+   && hand.confidence > 0.3
+   && $('#map').hasClass('half-left')) {
+    closeDriveView();
+  }
+
 
 
 };
@@ -327,7 +357,7 @@ function openMenu (hand) {
   }
   // Open menu
   if (!($('#wrapper').hasClass('toggled'))
-   && hand._translation[0] < -6
+   && hand._translation[0] < -3
    && palmX <-0.8
    && hand.palmPosition[2] < -10) {
     $("#wrapper").toggleClass("toggled");

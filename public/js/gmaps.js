@@ -270,6 +270,7 @@ function initialize() {
 
   $("#myModal").on('hidden.bs.modal', function(e){
     if (!(leapActive)){
+      leapOn = true;
       var my_controller = loadLeap();
     };
     e.preventDefault();

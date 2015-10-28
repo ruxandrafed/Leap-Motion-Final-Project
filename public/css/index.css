@@ -252,8 +252,17 @@ position: relative;
   width: 100hh;
 }
 
+#sunglasses-icon {
+  right: 150px;
+}
+
+#sunglasses-icon.not-level {
+  color: green;
+}
+
 #menu-toggle, #help-modal, #location-modal, #get-directions-modal,
-#leap-icon, #right-hand-icon, #left-hand-icon, #drive-around, #get-directions, #bus-routes-modal {
+#leap-icon, #right-hand-icon, #left-hand-icon, #drive-around,
+#get-directions, #bus-routes-modal, #sunglasses-icon {
   position: absolute;
   opacity: 0.9;
   z-index: 1;
