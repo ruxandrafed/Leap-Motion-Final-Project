@@ -42,53 +42,22 @@ function leapStreetView(frame) {
     detectHands(frame)
   };
 
-  if (frame.valid 
-   && frame.hands.length == 1
-   && frame.hands[0].type == 'left') {
+  if (leftHandOnly) {
     hand = frame.hands[0];
-    openMenu(hand);
-  }
-
-  if (frame.valid
-   && frame.hands.length == 1
-   && frame.hands[0].type == 'left') {
-    hand = frame.hands[0];
-    toggleMarkers(hand);
-  }
-
-
-  if (frame.valid
-   && frame.hands.length == 1
-   && frame.hands[0].type == 'left') {
-    scrollUpOrDown(hand);
+    leftHandControls(hand)
   }
 
   // Directions Api Controls
-  if (frame.valid
-   && frame.hands.length == 1
-   && frame.hands[0].type =='right') {
+  if (rightHandOnly) {
     hand = frame.hands[0];
     directionsApiMenu(hand)
   } 
 
 
-  if (frame.valid 
-   && frame.hands.length == 1
-   && frame.hands[0].type == 'right') {
-    hand = frame.hands[0]
-    if (hand.palmNormal[2] <= 0.1 && hand.palmNormal[2] >= -0.2) {
-      $('#sunglasses-icon').removeClass('not-level');
-    } else {
-      $('#sunglasses-icon').addClass('not-level');
-    }
-  }
-
-  // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
-  if(frame.valid
-   && frame.hands.length == 1 
-   && frame.hands[0].type=='right') {
-
-    var hand = frame.hands[0];
+  if (rightHandOnly) {
+    hand = frame.hands[0];
+    levelOrNot(hand);
+     // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
 
     // Close your first with your right hand to deactivate Leap Motion
     if (hand.grabStrength == 1
@@ -110,26 +79,24 @@ function leapStreetView(frame) {
       $('#leap-icon').addClass('leap-on');
       $('#leap-icon').removeClass('leap-off');
     }
-  };
 
-  // Motion commands
-  if (frame.valid
-   && frame.hands.length == 1
-   && frame.hands[0].type=='right'
-   && leapOn) {
-    hand = frame.hands[0];
-    if (!(hand.grabStrength > 0.85)) {
-      if (previousFrame) {
-        movement(hand);
-      }
+    // Motion commands
+    if (leapOn) {
+      if (!(hand.grabStrength > 0.85)) {
+        if (previousFrame) {
+          movement(hand);
+        }
+      };
     };
-  };
+
+ }
 
 
   previousFrame = frame;
 
 };
 
+// True or false if only the left hand is in the frame
 function leftOnly(frame) {
   if (frame.valid
    && frame.hands.length == 1
@@ -139,7 +106,7 @@ function leftOnly(frame) {
     return false
   }
 }
-
+// True or false if only the right hand is in the frame
 function rightOnly(frame) {
   if (frame.valid
    && frame.hands.length == 1
@@ -150,10 +117,12 @@ function rightOnly(frame) {
   }
 }
 
+// This tells us which hands are in the frame by
+// lighting up the hands icon on the page
 function detectHands (frame) {
-  // This tells us which hands are in the frame by
-  // lighting up the hands icon on the page
+
   hands = frame.hands;
+
   if (hands.length == 0) {
     $('#right-hand-icon').removeClass('detected');
     $('#left-hand-icon').removeClass('detected');
@@ -163,19 +132,40 @@ function detectHands (frame) {
     if (hands[0].type=='right') {
       $('#left-hand-icon').removeClass('detected');
       $('#right-hand-icon').addClass('detected');
-    };
-    if (hands[0].type =='left') {
+    } else {
       $('#right-hand-icon').removeClass('detected');
       $('#left-hand-icon').addClass('detected');
     }
   };
 
-  if (hands.length == 2){
+  if (hands.length == 2) {
     $('#right-hand-icon').addClass('detected');
     $('#left-hand-icon').addClass('detected');
   };
 
 };
+
+// Left hand only functions
+
+function leftHandControls (hand) {
+  openMenu(hand);
+  toggleMarkers(hand);
+  scrollUpOrDown(hand);
+}
+
+// function righthandControls (hand) {
+
+// }
+
+function levelOrNot (hand) {
+
+  if (hand.palmNormal[2] <= 0.1 && hand.palmNormal[2] >= -0.2) {
+    $('#sunglasses-icon').removeClass('not-level');
+  } else {
+    $('#sunglasses-icon').addClass('not-level');
+  }
+
+}
 
 function movement (hand) {
   var panoNum = null;
@@ -256,11 +246,6 @@ function moveForward (hand, pov) {
   };
 };
 
-// var indexFinger = 1;
-
-function streetViewKeyTap(frame, gesture) {
-  $('#myModalHelp').modal('toggle')
-};
 
 function openMenu (hand) {
 
@@ -524,7 +509,7 @@ function scrollUpOrDown (hand) {
   if (hand.pinchStrength > 0.7
    && hand._translation[1] < -1
    && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY -= 20);
+    window.scroll(0, window.scrollY -= 50);
   }
 
   if (window.scrollY > 450) {
@@ -658,5 +643,12 @@ function isClockwise(frame, gesture) {
   // if (!frame.valid) { 
   //   leapOn = false;
   // }
+
+// var indexFinger = 1;
+
+// function streetViewKeyTap(frame, gesture) {
+//   $('#myModalHelp').modal('toggle')
+// };
+
 
 
