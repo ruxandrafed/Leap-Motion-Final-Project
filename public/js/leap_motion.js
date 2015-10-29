@@ -315,7 +315,7 @@ function scrollUpOrDown (hand) {
   if (hand.pinchStrength > 0.7
    && hand._translation[1] > 1
    && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY += 20);
+    window.scroll(0, window.scrollY += 50);
   }
 
   //moves window up
@@ -323,11 +323,11 @@ function scrollUpOrDown (hand) {
   if (hand.pinchStrength > 0.7
    && hand._translation[1] < -1
    && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY -= 50);
+    window.scroll(0, window.scrollY -= 100);
   }
 
-  if (window.scrollY > 450) {
-    window.scrollY = 450
+  if (window.scrollY > 1106) {
+    window.scrollY = 1106
   }
 
   if (window.scrollY < 0) {
