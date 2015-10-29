@@ -19,6 +19,10 @@ body {
   margin: 5px 5px;
 }
 
+.container-fluid {
+  padding: 0px;
+}
+
 /* Hides fullscreencontrol from Streetview*/
 .gm-style > div:nth-child(10){
  display:none;
