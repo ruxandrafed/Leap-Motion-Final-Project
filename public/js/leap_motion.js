@@ -66,7 +66,7 @@ function leapStreetView(frame) {
   }
 
   if(frame.valid
-   && frame.gestures.length > 0) {
+   && frame.gestures.length > 0 && frame.hands.length > 0) {
 // console.log(frame.gestures);
 // debugger;
     frame.gestures.forEach(function(gesture){
@@ -160,7 +160,7 @@ function leftHandControls (hand) {
   scrollUpOrDown(hand);
 }
 
-function toggleMarkers (hand) { 
+function toggleMarkers (hand) {
 
   var palmX = hand.palmNormal[0];
   var handVelocX = hand.palmVelocity[0];
@@ -417,10 +417,10 @@ function righthandControls (hand) {
     $('#myModalTheFinger').modal('toggle');
   }
 
-  distanceOne = Leap.vec3.distance(hand.pinky.tipPosition, hand.ringFinger.tipPosition);  
-  distanceTwo = Leap.vec3.distance(hand.ringFinger.tipPosition, hand.middleFinger.tipPosition);  
-  distanceThree = Leap.vec3.distance(hand.middleFinger.tipPosition, hand.indexFinger.tipPosition);  
-  distanceFour = Leap.vec3.distance(hand.indexFinger.tipPosition, hand.thumb.tipPosition); 
+  distanceOne = Leap.vec3.distance(hand.pinky.tipPosition, hand.ringFinger.tipPosition);
+  distanceTwo = Leap.vec3.distance(hand.ringFinger.tipPosition, hand.middleFinger.tipPosition);
+  distanceThree = Leap.vec3.distance(hand.middleFinger.tipPosition, hand.indexFinger.tipPosition);
+  distanceFour = Leap.vec3.distance(hand.indexFinger.tipPosition, hand.thumb.tipPosition);
 
   if (!spockEgg
    && distanceOne < minDistOneSpk
@@ -481,7 +481,7 @@ function pitchAndHeading (hand) {
   pinkyExtended = hand.pinky.extended;
   thumbExtended = hand.thumb.extended;
 
-  // Note: All of these actions are in the same function because they control pitch / heading (view) 
+  // Note: All of these actions are in the same function because they control pitch / heading (view)
   // This controls the up down view of looking at a frame
   if (axis[0] < -0.6
    && hand.palmNormal[2] < -0.2
@@ -557,7 +557,7 @@ function openMenu (hand) {
 
   // Close menu
   if ($('#wrapper').hasClass('toggled')
-   && hand._translation[0] > 6 
+   && hand._translation[0] > 6
    && palmX > 0.8
    && hand.palmPosition[2] < -10) {
     $("#wrapper").toggleClass("toggled");
@@ -629,9 +629,9 @@ function bothHandControls(hands) {
 
 
   distBurnsOne = Leap.vec3.distance(left.pinky.tipPosition, right.pinky.tipPosition);
-  distBurnsTwo = Leap.vec3.distance(left.ringFinger.tipPosition, right.ringFinger.tipPosition);    
+  distBurnsTwo = Leap.vec3.distance(left.ringFinger.tipPosition, right.ringFinger.tipPosition);
   distBurnsThree = Leap.vec3.distance(left.middleFinger.tipPosition, right.middleFinger.tipPosition);
-  distBurnsFour = Leap.vec3.distance(left.indexFinger.tipPosition, right.indexFinger.tipPosition);    
+  distBurnsFour = Leap.vec3.distance(left.indexFinger.tipPosition, right.indexFinger.tipPosition);
   distBurnsFive = Leap.vec3.distance(left.thumb.tipPosition, right.thumb.tipPosition);
 
   if (!burnsEgg
@@ -710,7 +710,7 @@ function isClockwise(frame, gesture) {
   // if (frame.valid
   //  && frame.hands.length == 1
   //  && frame.hands[0].type == 'left') {
-  //   hand = frame.hands[0] 
+  //   hand = frame.hands[0]
   //   pinching(hand)
   // }
 
@@ -730,9 +730,9 @@ function isClockwise(frame, gesture) {
 //         if(current != hand.thumb && distance < closest)
 //         {
 //             closest = distance;
-//             pincher = current; 
+//             pincher = current;
 //         }
-//     } 
+//     }
 //     return pincher;
 //   }
 // }
@@ -747,7 +747,7 @@ function isClockwise(frame, gesture) {
   //     });
   //     return;
   // }
-  // if (!frame.valid) { 
+  // if (!frame.valid) {
   //   leapOn = false;
   // }
 
