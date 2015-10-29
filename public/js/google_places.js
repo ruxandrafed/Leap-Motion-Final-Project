@@ -91,7 +91,7 @@ function createGPMarker(place, map) {
   });
 
   // This open windows automatically, still buggy
-  google.maps.event.trigger(markerP, 'click')
+  google.maps.event.trigger(markerP, 'click');
 
 }
 

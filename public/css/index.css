@@ -19,6 +19,10 @@ body {
   margin: 5px 5px;
 }
 
+/*.container-fluid {
+  padding: 0px;
+}*/
+
 /* Hides fullscreencontrol from Streetview*/
 .gm-style > div:nth-child(10){
  display:none;
@@ -225,6 +229,11 @@ position: relative;
   border-color: #2D85A2;
 }
 
+#generate-hyperlapse, #clear-hyperlapse {
+  background-color: #0ACF00;
+  border-color: #0ACF00;
+}
+
 #map-address-btn, #map-address-btn2, #map-address-btn3 {
   margin-left: 15px;
   background-color: #0ACF00;
@@ -256,10 +265,12 @@ position: relative;
   box-shadow: 5px 5px 5px #d1d1d1;
 }
 
-/*#sidebar-wrapper #location-address {
-  width: 19%;
+#slapgif, #gangnamgif, #spockgif, #mrburnsgif {
+  display: block;
+  margin: auto;
+  margin-bottom: 1em;
 }
-*/
+
 #streetview {
   height: 95vh;
   /* avoid grey area on sidebar toggle*/
