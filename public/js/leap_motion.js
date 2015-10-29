@@ -23,6 +23,18 @@ var driveAround = false;
 var directionsSearchOpen = false;
 
 var helpOpen = false;
+var burnsEgg = false;
+var middleFingerEgg = false;
+var spockEgg = false;
+
+var minBurns = 45;
+
+
+var minDistOneSpk = 35;
+var minDistTwoSpk = 45;
+var minDistThreeSpk = 23;
+var minDistFourSpk = 90;
+
 
 function leapStreetView(frame) {
 
@@ -35,6 +47,7 @@ function leapStreetView(frame) {
 
   var leftHandOnly = leftOnly(frame)
   var rightHandOnly = rightOnly(frame)
+  var bothHands = bothHandsDetected(frame)
 
 
   // Always detect if hands are present
@@ -49,7 +62,12 @@ function leapStreetView(frame) {
 
   if (rightHandOnly) {
     hand = frame.hands[0];
-    righthandControls (hand)
+    righthandControls(hand)
+  }
+
+  if (bothHands) {
+    hands = frame.hands
+    bothHandControls(hands)
   }
 
   previousFrame = frame;
@@ -72,6 +90,16 @@ function rightOnly(frame) {
   if (frame.valid
    && frame.hands.length == 1
    && frame.hands[0].type == 'right'
+   && previousFrame) {
+    return true
+  } else {
+    return false
+  }
+}
+
+function bothHandsDetected(frame) {
+  if (frame.valid
+   && frame.hands.length == 2
    && previousFrame) {
     return true
   } else {
@@ -107,225 +135,14 @@ function detectHands (frame) {
 
 };
 
+
+
 // Left hand only functions go here
 
 function leftHandControls (hand) {
   openMenu(hand);
   toggleMarkers(hand);
   scrollUpOrDown(hand);
-}
-
-// Right hand only functions go here
-
-function righthandControls (hand) {
-
-  // Tests whether the hand is level so hand won't pitch up/down
-  // changes the sunglasses to black when level
-  // Should always check
-  levelOrNot(hand);
-
-  // Directions Api Controls
-  directionsApiMenu(hand)
-
-
-  // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
-
-  // Close your first with your right hand to deactivate Leap Motion
-  if (hand.grabStrength == 1
-   && hand.confidence > 0.4) {
-    preventMotion()
-  }
-
-  // Place right palm opened up near the sensor to turn on
-  if (hand.grabStrength < 1
-   && hand.palmPosition[0] > -15
-   && hand.palmPosition[0] < 20
-   && hand.palmPosition[2] > -10
-   && hand.palmPosition[2] < 20) {
-    allowMotion()
-  }
-
-  // Pitch and heading commands
-  if (leapOn
-    && hand.palmPosition[2] > -25) {
-    pitchAndHeading(hand);
-  };
-
-  var pov = panorama.getPov();
-  // Forward motion achieved by putting palm forward towards laptop
-  // Direct heading currently a bit buggy.
-  if (hand.palmPosition[2] < -30
-   && hand.confidence > 0.25
-   && hand.palmPosition[1] < 120) {
-    moveForward(hand, pov);
-  }
-}
-
-function levelOrNot (hand) {
-
-  if (hand.palmNormal[2] <= 0.1 && hand.palmNormal[2] >= -0.2) {
-    $('#sunglasses-icon').removeClass('not-level');
-  } else {
-    $('#sunglasses-icon').addClass('not-level');
-  }
-
-}
-
-function preventMotion() {
-  leapOn = false;
-  $('#leap-icon').removeClass('leap-on');
-  $('#leap-icon').addClass('leap-off');
-}
-
-function allowMotion() {
-  leapOn = true;
-  $('#leap-icon').addClass('leap-on');
-  $('#leap-icon').removeClass('leap-off');
-}
-
-function pitchAndHeading (hand) {
-  var panoNum = null;
-  var axis = hand.rotationAxis(previousFrame);
-  var palmYPosition = hand.palmPosition[1];
-  var palmZPosition = hand.palmPosition[2];
-  // These allow me to use different finger arrangments for different commands.
-  middleFingerExtended = hand.middleFinger.extended;
-  indexFingerExtended = hand.indexFinger.extended;
-  ringFingerExtended = hand.ringFinger.extended;
-  pinkyExtended = hand.pinky.extended;
-  thumbExtended = hand.thumb.extended;
-
-  // Note: All of these actions are in the same function because they control pitch / heading (view) 
-  // This controls the up down view of looking at a frame
-  if (axis[0] < -0.6
-   && hand.palmNormal[2] < -0.2
-   && hand.palmPosition[0] < 50
-   && palmZPosition > -38) {
-    currentPitch = Math.min(90, currentPitch += 0.75);
-  }
-  if (axis[0] > 0.8
-   && hand.palmNormal[2] > 0.1
-   && hand.palmPosition[0] < 50
-   && palmZPosition > -38) {
-    currentPitch = Math.max(currentPitch -= 0.75, -90);
-  }
-  // currentPitch= -90*axis[0]
-
-  // This control the right left rotation of a street view
-
-  if (axis[2] > 0.7
-   && hand.palmNormal[0] < -0.3
-   && hand.palmPosition[1] < 150) {
-    if (currentHeading > 360) {
-      currentHeading = 1;
-    } else {
-      currentHeading += 1;
-    }
-  };
-  if (axis[2] < -0.7
-   && hand.palmNormal[0] > 0.25
-   && hand.palmPosition[1] < 150) {
-    if (currentHeading <= 0) {
-      currentHeading = 360;
-    } else {
-      currentHeading -= 1
-    }
-  };
-
-  panorama.setPov({
-    heading: currentHeading,
-    pitch: currentPitch
-  });
-
-};
-
-function moveForward (hand, pov) {
-  links = panorama.getLinks();
-  if (links) {
-    var linksABS = links.map(function (a){
-      return {
-        'heading': (Math.abs(a['heading'] - pov.heading)),
-        'description': a['description'],
-        'pano': a['pano']
-      }
-    });
-  linksABS.sort(function (a,b){ return a['heading'] - b['heading']});
-  panorama.setPano(linksABS[0]['pano']);
-  };
-};
-
-
-function openMenu (hand) {
-
-  var palmX = hand.palmNormal[0];
-  var handVelocX = hand.palmVelocity[0];
-  var handTranX = hand._translation[0];
-
-  var middleFingerExtended = hand.middleFinger.extended;
-  var indexFingerExtended = hand.indexFinger.extended;
-  var ringFingerExtended = hand.ringFinger.extended;
-  var pinkyExtended = hand.pinky.extended;
-  var thumbExtended = hand.thumb.extended;
-
-  // These two gestures open and close the side-menu
-
-  // Close menu
-  if ($('#wrapper').hasClass('toggled')
-   && hand._translation[0] > 6 
-   && palmX > 0.8
-   && hand.palmPosition[2] < -10) {
-    $("#wrapper").toggleClass("toggled");
-    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-  }
-  // Open menu
-  if (!($('#wrapper').hasClass('toggled'))
-   && hand._translation[0] < -3
-   && palmX <-0.8
-   && hand.palmPosition[2] < -10) {
-    $("#wrapper").toggleClass("toggled");
-    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-  }
-}
-
-function directionsApiMenu (hand) {
-
-  if (hand.palmPosition[0] > 60
-   && hand.palmPosition[1] > 125
-   && !driveAround
-   && indexFingerExtended
-   && !middleFingerExtended
-   && !ringFingerExtended
-   && !thumbExtended
-   && !pinkyExtended
-   && hand.confidence > 0.25) {
-    openDriveView();
-  }
-
-  if (hand.palmPosition[0] > 60
-   && hand.palmPosition[1] > 125
-   && driveAround
-   && indexFingerExtended
-   && middleFingerExtended
-   && !thumbExtended
-   && !ringFingerExtended
-   && !pinkyExtended
-   && hand.confidence > 0.25) {
-    closeDriveView();
-  }
-
-  if (hand.palmPosition[0] > 60
-   && hand.palmPosition[1] > 125
-   && driveAround
-   && indexFingerExtended
-   && middleFingerExtended
-   && thumbExtended
-   && !ringFingerExtended
-   && !pinkyExtended
-   && hand.confidence > 0.25
-   && $('#map').hasClass('half-left')
-   && !directionsSearchOpen) {
-    openDirectionsSearchBar();
-  }
 }
 
 function toggleMarkers (hand) { 
@@ -540,6 +357,289 @@ function closeDriveView () {
 function openDirectionsSearchBar () {
   directionsSearchOpen = true;
   $('#get-directions-modal').trigger('click')
+}
+
+
+// Right hand only functions go here
+
+function righthandControls (hand) {
+
+  var middleFingerExtended = hand.middleFinger.extended;
+  var indexFingerExtended = hand.indexFinger.extended;
+  var ringFingerExtended = hand.ringFinger.extended;
+  var pinkyExtended = hand.pinky.extended;
+  var thumbExtended = hand.thumb.extended;
+
+  // Tests whether the hand is level so hand won't pitch up/down
+  // changes the sunglasses to black when level
+  // Should always check
+  levelOrNot(hand);
+
+  // Directions Api Controls
+  directionsApiMenu(hand)
+
+
+  // Starting / Stopping Leap Motion. Use right hand to activate/deactivate
+
+  // Close your first with your right hand to deactivate Leap Motion
+  if (hand.grabStrength == 1
+   && hand.confidence > 0.4) {
+    preventMotion()
+  }
+
+  // Place right palm opened up near the sensor to turn on
+  if (hand.grabStrength < 1
+   && hand.palmPosition[0] > -15
+   && hand.palmPosition[0] < 20
+   && hand.palmPosition[2] > -10
+   && hand.palmPosition[2] < 20) {
+    allowMotion()
+  }
+
+  // Pitch and heading commands
+  if (leapOn
+    && hand.palmPosition[2] > -25) {
+    pitchAndHeading(hand);
+  };
+
+  var pov = panorama.getPov();
+  // Forward motion achieved by putting palm forward towards laptop
+  // Direct heading currently a bit buggy.
+  if (hand.palmPosition[2] < -30
+   && hand.confidence > 0.25
+   && hand.palmPosition[1] < 120) {
+    moveForward(hand, pov);
+  }
+
+  if (!middleFingerEgg
+   && hand.palmNormal[1] >= 0.4
+   && hand.palmNormal[2] >= 0.5) {
+    middleFingerEgg = true;
+    console.log("fuck you, too")
+  }
+
+  distanceOne = Leap.vec3.distance(hand.pinky.tipPosition, hand.ringFinger.tipPosition);  
+  distanceTwo = Leap.vec3.distance(hand.ringFinger.tipPosition, hand.middleFinger.tipPosition);  
+  distanceThree = Leap.vec3.distance(hand.middleFinger.tipPosition, hand.indexFinger.tipPosition);  
+  distanceFour = Leap.vec3.distance(hand.indexFinger.tipPosition, hand.thumb.tipPosition); 
+
+  if (!spockEgg
+   && distanceOne < minDistOneSpk
+   && distanceTwo > minDistTwoSpk
+   && distanceThree < minDistThreeSpk
+   && distanceFour > minDistFourSpk
+   && hand.palmNormal[2] >= -0.5) {
+    spockEgg = true;
+    console.log("Live long and Prosper")
+  }
+
+}
+
+function levelOrNot (hand) {
+
+  if (hand.palmNormal[2] <= 0.1 && hand.palmNormal[2] >= -0.2) {
+    $('#sunglasses-icon').removeClass('not-level');
+  } else {
+    $('#sunglasses-icon').addClass('not-level');
+  }
+
+}
+
+function preventMotion() {
+  leapOn = false;
+  $('#leap-icon').removeClass('leap-on');
+  $('#leap-icon').addClass('leap-off');
+}
+
+function allowMotion() {
+  leapOn = true;
+  $('#leap-icon').addClass('leap-on');
+  $('#leap-icon').removeClass('leap-off');
+}
+
+function pitchAndHeading (hand) {
+  var panoNum = null;
+  var axis = hand.rotationAxis(previousFrame);
+  var palmYPosition = hand.palmPosition[1];
+  var palmZPosition = hand.palmPosition[2];
+  // These allow me to use different finger arrangments for different commands.
+  middleFingerExtended = hand.middleFinger.extended;
+  indexFingerExtended = hand.indexFinger.extended;
+  ringFingerExtended = hand.ringFinger.extended;
+  pinkyExtended = hand.pinky.extended;
+  thumbExtended = hand.thumb.extended;
+
+  // Note: All of these actions are in the same function because they control pitch / heading (view) 
+  // This controls the up down view of looking at a frame
+  if (axis[0] < -0.6
+   && hand.palmNormal[2] < -0.2
+   && hand.palmPosition[0] < 50
+   && palmZPosition > -38) {
+    currentPitch = Math.min(90, currentPitch += 0.75);
+  }
+  if (axis[0] > 0.8
+   && hand.palmNormal[2] > 0.1
+   && hand.palmPosition[0] < 50
+   && palmZPosition > -38) {
+    currentPitch = Math.max(currentPitch -= 0.75, -90);
+  }
+  // currentPitch= -90*axis[0]
+
+  // This control the right left rotation of a street view
+
+  if (axis[2] > 0.7
+   && hand.palmNormal[0] < -0.3
+   && hand.palmPosition[1] < 150) {
+    if (currentHeading > 360) {
+      currentHeading = 1;
+    } else {
+      currentHeading += 1;
+    }
+  };
+  if (axis[2] < -0.7
+   && hand.palmNormal[0] > 0.25
+   && hand.palmPosition[1] < 150) {
+    if (currentHeading <= 0) {
+      currentHeading = 360;
+    } else {
+      currentHeading -= 1
+    }
+  };
+
+  panorama.setPov({
+    heading: currentHeading,
+    pitch: currentPitch
+  });
+
+};
+
+function moveForward (hand, pov) {
+  links = panorama.getLinks();
+  if (links) {
+    var linksABS = links.map(function (a){
+      return {
+        'heading': (Math.abs(a['heading'] - pov.heading)),
+        'description': a['description'],
+        'pano': a['pano']
+      }
+    });
+  linksABS.sort(function (a,b){ return a['heading'] - b['heading']});
+  panorama.setPano(linksABS[0]['pano']);
+  };
+};
+
+
+function openMenu (hand) {
+
+  var palmX = hand.palmNormal[0];
+  var handVelocX = hand.palmVelocity[0];
+  var handTranX = hand._translation[0];
+
+  var middleFingerExtended = hand.middleFinger.extended;
+  var indexFingerExtended = hand.indexFinger.extended;
+  var ringFingerExtended = hand.ringFinger.extended;
+  var pinkyExtended = hand.pinky.extended;
+  var thumbExtended = hand.thumb.extended;
+
+  // These two gestures open and close the side-menu
+
+  // Close menu
+  if ($('#wrapper').hasClass('toggled')
+   && hand._translation[0] > 6 
+   && palmX > 0.8
+   && hand.palmPosition[2] < -10) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+  // Open menu
+  if (!($('#wrapper').hasClass('toggled'))
+   && hand._translation[0] < -2.5
+   && palmX <= -0.7
+   && hand.palmPosition[2] < -10) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+}
+
+function directionsApiMenu (hand) {
+
+  if (hand.palmPosition[0] > 60
+   && hand.palmPosition[1] > 125
+   && !driveAround
+   && indexFingerExtended
+   && !middleFingerExtended
+   && !ringFingerExtended
+   && !thumbExtended
+   && !pinkyExtended
+   && hand.confidence > 0.25) {
+    openDriveView();
+  }
+
+  if (hand.palmPosition[0] > 60
+   && hand.palmPosition[1] > 125
+   && driveAround
+   && indexFingerExtended
+   && middleFingerExtended
+   && !thumbExtended
+   && !ringFingerExtended
+   && !pinkyExtended
+   && hand.confidence > 0.25) {
+    closeDriveView();
+  }
+
+  if (hand.palmPosition[0] > 60
+   && hand.palmPosition[1] > 125
+   && driveAround
+   && indexFingerExtended
+   && middleFingerExtended
+   && thumbExtended
+   && !ringFingerExtended
+   && !pinkyExtended
+   && hand.confidence > 0.25
+   && $('#map').hasClass('half-left')
+   && !directionsSearchOpen) {
+    openDirectionsSearchBar();
+  }
+}
+
+// Both hand controls and functions go below here
+
+function bothHandControls(hands) {
+
+  // Figuring which hand is which from our frame.
+  if (hands[0].type == 'left') {
+    left = hands[0]
+    right = hands[1]
+  } else {
+    left = hands[1]
+    right = hands[0]
+  }
+
+  // minDistOne = 150;
+  // distance = Leap.vec3.distance(left.pinky.tipPosition, right.pinky.tipPosition);  
+  // // if (distance < minDistOne
+  //   && (left.grabStrength > 0.7 || right.grabStrength > 0.7)
+  //   && !easterEggOne) {
+  //   easterEggOne = true;
+  //   console.log("Gangnam Style")
+  // }
+
+  distBurnsOne = Leap.vec3.distance(left.pinky.tipPosition, right.pinky.tipPosition);
+  distBurnsTwo = Leap.vec3.distance(left.ringFinger.tipPosition, right.ringFinger.tipPosition);    
+  distBurnsThree = Leap.vec3.distance(left.middleFinger.tipPosition, right.middleFinger.tipPosition);
+  distBurnsFour = Leap.vec3.distance(left.indexFinger.tipPosition, right.indexFinger.tipPosition);    
+  distBurnsFive = Leap.vec3.distance(left.thumb.tipPosition, right.thumb.tipPosition);
+
+  if (!burnsEgg
+   && distBurnsOne < minBurns
+   && distBurnsTwo < minBurns
+   && distBurnsThree < minBurns
+   && distBurnsFour < minBurns
+   && distBurnsFive < minBurns) {
+    burnsEgg = true;
+    console.log("Excellent")
+  }
+
 }
 
 
