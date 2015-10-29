@@ -66,7 +66,8 @@ function leapStreetView(frame) {
   }
 
   if(frame.valid
-   && frame.gestures.length > 0 && frame.hands.length > 0) {
+   && frame.gestures.length > 0
+   && frame.hands.length > 0) {
 // console.log(frame.gestures);
 // debugger;
     frame.gestures.forEach(function(gesture){
@@ -78,8 +79,9 @@ function leapStreetView(frame) {
 
   function streetViewCircle (frame, gesture) {
     hand = frame.hands[0]
-    if (hand.palmNormal[2] <= -0.7
-      && !easterGangnam) {
+    if (hand.palmNormal[2] <= -0.6
+     && hand.type=='right'
+     && !easterGangnam) {
       easterGangnam = true;
       $('#myModalGangnam').modal('toggle');
     }
@@ -344,11 +346,11 @@ function scrollUpOrDown (hand) {
   if (hand.pinchStrength > 0.7
    && hand._translation[1] < -1
    && $('#wrapper').hasClass('toggled')) {
-    window.scroll(0, window.scrollY -= 100);
+    window.scroll(0, window.scrollY -= 125);
   }
 
-  if (window.scrollY > 1106) {
-    window.scrollY = 1106
+  if (window.scrollY > 1250) {
+    window.scrollY = 1250
   }
 
   if (window.scrollY < 0) {
