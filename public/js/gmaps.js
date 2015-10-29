@@ -457,11 +457,9 @@ function initialize() {
 
   // Removes infowindows from panorama
   function clearOverlays(array) {
-    if (array.length > 0) {
       for (var i = 0; i < array.length; i++) {
         array[i].setMap(null);
       }
-    }
   }
 
   function addBusRoutesLayers(route, map) {

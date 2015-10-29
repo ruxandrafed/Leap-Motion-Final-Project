@@ -12,13 +12,13 @@ var translinkMarkers = [];
 function renderTranslinkMarkers (data) {
   stops = data.Stops.Stop;
 
-  stops.map(function (stop) {
-    name = stop.Name;
-    route = stop.Routes;
-    atStreet = stop.AtStreet[0];
-    stopNo = stop.StopNo;
+  stops.forEach(function (stop) {
+    var name = stop.Name;
+    var route = stop.Routes;
+    var atStreet = stop.AtStreet[0];
+    var stopNo = stop.StopNo;
 
-    getContentRoutes(function (contentRoutes) {
+    getContentRoutes(stopNo, function (contentRoutes) {
       // once we get here the ajax call is complete
       busIcon = "../images/places/busstop.png"
 
@@ -62,7 +62,7 @@ function renderTranslinkMarkers (data) {
   });
 }
 
-function getContentRoutes(callback) {
+function getContentRoutes(stopNo, callback) {
   $.getJSON("/translink/buses", {stopNo: stopNo, count: 3, timeFrame: 90}, function (data) {
     var buses = data.NextBuses.NextBus;
     contentRoutes = '';

@@ -79,7 +79,7 @@ function leapStreetView(frame) {
 
   function streetViewCircle (frame, gesture) {
     hand = frame.hands[0]
-    if (hand.palmNormal[2] <= -0.6
+    if (hand.palmNormal[2] <= -0.8
      && hand.type=='right'
      && !easterGangnam) {
       easterGangnam = true;
@@ -413,7 +413,7 @@ function righthandControls (hand) {
   }
 
   if (!middleFingerEgg
-   && hand.palmNormal[1] >= 0.4
+   && hand.palmNormal[1] >= 0.5
    && hand.palmNormal[2] >= 0.5) {
     middleFingerEgg = true;
     $('#myModalTheFinger').modal('toggle');
