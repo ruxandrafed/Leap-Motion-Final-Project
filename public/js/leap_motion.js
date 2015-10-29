@@ -38,12 +38,6 @@ var minDistFourSpk = 90;
 
 function leapStreetView(frame) {
 
-  // if (frame.valid
-  //  && frame.hands.length == 1
-  //  && frame.hands[0].type == 'right'
-  //  && !leapOn) {
-  //   spock
-  // }
 
   var leftHandOnly = leftOnly(frame)
   var rightHandOnly = rightOnly(frame)
@@ -615,14 +609,6 @@ function bothHandControls(hands) {
     right = hands[0]
   }
 
-  // minDistOne = 150;
-  // distance = Leap.vec3.distance(left.pinky.tipPosition, right.pinky.tipPosition);  
-  // // if (distance < minDistOne
-  //   && (left.grabStrength > 0.7 || right.grabStrength > 0.7)
-  //   && !easterEggOne) {
-  //   easterEggOne = true;
-  //   console.log("Gangnam Style")
-  // }
 
   distBurnsOne = Leap.vec3.distance(left.pinky.tipPosition, right.pinky.tipPosition);
   distBurnsTwo = Leap.vec3.distance(left.ringFinger.tipPosition, right.ringFinger.tipPosition);    
