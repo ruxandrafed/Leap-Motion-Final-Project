@@ -26,6 +26,7 @@ var helpOpen = false;
 var burnsEgg = false;
 var middleFingerEgg = false;
 var spockEgg = false;
+var easterGangnam = false;
 
 var minBurns = 45;
 
@@ -62,6 +63,26 @@ function leapStreetView(frame) {
   if (bothHands) {
     hands = frame.hands
     bothHandControls(hands)
+  }
+
+  if(frame.valid
+   && frame.gestures.length > 0) {
+// console.log(frame.gestures);
+// debugger;
+    frame.gestures.forEach(function(gesture){
+      // console.log(gesture)
+    filterGesture("circle", streetViewCircle)(frame, gesture);
+    });
+    return;
+  }
+
+  function streetViewCircle (frame, gesture) {
+    hand = frame.hands[0]
+    if (hand.palmNormal[2] <= -0.7
+      && !easterGangnam) {
+      easterGangnam = true;
+      $('#myModalGangnam').modal('toggle');
+    }
   }
 
   previousFrame = frame;
@@ -346,6 +367,7 @@ function righthandControls (hand) {
   var ringFingerExtended = hand.ringFinger.extended;
   var pinkyExtended = hand.pinky.extended;
   var thumbExtended = hand.thumb.extended;
+
 
   // Tests whether the hand is level so hand won't pitch up/down
   // changes the sunglasses to black when level
