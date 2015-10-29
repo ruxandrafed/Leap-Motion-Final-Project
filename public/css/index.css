@@ -225,6 +225,11 @@ position: relative;
   border-color: #2D85A2;
 }
 
+#generate-hyperlapse, #clear-hyperlapse {
+  background-color: #0ACF00;
+  border-color: #0ACF00;
+}
+
 #map-address-btn, #map-address-btn2, #map-address-btn3 {
   margin-left: 15px;
   background-color: #0ACF00;
