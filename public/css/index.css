@@ -191,7 +191,7 @@ position: relative;
 }
 
 #leap-icon {
-  right: 105px;
+  right: 70px;
   font-weight: bold;
 }
 
@@ -204,7 +204,7 @@ position: relative;
 }
 
 #left-hand-icon {
-  right: 60px;
+  right: 20px;
 }
 
 #left-hand-icon.detected{
@@ -278,7 +278,7 @@ position: relative;
 }
 
 #sunglasses-icon {
-  right: 150px;
+  right: 110px;
 }
 
 #sunglasses-icon.not-level {
@@ -291,4 +291,15 @@ position: relative;
   position: absolute;
   opacity: 0.9;
   z-index: 1;
+}
+
+#leap-icons {
+  position: fixed;
+  z-index: 1;
+  right: 20px;
+}
+
+#leap-icon, #right-hand-icon, #left-hand-icon {
+  display: inline-block;
+  position: relative;
 }
