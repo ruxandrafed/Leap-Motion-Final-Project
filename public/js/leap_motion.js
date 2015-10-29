@@ -337,23 +337,6 @@ function scrollUpOrDown (hand) {
 
 
 
-
-function openDriveView () {
-  driveAround = true;
-  $('#drive-around').trigger('click')
-}
-
-function closeDriveView () {
-  driveAround = false;
-  $('#drive-around').trigger('click')
-}
-
-function openDirectionsSearchBar () {
-  directionsSearchOpen = true;
-  $('#get-directions-modal').trigger('click')
-}
-
-
 // Right hand only functions go here
 
 function righthandControls (hand) {
@@ -409,7 +392,7 @@ function righthandControls (hand) {
    && hand.palmNormal[1] >= 0.4
    && hand.palmNormal[2] >= 0.5) {
     middleFingerEgg = true;
-    console.log("fuck you, too")
+    $('#myModalTheFinger').modal('toggle');
   }
 
   distanceOne = Leap.vec3.distance(hand.pinky.tipPosition, hand.ringFinger.tipPosition);  
@@ -424,19 +407,32 @@ function righthandControls (hand) {
    && distanceFour > minDistFourSpk
    && hand.palmNormal[2] >= -0.5) {
     spockEgg = true;
-    console.log("Live long and Prosper")
+    $('#myModalSpock').modal('toggle');
   }
 
 }
 
 function levelOrNot (hand) {
-
   if (hand.palmNormal[2] <= 0.1 && hand.palmNormal[2] >= -0.2) {
     $('#sunglasses-icon').removeClass('not-level');
   } else {
     $('#sunglasses-icon').addClass('not-level');
   }
+}
 
+function openDriveView () {
+  driveAround = true;
+  $('#drive-around').trigger('click')
+}
+
+function closeDriveView () {
+  driveAround = false;
+  $('#drive-around').trigger('click')
+}
+
+function openDirectionsSearchBar () {
+  directionsSearchOpen = true;
+  $('#get-directions-modal').trigger('click')
 }
 
 function preventMotion() {
@@ -623,7 +619,7 @@ function bothHandControls(hands) {
    && distBurnsFour < minBurns
    && distBurnsFive < minBurns) {
     burnsEgg = true;
-    console.log("Excellent")
+    $('#myModalMrBurns').modal('toggle');
   }
 
 }
