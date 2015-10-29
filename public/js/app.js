@@ -48,6 +48,10 @@ $(function() {
     $("#location-address3").val("");
   });
 
+  $("#wrapper").on("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend", function(event) {
+    google.maps.event.trigger(panorama, "resize");
+    google.maps.event.trigger(map, "resize");
+  });
 });
 
 
