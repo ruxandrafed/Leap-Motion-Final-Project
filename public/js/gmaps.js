@@ -134,6 +134,7 @@ function initialize() {
         mapTypeControl: false,
         zoom: 18
         });
+        map.setStreetView(panorama);
 
         // Hides bus route info if present
         $('#bus-route-info-box').hide();
@@ -358,7 +359,6 @@ function initialize() {
         service.search(request, getPlacesInfo);
         for (var i = 0; i < googlePlacesMarkers.length; i++) {
           googlePlacesMarkers[i].setMap(panorama);
-          // setTimeout(function() {google.maps.event.trigger(googlePlacesMarkers[i], 'click')}, 500);
         }
       } else {
           for (var i = 0; i < googlePlacesMarkers.length; i++) {
