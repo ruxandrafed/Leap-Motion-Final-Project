@@ -94,15 +94,15 @@ function initialize() {
 
   // Create the autocomplete object, restricting the search to geographical location types.
   autocomplete = new google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(document.getElementById('location-address')),
+    (document.getElementById('location-address')),
     {types: ['geocode']});
 
   autocomplete = new google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(document.getElementById('location-address2')),
+    (document.getElementById('location-address2')),
     {types: ['geocode']});
 
   autocomplete = new google.maps.places.Autocomplete(
-    /** @type {!HTMLInputElement} */(document.getElementById('location-address3')),
+    (document.getElementById('location-address3')),
     {types: ['geocode']});
 
   var geocoder = new google.maps.Geocoder();
@@ -112,24 +112,37 @@ function initialize() {
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
 
-         panorama.setPosition((results[0].geometry.location));      // center the map on address
+        // Changes current panorama position only if there is streetview available at that address
 
-          // Resets map
-          var currentCenter = panorama.getPosition();
-          map = new google.maps.Map(document.getElementById('map'), {
-            center: currentCenter,
-            mapTypeControl: false,
-            zoom: 18
-          });
+        var latLng = results[0].geometry.location;
+        var streetViewService = new google.maps.StreetViewService();
+        var streetviewMaxDistance = 100;
 
-          // Hides bus route info if present
-          $('#bus-route-info-box').hide();
+        streetViewService.getPanoramaByLocation(latLng, streetviewMaxDistance, function (streetViewPanoramaData, status) {
+          if (status === google.maps.StreetViewStatus.OK) {
+            panorama.setPosition((results[0].geometry.location));      // center the map on address
+          } else {
+            // alert('I\'m sorry, there is not streetview at that address!');
+            $('#myModalNoStreetview').modal('show');
+          };
+        });
 
-         // Point streetview camera to a marker
-         var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
-         var pov = panorama.getPov();
-         pov.heading = heading;
-         panorama.setPov(pov);
+        // Resets map
+        var currentCenter = panorama.getPosition();
+        map = new google.maps.Map(document.getElementById('map'), {
+        center: currentCenter,
+        mapTypeControl: false,
+        zoom: 18
+        });
+
+        // Hides bus route info if present
+        $('#bus-route-info-box').hide();
+
+        // Point streetview camera to a marker
+        var heading = google.maps.geometry.spherical.computeHeading(panorama.location.latLng, results[0].geometry.location);
+        var pov = panorama.getPov();
+        pov.heading = heading;
+        panorama.setPov(pov);
 
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -193,8 +206,10 @@ function initialize() {
     };
     e.preventDefault();
     var address = $("#location-address").val() ;
-    changeMapCoordinates(address);
-    hideModals();
+    if (address != "") {
+      changeMapCoordinates(address);
+      hideModals();
+    }
   })
 
   $("#citycentre-address-btn").on("click", function(e) {
@@ -220,8 +235,10 @@ function initialize() {
     };
     e.preventDefault();
     var address = $("#location-address2").val() ;
-    changeMapCoordinates(address);
-    hideModals();
+    if (address != "") {
+      changeMapCoordinates(address);
+      hideModals();
+    }
   })
 
   $("#citycentre-address-btn2").on("click", function(e) {
