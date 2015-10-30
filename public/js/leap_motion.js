@@ -358,6 +358,38 @@ function scrollUpOrDown (hand) {
   }
 }
 
+function openMenu (hand) {
+
+  var palmX = hand.palmNormal[0];
+  var handVelocX = hand.palmVelocity[0];
+  var handTranX = hand._translation[0];
+
+  var middleFingerExtended = hand.middleFinger.extended;
+  var indexFingerExtended = hand.indexFinger.extended;
+  var ringFingerExtended = hand.ringFinger.extended;
+  var pinkyExtended = hand.pinky.extended;
+  var thumbExtended = hand.thumb.extended;
+
+  // These two gestures open and close the side-menu
+
+  // Close menu
+  if ($('#wrapper').hasClass('toggled')
+   && hand._translation[0] > 6
+   && palmX > 0.8
+   && hand.palmPosition[2] < -10) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+  // Open menu
+  if (!($('#wrapper').hasClass('toggled'))
+   && hand._translation[0] < -2
+   && palmX <= -0.7
+   && hand.palmPosition[2] < -10) {
+    $("#wrapper").toggleClass("toggled");
+    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
+  }
+}
+
 
 
 // Right hand only functions go here
@@ -543,37 +575,6 @@ function moveForward (hand, pov) {
 };
 
 
-function openMenu (hand) {
-
-  var palmX = hand.palmNormal[0];
-  var handVelocX = hand.palmVelocity[0];
-  var handTranX = hand._translation[0];
-
-  var middleFingerExtended = hand.middleFinger.extended;
-  var indexFingerExtended = hand.indexFinger.extended;
-  var ringFingerExtended = hand.ringFinger.extended;
-  var pinkyExtended = hand.pinky.extended;
-  var thumbExtended = hand.thumb.extended;
-
-  // These two gestures open and close the side-menu
-
-  // Close menu
-  if ($('#wrapper').hasClass('toggled')
-   && hand._translation[0] > 6
-   && palmX > 0.8
-   && hand.palmPosition[2] < -10) {
-    $("#wrapper").toggleClass("toggled");
-    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-  }
-  // Open menu
-  if (!($('#wrapper').hasClass('toggled'))
-   && hand._translation[0] < -2.5
-   && palmX <= -0.7
-   && hand.palmPosition[2] < -10) {
-    $("#wrapper").toggleClass("toggled");
-    $('#menu-toggle span').toggleClass("glyphicon-chevron-right").toggleClass("glyphicon-chevron-left");
-  }
-}
 
 function directionsApiMenu (hand) {
 

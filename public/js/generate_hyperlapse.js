@@ -43,7 +43,7 @@ function generateHyperlapse(origin, destination) {
     if (status == google.maps.DirectionsStatus.OK) {
       hyperlapse.generate( {route:response} );
     } else {
-      console.log(status);
+      // console.log(status);
     }
   });
 
