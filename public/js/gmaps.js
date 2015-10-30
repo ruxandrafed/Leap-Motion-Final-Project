@@ -55,10 +55,23 @@ function initialize() {
     lat = panorama.position.lat().toPrecision(7);
     lng = panorama.position.lng().toPrecision(7);
     map.setCenter(panorama.position);
+    clearOverlays(googlePlacesMarkers);
+    clearOverlays(twitterMarkers);
+    clearOverlays(translinkMarkers);
+    clearOverlays(instaMarkers);
+    googlePlacesMarkers = [];
+    twitterMarkers = [];
+    translinkMarkers = [];
+    instaMarkers = [];
+
+
+
+
+
+
+
 
     if(placesCheckbox.is(":checked")) {
-      clearOverlays(googlePlacesMarkers);
-      googlePlacesMarkers = [];
       var request = {
         location: panorama.location.latLng,
         radius: '50',
@@ -72,20 +85,14 @@ function initialize() {
     };
 
     if(tweetsCheckbox.is(":checked")) {
-      clearOverlays(twitterMarkers);
-      twitterMarkers = [];
       getTweets(lat, lng, panorama);
     };
 
     if(translinkCheckbox.is(":checked")) {
-      clearOverlays(translinkMarkers);
-      translinkMarkers = [];
       translink(lat, lng, panorama);
     };
 
     if(instagramCheckbox.is(":checked")) {
-      clearOverlays(instaMarkers);
-      instaMarkers = [];
       getInstagramPosts(lat, lng, panorama);
     };
 
